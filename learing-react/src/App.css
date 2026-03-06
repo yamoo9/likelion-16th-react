@@ -1,42 +1,82 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.header {
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+  & section {
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    & h2 {
+      margin-top: 0;
+      color: #61dafb;
+      font-size: 1.25rem;
+      border-bottom: 2px solid #61dafb;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
   }
-  to {
-    transform: rotate(360deg);
+
+  & .field {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    & .input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex: 1;
+
+      &:focus-visible {
+        outline: 3px solid #ff9800;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  & .button {
+    background-color: #61dafb;
+    color: #20232a;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #4fa8c7;
+    }
+
+    &:focus-visible {
+      outline: 3px solid #ff9800;
+      outline-offset: 2px;
+    }
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.footer {
+  margin-top: 3rem;
+  padding: 2rem;
+  background-color: #20232a;
+  color: white;
+  text-align: center;
 }
