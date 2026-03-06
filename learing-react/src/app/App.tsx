@@ -1,4 +1,4 @@
-import JsxExpression from '../components/jsx-expression/JsxExpression'
+import JsxExpression from '@/components/jsx-expression/JsxExpression'
 
 export default function App() {
   return (

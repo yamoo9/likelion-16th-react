@@ -22,7 +22,12 @@
     "noUnusedParameters": false,   // 사용하지 않는 매개변수 있어도 에러 방지
     "erasableSyntaxOnly": false,   // 타입을 명시하지 않아도 에러 방지 (학습용)
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
 
   },
   "include": ["src"]
