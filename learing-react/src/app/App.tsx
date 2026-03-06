@@ -1,56 +1,12 @@
-import Button from '../components/button/Button'
-import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
-import Image from '../components/image/Image'
-import styles from './App.module.css'
-import FormField from '../components/form-field/FormField'
-
-// console.log(Button) // React 함수형 컴포넌트(Functional Component)
-
-// console.log(styles) // CSS Modules 기술을 사용해 내보내진 JS 객체
-
-/**
- * JSX (JavaScript eXtension: 자바스크립트 확장 (비표준: 브라우저 해석 못함: SyntaxError))
- * 빌드(컴파일 + 번들링) 도구에서만 JSX 사용 가능
- * Build Tools (Vite, Webpack, Turbopack, ....)
- * *.tsx (TypeScript + JSX) -> TSC -> *.js (React API: React.createElement(type, props, ...children))
- */
+import JsxExpression from '../components/jsx-expression/JsxExpression'
 
 export default function App() {
-  // return null /* 아무 것도 반환하지 않음 (화면에 아무 것도 그리지 않음) */
-
-  // 함수가 JSX(React.ReactNode 타입) 반환
-  // JSX (JavaScript 확장 구문: 마크업 (구조 설계 in JavaScript 파일))
-  // JSX는 문(statement)이다? ❌ 값(expression, value)이다? ⭕️
   return (
     <>
-      <Header />
-      <main className={styles.main}>
-        <section>
-          <h2>모든 태그는 반드시 닫혀야 합니다.</h2>
-          <Button />
-          <p>
-            <dfn>
-              <abbr title="Hyper Text Markup Language">HTML</abbr>
-              에서는 허용되었던 {'<img>'} 태그도 반드시 닫아야 합니다.
-            </dfn>
-            <Image />
-          </p>
-        </section>
-        <section>
-          <h2>
-            <abbr>HTML</abbr>이 아닙니다.
-          </h2>
-          {/* FormField 컴포넌트 분리 */}
-          <FormField />
-        </section>
-        <section>
-          <h2>웹 표준과 접근성을 준수해야 합니다.</h2>
-          {/* 리액트 컴포넌트 (JSX 구문 : React.createElement(Button)) */}
-          <Button />
-        </section>
-      </main>
-      <Footer />
+      <JsxExpression />
+      {/* <Header /> */}
+      {/* <Main /> */}
+      {/* <Footer /> */}
     </>
   )
 }
