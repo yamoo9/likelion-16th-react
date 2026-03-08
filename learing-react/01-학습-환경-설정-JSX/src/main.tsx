@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './app/App.tsx'
+import App from './app/App'
 import './styles/main.css'
 
+// 실제 DOM의 컨테이너 요소 찾기
 const rootElement = document.getElementById('root')
 
 // 방어적 프로그래밍
@@ -13,15 +14,10 @@ if (!rootElement) {
 
 // React(Virtual) DOM (가짜 문서 객체 모델의 뿌리)
 const ReactDOMRoot = createRoot(rootElement)
-// console.log(ReactDOMRoot) // ReactDOMRoot { render, unmount }
+
+// React DOM을 실제 DOM에 렌더링
 ReactDOMRoot.render(
   <StrictMode>
     <App />
   </StrictMode>,
 )
-
-// createRoot(rootElement).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
