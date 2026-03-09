@@ -3,6 +3,13 @@
   flex-direction: column;
   min-height: 100vh;
 
+  .imageWrapper {
+    display: flex;
+    align-items: center;
+    color: #0b7ea4;
+    gap: 4px;
+  }
+
   [data-placeholder] {
     flex: 1;
   }
