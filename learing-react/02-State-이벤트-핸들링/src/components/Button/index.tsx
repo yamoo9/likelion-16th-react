@@ -17,11 +17,17 @@ function Button({ isDisabled = false, children }: ButtonProps) {
   // const { children } = props
   // const isDisabled = false
 
+  let handleClick // = undefined
+
+  if (!isDisabled) {
+    handleClick = () => alert('모든 사용자가 행복해요!!! 🌈')
+  }
+
   return (
     <button
       type="button"
       className={S.button}
-      onClick={() => alert('모든 사용자가 행복해요!!! 🌈')}
+      onClick={handleClick}
       aria-disabled={isDisabled}
     >
       {children}
