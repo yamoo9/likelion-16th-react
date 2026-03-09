@@ -12,6 +12,7 @@ function Image(props: ImageProps) {
       alt={props.alt}
       width={props.width}
       height={props.height}
+      loading="lazy"
     />
   )
 }
