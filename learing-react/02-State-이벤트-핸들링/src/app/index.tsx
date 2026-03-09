@@ -1,9 +1,12 @@
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
-import Image from '@/components/Image'
+// import Header from '@/components/Header'
+// import Footer from '@/components/Footer'
+// import Image from '@/components/Image'
+// import Section from '@/components/Section'
+// import Button from '@/components/Button'
+
+import { Header, Footer, Image, Section, Button } from '@/components'
+
 import S from './style.module.css'
-import Section from '@/components/Section'
-import Button from '@/components/Button'
 
 export default function App() {
   return (
@@ -21,9 +24,11 @@ export default function App() {
           lang="en"
           style={{ display: 'flex', gap: 6, marginBlockStart: 12 }}
         >
-          <Button>Reaction</Button>
-          <Button isDisabled>Reactive</Button>
-          <Button>Reactivity</Button>
+          <Button onNoti={() => alert('리액션!')}>Reaction</Button>
+          <Button onNoti={() => alert('리액티브!')} isDisabled>
+            Reactive
+          </Button>
+          <Button onNoti={() => alert('리액티비티!')}>Reactivity</Button>
         </div>
       </Section>
 
