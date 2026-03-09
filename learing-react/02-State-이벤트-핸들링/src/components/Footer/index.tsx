@@ -1,3 +1,4 @@
+import Wrapper from '../Wrapper'
 import S from './style.module.css'
 
 // 컴포넌트 Props(반드시 객체) 인터페이스(약속) 선언
@@ -36,10 +37,12 @@ export default function Footer(props: FooterProps) {
 
   return (
     <footer className={S.footer}>
-      <small aria-label={copyrightLabel}>
-        {currentYear} COPYRIGHT RESERVED. © <abbr title="이듬(EUID)">EUID</abbr>
-        . {props.slogan}
-      </small>
+      <Wrapper>
+        <small aria-label={copyrightLabel}>
+          {currentYear} COPYRIGHT RESERVED. ©{' '}
+          <abbr title="이듬(EUID)">EUID</abbr>. {props.slogan}
+        </small>
+      </Wrapper>
     </footer>
   )
 }

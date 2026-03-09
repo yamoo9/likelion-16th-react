@@ -3,6 +3,10 @@
   padding: 2rem;
   background-color: #20232a;
   color: white;
-  text-align: center;
   font-weight: 700;
+
+  /* small {
+    display: block;
+    text-align: center;
+  } */
 }
