@@ -25,7 +25,7 @@ export default function EventHandler() {
           className={S.button}
           // TODO 2: JSX에서 함수 몸체 내부에 변수에 함수 값 할당
           onClick={handleIncreaseCount}
-          onMouseEnter={() => handlePrintMessage('오늘 수업 끝!')}
+          onDoubleClick={() => handlePrintMessage('오늘 수업 끝!')}
         >
           클릭(Click) 이벤트 ({count})
         </button>
