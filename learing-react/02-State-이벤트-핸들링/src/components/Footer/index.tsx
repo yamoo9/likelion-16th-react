@@ -1,6 +1,10 @@
 import S from './style.module.css'
 
-export default function Footer(props: { slogan: string }) {
+interface FooterProps {
+  slogan: string
+}
+
+export default function Footer(props: FooterProps) {
   /**
    * Props로 데이터 전달(부모 → 자식)
    * - ✅ 부모에서 자식으로 전달하는 데이터

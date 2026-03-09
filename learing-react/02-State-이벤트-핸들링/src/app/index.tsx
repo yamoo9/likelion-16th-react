@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className={S.container}>
       <div data-placeholder />
-      <Footer slogan={2026 + ''} />
+      <Footer slogan={'모든 이들에게 행복을!'} />
 
       {/* {createElement(
         // 컴포넌트 이름 (Component Name)
