@@ -8,6 +8,7 @@ function Counter() {
   // 일반 로컬(지역) 변수를 업데이트 하는 함수
   const handleIncreaseLocalCount = () => {
     // 일반 변수 업데이트 로직
+    // eslint-disable-next-line react-hooks/immutability
     localCount += 1
     console.log('일반 로컬(지역) 카운트 현재 값 =', { localCount })
   }
