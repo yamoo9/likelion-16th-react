@@ -12,11 +12,11 @@ export default function App() {
         </h2>
       </Header>
 
-      <Wrapper>
-        <ConditionalRendering />
-      </Wrapper>
-
-      {/* <div data-placeholder /> */}
+      <div data-placeholder>
+        <Wrapper>
+          <ConditionalRendering />
+        </Wrapper>
+      </div>
 
       <Footer slogan={'모든 이들에게 행복을!'} />
     </div>
