@@ -1,7 +1,5 @@
 import S from './style.module.css'
 
-function EventHandling() {
+export default function UpdateState() {
   return <div className={S.container}></div>
 }
-
-export default EventHandling

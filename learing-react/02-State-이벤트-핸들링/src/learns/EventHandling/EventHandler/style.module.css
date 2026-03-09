@@ -5,6 +5,8 @@
   --secondary-hover: #059669;
   --text-main: #1f2937;
 
+  width: 520px;
+  margin-inline: auto;
   padding: 2rem;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;

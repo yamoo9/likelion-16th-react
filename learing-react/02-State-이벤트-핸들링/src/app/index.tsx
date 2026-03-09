@@ -12,10 +12,10 @@ export default function App() {
         </h2>
       </Header>
 
-      <div data-placeholder>
+      <div className={S.main}>
         <Wrapper>
-          <EventHandling />
           <ComponentState />
+          <EventHandling />
         </Wrapper>
       </div>
 

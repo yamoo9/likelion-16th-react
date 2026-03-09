@@ -1,7 +1,5 @@
 import S from './style.module.css'
 
-function ControlledComponent() {
+export default function ControlledComponent() {
   return <div className={S.container}></div>
 }
-
-export default ControlledComponent

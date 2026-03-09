@@ -1,7 +1,5 @@
 import S from './style.module.css'
 
-function BatchCounter() {
+export default function BatchCounter() {
   return <article className={S.container}></article>
 }
-
-export default BatchCounter

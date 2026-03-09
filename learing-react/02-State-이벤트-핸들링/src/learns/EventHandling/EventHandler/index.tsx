@@ -11,10 +11,9 @@ export default function EventHandler() {
     const nextCount = count + 1
     setCount(nextCount)
   }
-
-  const handlePrintMessage = (message: string) => {
-    alert(message)
-  }
+  
+  // 이벤트 핸들러에 매개변수를 설정할 경우
+  // handlePrintMessage
 
   return (
     <section className={S.container}>
@@ -25,7 +24,7 @@ export default function EventHandler() {
           className={S.button}
           // TODO 2: JSX에서 함수 몸체 내부에 변수에 함수 값 할당
           onClick={handleIncreaseCount}
-          onDoubleClick={() => handlePrintMessage('오늘 수업 끝!')}
+          // TODO 3: JSX에서 이벤트 핸들러에 메시지를 전달
         >
           클릭(Click) 이벤트 ({count})
         </button>
