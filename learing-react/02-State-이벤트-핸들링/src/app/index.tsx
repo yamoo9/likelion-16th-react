@@ -3,6 +3,7 @@ import Header from '@/components/Header'
 import Image from '@/components/Image'
 import S from './style.module.css'
 import Section from '@/components/Section'
+import Button from '@/components/Button'
 
 export default function App() {
   return (
@@ -16,6 +17,11 @@ export default function App() {
 
       <Section title="리액트는 리액션(반응)!" isShowTitle>
         <p>리액트는 사용자의 행동에 따라 리액션을 제공한다.</p>
+        <div style={{ display: 'flex', gap: 6, marginTop: 12 }}>
+          <Button>Reaction</Button>
+          <Button isDisabled>Reactive</Button>
+          <Button>Reactivity</Button>
+        </div>
       </Section>
 
       <div data-placeholder />
