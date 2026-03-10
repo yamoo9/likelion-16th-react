@@ -3,7 +3,7 @@
 // ---------------------------
 
 // 1. learn/RenderPipeline
-export { default as RenderPipeline } from './RednerPipeline'
+export { default as RenderPipeline } from './RenderPipeline'
 
 // 2. learn/VirtualDOM
 export { default as VirtualDOM } from './VirtualDOM'
