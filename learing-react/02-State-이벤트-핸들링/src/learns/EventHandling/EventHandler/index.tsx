@@ -7,17 +7,20 @@ export default function EventHandler() {
 
   // 화살표 함수 식 (이벤트 객체를 사용할 경우, 타입 지정 필요)
   const handleIncreaseCount = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log('버블링')
     console.log(e.type + ' 이벤트 발동!')
     const nextCount = count + 1
     setCount(nextCount)
   }
   
-  // 이벤트 핸들러에 매개변수를 설정할 경우
-  // handlePrintMessage
+  // 함수 몸체(body) 영역의 일반 함수 매개변수를 설정할 경우
+  function logMessage(message: string) {
+    console.log(message)
+  }
 
   return (
     <section className={S.container}>
-      <h2 className={S.title}>이벤트 핸들링 실습</h2>
+      <h2 className={S.title}>이벤트 핸들링</h2>
       <div role="group" className={S.buttonGroup}>
         <button
           type="button"
@@ -25,6 +28,10 @@ export default function EventHandler() {
           // TODO 2: JSX에서 함수 몸체 내부에 변수에 함수 값 할당
           onClick={handleIncreaseCount}
           // TODO 3: JSX에서 이벤트 핸들러에 메시지를 전달
+          onClickCapture={(/* 인라인 이벤트 핸들러 */) => {
+            console.log('캡쳐링')
+            logMessage('오늘 수업 시작합니다!')
+          }}
         >
           클릭(Click) 이벤트 ({count})
         </button>

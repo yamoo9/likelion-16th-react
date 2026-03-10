@@ -14,8 +14,8 @@ export default function App() {
 
       <div className={S.main}>
         <Wrapper>
-          <ComponentState />
           <EventHandling />
+          <ComponentState />
         </Wrapper>
       </div>
 
