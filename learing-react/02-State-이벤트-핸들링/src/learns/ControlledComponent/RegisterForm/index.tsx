@@ -4,6 +4,8 @@ import S from './style.module.css'
 // (리액트에 의해) 제어된 컴포넌트 (Controlled Component)
 // (리액트에 의해) 제어되지 않은 컴포넌트 (Uncontrolled Component)
 
+const REG_EMAIL_CHECK = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
 export default function RegisterForm() {
   // 폼 제출 핸들러 작성
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -56,7 +58,7 @@ export default function RegisterForm() {
   // 상태(State) 선언 (선언적 프로그래밍 방식)
   // - 사용자의 이름, 이메일 등 제어할 것을 상태로 선언한다.
 
-  // 사용자 이름 State 선언
+  // 사용자 이름, 이메일 State 선언
   const [username, setUsername] = useState('')
   const [useremail, setUseremail] = useState('')
 
@@ -123,8 +125,8 @@ export default function RegisterForm() {
             setUseremail(trimedValue)
           }}
         />
-        {/* 유효성 검사: '@', '.' 기호를 포함하는지 여부 검사 */}
-        {!useremail.includes('@') && !useremail.includes('.') && (
+        {/* 이메일 유효성 검사 */}
+        {REG_EMAIL_CHECK.test(useremail) || (
           <span role="alert" className={S.errorMessage}>
             유효한 이메일이 아닙니다.
           </span>
