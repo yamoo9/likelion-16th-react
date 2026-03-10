@@ -12,6 +12,7 @@ export { default as ComponentState } from './ComponentState'
 export { default as EventHandling } from './EventHandling'
 
 // 4. State 업데이트 : learn/UpdateState
+export { default as UpdateState } from './UpdateState'
 
 // 5. 입력 동기화 : learn/ControlledComponent
 

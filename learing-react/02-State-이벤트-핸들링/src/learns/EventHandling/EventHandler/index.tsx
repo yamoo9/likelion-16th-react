@@ -7,7 +7,7 @@ export default function EventHandler() {
 
   // 화살표 함수 식 (이벤트 객체를 사용할 경우, 타입 지정 필요)
   const handleIncreaseCount = (e: MouseEvent<HTMLButtonElement>) => {
-    console.log('버블링')
+    console.log('버블링', e.eventPhase)
     console.log(e.type + ' 이벤트 발동!')
     const nextCount = count + 1
     setCount(nextCount)
@@ -20,15 +20,15 @@ export default function EventHandler() {
 
   // 버전 2. 클로저(Closure) 활용
   //        화살표 함수 구문 사용
-  const makeClickHandler = (message: string) => () => {
-    console.log('캡쳐링')
+  const makeClickHandler = (message: string) => (e: MouseEvent<HTMLButtonElement>) => {
+    console.log('캡쳐링', e.eventPhase)
     console.log(message)
   }
 
   // 함수 선언 방식의 클로저 활용
   // function makeClickHandler(message: string) {
-  //   return function handleClick() {
-  //     console.log('캡쳐링')
+  //   return function handleClick(e: MouseEvent<HTMLButtonElement>) {
+  //     console.log('캡쳐링', e.eventPhase)
   //     console.log(message)
   //   }
   // }
