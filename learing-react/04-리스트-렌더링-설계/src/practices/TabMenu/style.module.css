@@ -1,0 +1,53 @@
+.container {
+
+  --border-gray: #e5e7eb;
+  --text-muted: #6b7280;
+  --primary-blue: #3b82f6;
+  --bg-content: #f9fafb;
+
+  max-width: 500px;
+  margin: 2rem auto;
+
+  .tabList {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 2px solid var(--border-gray);
+
+    .tabItem {
+      flex: 1;
+
+      .tabButton {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        background: none;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+
+        &:hover {
+          color: var(--primary-blue);
+        }
+
+        &.active {
+          color: var(--primary-blue);
+          border-bottom-color: var(--primary-blue);
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 2rem;
+    background-color: var(--bg-content);
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+    color: #1f2937;
+  }
+}

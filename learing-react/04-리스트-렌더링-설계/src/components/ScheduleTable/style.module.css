@@ -1,0 +1,117 @@
+.container {
+  
+  --primary: #37a6da;
+  --border: #e2e8f0;
+  --bg-head: #f8fafc;
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --success: #05704e;
+  --completed: #63899a;
+
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+
+  .header {
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin: 0;
+    }
+
+    .desc {
+      font-size: 0.875rem;
+      color: var(--text-sub);
+      margin-top: 0.5rem;
+    }
+  }
+
+  .tableWrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+
+    &:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.938rem;
+    text-align: left;
+
+    th,
+    td {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    thead th {
+      background-color: var(--bg-head);
+      color: #475569;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .dateCell {
+      background-color: #fff;
+      vertical-align: middle;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      font-weight: 700;
+      color: var(--text-sub);
+
+      .day {
+        font-weight: 400;
+        font-size: 0.85rem;
+        margin-left: 4px;
+      }
+    }
+
+    .typeCell {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .statusCell {
+      span {
+        padding: 0.3rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .done {
+        background: #ecfdf5;
+        color: var(--success);
+        border: 1px solid #d1fae5;
+      }
+
+      .pending {
+        background: #f1f5f9;
+        color: var(--text-sub);
+      }
+    }
+
+    .completed {
+      background-color: #f9fafb;
+      color: var(--text-sub);
+
+      .typeCell {
+        color: var(--completed);
+      }
+
+      .nameCell,
+      .timeCell {
+        opacity: 0.8;
+      }
+    }
+  }
+}
