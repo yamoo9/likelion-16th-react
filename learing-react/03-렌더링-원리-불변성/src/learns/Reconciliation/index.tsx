@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import S from './style.module.css'
 
 // User 인터페이스
