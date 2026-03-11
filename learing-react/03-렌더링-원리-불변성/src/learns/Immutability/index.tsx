@@ -2,7 +2,7 @@ import { useState } from 'react'
 import S from './style.module.css'
 import { log } from '@/utils'
 
-export default function ImmutabilityTest() {
+export default function Immutability() {
   const [items, setItems] = useState(['하나', '둘', '셋'])
 
   // 직접 수정(push) 방식
@@ -21,7 +21,8 @@ export default function ImmutabilityTest() {
     // 메모리 힙(heap) : 객체형 데이터 저장 (참조 주소)
     setItems(items) // 동일 참조! (메모리 힙 주소가 동일)
     // 리액트가 화면을 바꾸는 원리
-    // 새로운 상태 데이터 값이 이전과 달라야 한다.
+    // - 새로운 상태 데이터 값이 이전과 달라야 한다.
+    // - 리액트는 객체의 경우, 힙(Heap) 주소만 본다.
   }
 
   // 새로운 배열 생성(spread) 방식
@@ -30,7 +31,19 @@ export default function ImmutabilityTest() {
     // 원본 배열이 아니라, 복제된 배열을 사용
 
     // 배열을 복제하는 메서드? array.slice()
+    // const nextItems = items.slice() // 배열 복제 (메모리 상 다른 힙 주소)
+    // nextItems.push('넷', '다섯', '여섯')
+    // console.log({ items })
+    // console.log({ nextItems })
+
+    // 다른 참조 주소라면? 리액트는 상태가 변경되었다고 생각합니다.
+    // 그러므로 화면을 갱신하려 시도하겠죠.
+
     // 배열을 복제하는 구문(문법)? [...array]
+    // const nextItems = [...items, '넷', '다섯', '아홉']
+    // setItems(nextItems)
+
+    setItems([...items, '넷', '다섯', '아홉'])
   }
 
   return (
