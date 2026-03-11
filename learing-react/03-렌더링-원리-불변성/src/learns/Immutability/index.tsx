@@ -65,8 +65,8 @@ export default function Immutability() {
 
       <div className={S.listWrapper}>
         <ul className={S.itemList}>
-          {items.map((item) => (
-            <li>{item}</li>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
           ))}
         </ul>
       </div>
