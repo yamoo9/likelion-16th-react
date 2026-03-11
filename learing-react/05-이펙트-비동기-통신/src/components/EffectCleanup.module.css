@@ -1,0 +1,91 @@
+.container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  header {
+    display: flex;
+    flex-flow: column;
+    gap: 2px;
+    align-items: center;
+    margin-block-end: 24px;
+  }
+
+  & .description {
+    font-size: 0.95rem;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+  }
+
+  & .toggleButton {
+    padding: 12px 24px;
+    background-color: #ff4757;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+
+    &:hover {
+      background-color: #ff6b81;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 3px solid #ff4757;
+      outline-offset: 2px;
+    }
+  }
+
+  & .contentArea {
+    min-height: 200px; /* 레이아웃 시프트 방지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .card {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 2px dashed #dee2e6;
+    border-radius: 12px;
+    width: 100%;
+    animation: fadeIn 0.3s ease-out;
+
+    & .timerDisplay {
+      display: block;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #2f3542;
+      margin: 1rem 0;
+      font-variant-numeric: tabular-nums; /* 숫자 너비 고정으로 떨림 방지 */
+    }
+
+    & .info {
+      font-size: 0.85rem;
+      color: #747d8c;
+      line-height: 1.5;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

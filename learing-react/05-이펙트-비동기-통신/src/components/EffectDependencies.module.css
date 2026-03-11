@@ -1,0 +1,121 @@
+.container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  .display {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 1.5rem;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+
+    .countOutput {
+      display: block;
+      font-size: 4rem;
+      font-weight: 800;
+      color: #007bff;
+      margin: 1rem 0;
+    }
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #374151;
+      text-align: left;
+    }
+
+    input {
+      padding: 0.8rem;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+    }
+
+    .counterButton {
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .logBox {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: #1f2937;
+    color: #10b981;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-align: left;
+
+    .textHighlight {
+      text-decoration: none;
+      color: #fbbf24;
+      font-weight: 700;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+/* 
+  CSS Modules
+  전역 sr-only 스타일 누락 보완 (웹 표준 아님) 
+*/
+:global(.sr-only) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

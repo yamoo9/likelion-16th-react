@@ -1,0 +1,71 @@
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+
+  & .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  & .statusMessage {
+    padding: 2rem;
+    text-align: center;
+    font-weight: 600;
+
+    &.loading {
+      color: #3b82f6;
+      animation: pulse 1.5s infinite;
+    }
+
+    &.error {
+      color: #ef4444;
+      background-color: #fef2f2;
+      border-radius: 8px;
+    }
+  }
+
+  & .postList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    & .postItem {
+      padding: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background-color 0.2s;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #f8fafc;
+      }
+
+      & h3 {
+        font-size: 1.1rem;
+        color: #334155;
+        margin-bottom: 0.5rem;
+        text-transform: capitalize;
+      }
+
+      & p {
+        font-size: 0.9rem;
+        color: #64748b;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

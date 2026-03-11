@@ -1,0 +1,43 @@
+.container {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 1.5rem;
+  }
+
+  .counterButton {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #1d4ed8;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  .statusText {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+}
