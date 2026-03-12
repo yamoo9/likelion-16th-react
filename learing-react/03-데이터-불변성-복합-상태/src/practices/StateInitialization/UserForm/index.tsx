@@ -1,4 +1,5 @@
 import { useState, type SubmitEvent } from 'react'
+import type { ResetEvent } from '@/types'
 import S from './style.module.css'
 
 // 인터페이스(Interface) = 객체 형태의 타입 선언
@@ -32,7 +33,7 @@ export default function UserForm() {
     console.log({ name, email, role })
   }
 
-  const handleReset = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleReset = (e: ResetEvent) => {
     console.log('사용자가 입력한 폼 데이터 초기화')
 
     // [리액트에 의해 제어되지 않는 상황]
