@@ -5,7 +5,7 @@ export default function RaceCondition() {
   return (
     <article className={S.container}>
       <header className={S.searchField}>
-        <h2 className={S.title}>사용자 검색 시스템</h2>
+        <h2 className={S.title}>사용자 검색</h2>
         <label htmlFor="user-search">조회할 사용자 ID (1~20)</label>
         <input
           id="user-search"
