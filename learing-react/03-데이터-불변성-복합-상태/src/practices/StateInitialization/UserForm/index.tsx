@@ -99,6 +99,7 @@ export default function UserForm() {
         </div>
 
         <div
+          hidden
           role="group"
           style={{ marginBlockStart: 8, display: 'flex', gap: 8 }}
         >
