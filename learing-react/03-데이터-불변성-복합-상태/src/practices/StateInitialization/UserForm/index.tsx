@@ -8,6 +8,8 @@ import S from './style.module.css'
 type UserRole = 'user' | 'admin' | ''
 
 export default function UserForm() {
+  console.log('UserForm 렌더링')
+
   // [상태] 사용자 이름
   const [name, setName] = useState('')
   // [상태] 이메일
@@ -99,7 +101,7 @@ export default function UserForm() {
         </div>
 
         <div
-          hidden
+          // hidden
           role="group"
           style={{ marginBlockStart: 8, display: 'flex', gap: 8 }}
         >
