@@ -6,7 +6,7 @@ export { default as StaffList } from './StaffList'
 export { default as ShiftManager } from './ShiftManager'
 export { default as ScheduleTable } from './ScheduleTable'
 
-// 컴포넌트 분리
+// 컴포넌트 분리(추출)
 export { default as ProductList } from './ProductList'
 
 // 데이터 필터링

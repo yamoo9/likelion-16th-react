@@ -1,0 +1,38 @@
+[
+  {
+    "id": 4207892,
+    "name": "시그니처 세라믹 화병 (샌드 베이지)",
+    "price": 48000,
+    "isSoldOut": false
+  },
+  {
+    "id": 210528,
+    "name": "미니멀리스트 알루미늄 탁상시계",
+    "price": 32500,
+    "isSoldOut": false
+  },
+  {
+    "id": 1007767,
+    "name": "무드 인센스 홀더 (매트 블랙)",
+    "price": 19000,
+    "isSoldOut": true
+  },
+  {
+    "id": 1248583,
+    "name": "프리미엄 린넨 텍스처 쿠션",
+    "price": 28000,
+    "isSoldOut": false
+  },
+  {
+    "id": 6932884,
+    "name": "스테인리스 스틸 드립 포트",
+    "price": 55000,
+    "isSoldOut": false
+  },
+  {
+    "id": 34992781,
+    "name": "북유럽풍 원목 트레이 (오크)",
+    "price": 42000,
+    "isSoldOut": false
+  }
+]
