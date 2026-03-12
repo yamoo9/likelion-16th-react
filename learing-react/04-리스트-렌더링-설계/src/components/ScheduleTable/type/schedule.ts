@@ -2,7 +2,7 @@ export type ShiftType = '오전' | '오후' | '야간'
 
 export interface Shift {
   id: string
-  type: ShiftType
+  type: string
   staffName: string
   startTime: string
   endTime: string
