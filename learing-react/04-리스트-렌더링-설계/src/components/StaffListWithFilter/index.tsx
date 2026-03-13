@@ -8,11 +8,12 @@ import S from './style.module.css'
 
 export default function StaffListWithFilter() {
   const [staffs] = useState<Staff[]>(staffData)
+  const [search, setSearch] = useState('')
 
   return (
     <section className={S.container}>
       <StaffListInfo staffs={staffs} />
-      <StaffListSearch />
+      <StaffListSearch search={search} setSearch={setSearch} />
       <StaffList staffs={staffs} />
     </section>
   )

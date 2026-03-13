@@ -1,6 +1,11 @@
 import S from './StaffListSearch.module.css'
 
-export default function StaffListSearch() {
+interface Props {
+  search: string
+  setSearch: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function StaffListSearch({ search, setSearch }: Props) {
   return (
     <search className={S.searchSection}>
       <div className={S.searchField}>
@@ -11,6 +16,8 @@ export default function StaffListSearch() {
           id="staff-search"
           type="search"
           className={S.searchInput}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="이름, 역할 또는 연락처로 검색하세요"
         />
         <span className={S.searchIcon} aria-hidden="true">
