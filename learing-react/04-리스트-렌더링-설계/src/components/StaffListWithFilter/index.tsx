@@ -10,6 +10,7 @@ export default function StaffListWithFilter() {
 
   return (
     <section className={S.container}>
+      {/* StaffListInfo */}
       <header className={S.header}>
         <h2>알바생 관리 명부</h2>
         <span className={S.count}>
