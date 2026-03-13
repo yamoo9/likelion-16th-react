@@ -1,10 +1,10 @@
-import { EffectDependencies } from '@/components'
+import { EffectCleanup } from '@/components'
 import S from './style.module.css'
 
 export default function App() {
   return (
     <div className={S.container}>
-      <EffectDependencies />
+      <EffectCleanup />
     </div>
   )
 }

@@ -8,7 +8,7 @@ export default function EffectDependencies() {
   // - 텍스트 상태
   const [text, setText] = useState('')
   // - 마운트 상태
-  const [mounted] = useState(false)
+  const [mounted, setMounted] = useState(false) // '리액트 앱이 아직 마운트 전이다'
 
   // 이펙트 설정 (종속성 또는 의존성(dependencies: Array)
   // 상황 1. 의존성 배열이 없을 경우
@@ -22,10 +22,12 @@ export default function EffectDependencies() {
   // 상황 2. 의존성 배열이 비어있는 경우
   // 최초 렌더링 할 때 단 한번만 이펙트 함수의 로직이 실행
   useEffect(() => {
-    const currentYear = new Date().getFullYear()
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCount(currentYear) // 0 -> 2026
-    console.log(`올해는 ${currentYear}년입니다. 📆`)
+    setMounted(true) // '리액트 앱이 마운트 되었다!'
+
+    // const currentYear = new Date().getFullYear()
+    // setCount(currentYear) // 0 -> 2026
+    // console.log(`올해는 ${currentYear}년입니다. 📆`)
   }, [])
 
   // 상황 3. 의존성 배열에 특정 값이 포함된 경우
@@ -35,10 +37,13 @@ export default function EffectDependencies() {
     document.title = `현재 카운트 = ${count}`
   }, [count])
 
+  const mountedISOTime = mounted ? new Date().toISOString() : undefined
+
   return (
     <article className={S.container}>
       <header className={S.display}>
         <h2>의존성 배열 학습</h2>
+        <output>{mounted ? '마운트 됨' : '마운트 안됨'}</output>
         <p className={S.description}>실시간 카운트 상태를 확인하세요.</p>
         <output className={S.countOutput} aria-live="polite" aria-atomic="true">
           {count}
@@ -79,7 +84,9 @@ export default function EffectDependencies() {
         <p>콘솔창(F12)을 확인하며 Effect의 동작을 관찰하세요.</p>
         <p>
           현재 입력 내용:
-          <ins className={S.textHighlight}>{text || '입력 대기 중...'}</ins>
+          <ins dateTime={mountedISOTime} className={S.textHighlight}>
+            {text || '입력 대기 중...'}
+          </ins>
         </p>
       </footer>
     </article>

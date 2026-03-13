@@ -9,7 +9,9 @@ if (!rootElement) {
   throw new Error('문서에 #root인 요소가 없습니다. 확인해보세요.')
 }
 
-createRoot(rootElement).render(
+const reactDomRoot = createRoot(rootElement)
+
+reactDomRoot.render(
   <StrictMode>
     <App />
   </StrictMode>,
