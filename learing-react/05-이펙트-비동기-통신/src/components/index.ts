@@ -1,4 +1,4 @@
-// 이펙트 기초
+// 이펙트 (Side Effects: "부수 효과" 리액트 앱의 렌더링에 영향을 끼칠 수 있는 요인) 기초
 export { default as EffectBasic } from './EffectBasic/EffectBasic'
 
 // 이펙트 의존성(Dependencies)

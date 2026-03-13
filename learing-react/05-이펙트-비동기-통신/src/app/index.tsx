@@ -1,10 +1,10 @@
-import { TodoSearch } from '@/practices'
+import { EffectBasic } from '@/components'
 import S from './style.module.css'
 
 export default function App() {
   return (
     <div className={S.container}>
-      <TodoSearch />
+      <EffectBasic />  
     </div>
   )
 }
