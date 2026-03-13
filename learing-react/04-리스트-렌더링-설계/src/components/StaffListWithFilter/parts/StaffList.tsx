@@ -1,7 +1,7 @@
 import type { Staff } from '../type/staff'
 import StaffListNoResult from './StaffListNoResult'
-import S from './StaffList.module.css'
 import StaffListCard from './StaffListCard'
+import S from './StaffList.module.css'
 
 interface StaffListProps {
   staffs: Staff[]

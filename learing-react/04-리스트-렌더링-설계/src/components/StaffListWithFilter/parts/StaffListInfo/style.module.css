@@ -1,0 +1,24 @@
+ .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+    }
+
+    .count {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--primary);
+      background-color: #dbeafe;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+    }
+  }
