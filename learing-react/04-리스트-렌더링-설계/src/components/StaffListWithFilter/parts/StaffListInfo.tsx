@@ -1,5 +1,5 @@
-import type { Staff } from '../../type/staff'
-import S from './style.module.css'
+import type { Staff } from '../type/staff'
+import S from './StaffListInfo.module.css'
 
 interface Props {
   staffs: Staff[]
