@@ -2,15 +2,17 @@ import type { Product } from '../type/product'
 import ProductCard from './ProductCard'
 import S from './ProductSearchResult.module.css'
 
-interface ProductSearchResultProps {
+interface Props {
   products: Product[]
-  searchQuery?: string
+  searchQuery: string
 }
 
+// Stateless: 상태가 없는 컴포넌트
+// 비즈니스 로직 없이 화면에 그림을 그리는 컴포넌트 (마크업, 스타일링 담당)
 export default function ProductSearchResult({
   products,
   searchQuery = '',
-}: ProductSearchResultProps) {
+}: Props) {
   if (products.length === 0) {
     return (
       <div className={S.noResult} aria-live="polite">
