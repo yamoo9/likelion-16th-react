@@ -9,7 +9,7 @@
   --radius-md: 8px;
   --radius-sm: 6px;
 
-  max-width: 400px;
+  max-width: 440px;
   margin: 40px auto;
   padding: 24px;
   border: 1px solid var(--card-border);
@@ -109,7 +109,7 @@
       opacity: 0.9;
     }
 
-    .removeBtn {
+    .removeButton {
       position: absolute;
       top: 10px;
       right: 10px;
@@ -133,7 +133,7 @@
     }
   }
 
-  .submitBtn {
+  .submitButton {
     width: 100%;
     height: 40px;
     background: var(--brand-color);
@@ -143,9 +143,103 @@
     font-weight: 600;
     cursor: pointer;
 
-    &:disabled {
-      opacity: 0.5;
+    &[aria-disabled="true"] {
       cursor: not-allowed;
+      opacity: 0.5;
     }
   }
+
+  .resultArea {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 2px dashed var(--card-border);
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .resultTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #16a34a;
+  }
+
+  .resultContent {
+    background-color: #f8fafc;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--card-border);
+  }
+
+  .resultImg {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    border: 1px solid var(--card-border);
+  }
+
+  .urlBox {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .urlLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .urlText {
+    font-size: 11px;
+    background: #f1f5f9;
+    padding: 8px;
+    border-radius: 4px;
+    word-break: break-all;
+    color: var(--brand-color);
+    border: 1px solid #e2e8f0;
+  }
+
+  .copyWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f1f5f9;
+    padding: 4px 4px 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .urlText {
+    flex: 1;
+    font-size: 11px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    word-break: break-all;
+    color: var(--brand-color);
+  }
+
+  .copyButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+    
+    &:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+  }
+
 }
