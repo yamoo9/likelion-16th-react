@@ -1,0 +1,122 @@
+.container {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  .header {
+    margin-bottom: 1.5rem;
+
+    .title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+
+    .form {
+      display: flex;
+      gap: 0.5rem;
+
+      .input {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 0.875rem;
+
+        &:focus {
+          outline: 2px solid #2563eb;
+          border-color: transparent;
+        }
+      }
+
+      .buttonAdd {
+        padding: 0.6rem 1.2rem;
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #1d4ed8;
+        }
+      }
+    }
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid #f1f5f9;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .text {
+        font-size: 1rem;
+        color: #334155;
+        transition: all 0.2s;
+
+        &.completed {
+          text-decoration: line-through;
+          color: #94a3b8;
+        }
+      }
+
+      .buttonGroup {
+        display: flex;
+        gap: 0.5rem;
+
+        button {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .buttonToggle {
+          background-color: #f1f5f9;
+          border: 1px solid #e2e8f0;
+          color: #475569;
+
+          &:hover {
+            background-color: #e2e8f0;
+          }
+        }
+
+        .buttonDelete {
+          background-color: #fff1f2;
+          border: 1px solid #ffe4e6;
+          color: #e11d48;
+
+          &:hover {
+            background-color: #ffe4e6;
+          }
+        }
+      }
+    }
+  }
+
+  .empty {
+    text-align: center;
+    color: #707c8d;
+    font-size: 0.875rem;
+    margin-top: 2rem;
+  }
+}
