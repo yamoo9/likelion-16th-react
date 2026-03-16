@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import S from './DataFetching.module.css'
-import { getPosts } from '@/api/getPosts'
+import { getPosts, type Post } from '@/api/getPosts'
 
 export default function PostList() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
 
       try {
-        const data = await getPosts(5, 4)
+        const data = await getPosts({ limit: 6, page: 2 })
         setPosts(data.posts)
       } catch (error) {
         if (error instanceof Error) {
@@ -48,10 +48,16 @@ export default function PostList() {
       {!isLoading && !error && (
         <ul className={S.postList}>
           {posts.map((post) => {
+            const formatDate = new Date(post.createdAt).toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })
+            
             return (
               <li key={post.id} className={S.postItem}>
                 <h3>{post.title}</h3>
-                <p>{post.content}</p>
+                <p>{post.content} ({formatDate})</p>
               </li>
             )
           })}
