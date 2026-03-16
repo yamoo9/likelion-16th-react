@@ -1,30 +1,45 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import S from './RaceCondition.module.css'
-
-// 데이터 가져오기 로직을 분리한 함수 작성 (재사용 가능)
-// 유저 ID값을 전달받아 서버에 데이터 요청/응답 비동기 처리
-// 응답 결과(성공/실패) 상태에 따라 결과값 반환 필요
-// 유저 및 응답 타입 지정 필요
-
-interface User {
-  id: number
-  username: string
-  email: string
-  phone: string
-  address: string
-  createdAt: string
-}
+import { getUser, type User } from '@/api/getUser'
 
 export default function RaceCondition() {
   // 리액트가 제어할 상태(State) 선언
   // 상태가 변경되면 리액트가 화면을 다시 그림(Rendering)
-  const [userId, setUserId] = useState('21')
+  const [userId, setUserId] = useState('')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState('')
   const [user, setUser] = useState<null|User>(null)
 
   // 이펙트 내부에서 데이터 가져오기 (외부 시스템과 동기화)
   // 데이터 가져오기 상황(로딩, 에러, 데이터)에 따라 상태 업데이트 요청(Trigger)
+  useEffect(() => {
+    if (!userId) {
+      setUser(null) // 유저 데이터 초기화
+      setError('')  // 에러 데이터 초기화
+      return // 불필요한 이펙트 함수 실행 차단(중지)
+    }
+
+    // 서버에 데이터 요청/응답 처리 비동기 함수
+    const fetchUser = async () => {
+      setPending(true) // 로딩 상태 업데이트 요청 (화면 변경)
+
+      try {
+        const data = await getUser(userId)
+        setUser(data.user) // 유저 상태 업데이트 요청 (화면 변경)
+      } catch(error) {
+        if (error instanceof Error) {
+          setError(error.message) // 에러 상태 업데이트 요청 (화면 변경)
+          setUser(null) // 이전 기록된 유저 정보를 초기화
+        }
+      } finally {
+        setPending(false) // 로딩 상태 업데이트 요청 (화면 변경)
+      }
+    }
+
+    // 데이터 가져오기 함수 실행
+    fetchUser()
+
+  }, [userId])
 
   return (
     <article className={S.container}>
