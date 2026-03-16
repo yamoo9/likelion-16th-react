@@ -18,37 +18,7 @@ const expensiveCalc = () => {
 }
 
 export default function Timer() {
-  const [seconds, setSeconds] = useState(expensiveCalc())
-
-  useEffect(
-    () => {
-      const intervalId = setInterval(() => {
-        setSeconds((s) => s + 1)
-      }, 1000)
-
-      return () => {
-        clearInterval(intervalId)
-      }
-    },
-    [],
-  )
-
-  return (
-    <div className={S.card}>
-      <p className={S.info}>실시간 타이머</p>
-      <output className={S.timerDisplay} aria-live="polite" aria-atomic="true">
-        {seconds}s
-      </output>
-      <span className={S.info}>
-        이 카드가 사라지면 콘솔 로그도 멈춰야 합니다.
-      </span>
-    </div>
-  )
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _Timer() {
-  const [seconds, setSeconds] = useState(expensiveCalc())
+  const [seconds, setSeconds] = useState(expensiveCalc)
 
   useEffect(() => {
     // 메모리 힙(heap)의 동일 주소 참조를 사용해야 추가/제거가 가능!
@@ -124,3 +94,4 @@ function _Timer() {
     </div>
   )
 }
+
