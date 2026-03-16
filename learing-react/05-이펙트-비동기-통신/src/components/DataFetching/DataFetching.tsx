@@ -9,16 +9,20 @@ export default function PostList() {
 
   useEffect(() => {
     const fetchData = async () => {
+      // 로딩 상태 업데이트 요청
       setIsLoading(true)
 
       try {
-        const data = await getPosts({ limit: 6, page: 2 })
+        const data = await getPosts()
+        // 포스트 리스트 데이터를 상태로 업데이트 요청
         setPosts(data.posts)
       } catch (error) {
         if (error instanceof Error) {
+          // 에러 상태 업데이트 요청
           setError(error.message)
         }
       } finally {
+        // 로딩 상태 업데이트 요청
         setIsLoading(false)
       }
     }
@@ -53,7 +57,7 @@ export default function PostList() {
               month: 'long',
               day: 'numeric'
             })
-            
+
             return (
               <li key={post.id} className={S.postItem}>
                 <h3>{post.title}</h3>
