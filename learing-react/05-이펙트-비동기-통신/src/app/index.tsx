@@ -1,10 +1,10 @@
-import { EffectCleanup } from '@/components'
+import { DataFetching } from '@/components'
 import S from './style.module.css'
 
 export default function App() {
   return (
     <div className={S.container}>
-      <EffectCleanup />
+      <DataFetching />
     </div>
   )
 }
