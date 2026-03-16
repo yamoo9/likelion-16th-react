@@ -7,7 +7,7 @@ export { default as EffectDependencies } from './EffectDependencies/EffectDepend
 // 이펙트 클린업(Cleanup)
 export { default as EffectCleanup } from './EffectCleanup/EffectCleanup'
 
-// 데이터 페칭 (Data Fetching)
+// 데이터 페칭 (Data Fetching) + 비동기 요청/응답 (async/await or promise)
 export { default as DataFetching } from './DataFetching/DataFetching'
 
 // 경쟁 상태 (Race Condition)

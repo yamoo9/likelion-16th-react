@@ -1,10 +1,10 @@
-import { DataFetching } from '@/components'
+import { RaceCondition } from '@/components'
 import S from './style.module.css'
 
 export default function App() {
   return (
     <div className={S.container}>
-      <DataFetching />
+      <RaceCondition />
     </div>
   )
 }
