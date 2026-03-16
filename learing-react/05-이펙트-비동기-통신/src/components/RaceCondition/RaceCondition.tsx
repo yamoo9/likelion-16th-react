@@ -19,15 +19,22 @@ export default function RaceCondition() {
       return // 불필요한 이펙트 함수 실행 차단(중지)
     }
 
+    // AbortController 객체 생성
+    const controller = new AbortController()
+    const { signal } = controller
+
     // 서버에 데이터 요청/응답 처리 비동기 함수
     const fetchUser = async () => {
       setPending(true) // 로딩 상태 업데이트 요청 (화면 변경)
 
       try {
-        const data = await getUser(userId)
+        const data = await getUser(userId, { signal })
         setUser(data.user) // 유저 상태 업데이트 요청 (화면 변경)
       } catch(error) {
+        
         if (error instanceof Error) {
+          console.log(error.name)
+
           setError(error.message) // 에러 상태 업데이트 요청 (화면 변경)
           setUser(null) // 이전 기록된 유저 정보를 초기화
         }
@@ -38,6 +45,12 @@ export default function RaceCondition() {
 
     // 데이터 가져오기 함수 실행
     fetchUser()
+
+    // 클린업(정리)
+    return () => {
+      // 이전 요청 중단
+      controller.abort('사용자가 직접 신호를 통해 중단시켰습니다.')
+    }
 
   }, [userId])
 
