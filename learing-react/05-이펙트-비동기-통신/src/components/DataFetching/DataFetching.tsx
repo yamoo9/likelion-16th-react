@@ -24,40 +24,32 @@ export default function PostList() {
   useEffect(() => {
     console.log('[이펙트] 시작')
 
-   // 데이터 가져오기 함수
-   const fetchData = () => {
+   // 데이터 가져오기 비동기 함수
+   const fetchData = async () => {
       console.log('[이펙트: 데이터 가져오기] 시작')
       // 로딩 화면 표시 (로딩 상태를 true로 변경 : 리액트에게 렌더 트리거(요청))
       setIsLoading(true)
 
-      // Fetch API
-      //   1. Promise 방식
-      //   2. async/await 방식
-      //   3. 재사용 할 수 있게 외부의 API 함수로 분리
-      // [클라이언트 측] 데이터 요청하기 -> [서버 측] 데이터 요청받기
-      fetch(POSTS_ENDPOINT)
-        .then((response) => {
-          if (!response.ok) throw new Error('포스트 리스트 가져오기에 실패했습니다.')
-          // [클라이언트 측] 데이터 응답받기 <- [서버 측] 데이터 응답하기
-          return response.json()
-        })
-        .then((data) => {
-          console.log('[이펙트: 데이터 가져오기] 완료')
-          // [리액트] 상태 업데이트 요청 (렌더 트리거)
-          setPosts(data.posts)
-        })
-        .catch((error) => {
-          console.log('[이펙트: 오류 가져오기] 완료')
-          // 오류 전달받기
-          // [리액트] 상태 업데이트 요청 (렌더 트리거)
+      try {
+        // 데이터 가져오기 시도
+        const response = await fetch(POSTS_ENDPOINT)
+        if (!response.ok) throw new Error('포스트 리스트 데이터 가져오기에 실패했습니다.')
+        // 성공한 경우
+        // 데이터 상태 업데이트 요청 (렌더 트리거)
+        const data = await response.json() // { posts, message, page, limit, hasNextPage }
+        setPosts(data.posts)
+      } catch(error) {
+        // 실패한 경우
+        // 에러 상태 업데이트 요청 (렌더 트리거)
+        if (error instanceof Error) {
           setError(error.message)
-        })
-        .finally(() => {
-          // 데이터 요청의 결과와 상관없이 항상 실행!
-          setIsLoading(false)
-        })
+        }
+      } finally {
+        // 요청 응답 성공/실패 유무와 상관없이 항상 실행
+        // 로딩 화면 감춤
+        setIsLoading(false)
+      }
    }
-
 
    // 데이터 가져오기 함수 실행
    console.log('[이펙트] fetchData() 함수 실행')
