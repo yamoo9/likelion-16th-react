@@ -1,7 +1,12 @@
 import { useId, useState } from 'react'
+import { createValidator } from '../util'
+import { EMAIL_PATTERN } from '../patterns'
+import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
 import S from '../MultiInputForm.module.css'
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const validateEmail = createValidator('이메일 입력이 필요합니다.', (value) =>
+  new RegExp(EMAIL_PATTERN).test(value) ? '' : '올바른 이메일 형식이 아닙니다.',
+)
 
 interface Props {
   value: string
@@ -10,15 +15,9 @@ interface Props {
 
 export default function EmailField({ value, onChange }: Props) {
   const fieldId = useId()
-  const [error, setError] = useState('')
+  const messageId = useId()
   const [isTouched, setIsTouched] = useState(false)
-
-  const handleBlur = () => {
-    setIsTouched(true)
-    setError(EMAIL_PATTERN.test(value) ? '' : '올바른 이메일 형식이 아닙니다.')
-  }
-
-  const showError = isTouched && error
+  const [error, showError] = validateEmail(value, isTouched)
 
   return (
     <div className={S.field}>
@@ -30,16 +29,17 @@ export default function EmailField({ value, onChange }: Props) {
         type="email"
         placeholder="user@email.com"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onBlur={handleBlur}
         className={showError ? S.inputError : S.input}
         aria-invalid={showError ? 'true' : 'false'}
+        onChange={(e) => onChange(e.target.value)}
+        onBlur={() => setIsTouched(true)}
       />
-      {showError && (
-        <p role="alert" className={S.errorMessage}>
-          {error}
-        </p>
-      )}
+      <ShowErrorOrInfoMessage
+        id={messageId}
+        error={error}
+        showError={showError}
+        infoMessage="올바른 이메일 주소 입력"
+      />
     </div>
   )
 }

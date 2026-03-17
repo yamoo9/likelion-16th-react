@@ -13,10 +13,10 @@ export default function MultiInputForm() {
 
   // TODO 2: 아래 4개의 개별 State를 제거하고,
   // INITIAL_STATE를 사용하는 하나의 'formState'로 통합하세요.
-  const [nickname, setNickname] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [nickname] = useState('')
+  const [email] = useState('')
+  const [password] = useState('')
+  const [passwordConfirm] = useState('')
 
   // TODO 3: [name]과 value를 인자로 받아
   // formState를 업데이트하는 핸들러를 작성하세요.
