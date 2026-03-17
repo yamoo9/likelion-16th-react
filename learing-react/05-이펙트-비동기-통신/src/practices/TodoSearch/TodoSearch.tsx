@@ -1,21 +1,6 @@
 import { useEffect, useState } from 'react'
+import { getTodos, type Todo } from '@/api/getTodos'
 import S from './TodoSearch.module.css'
-
-// API 엔드포인트(Endpoint)
-const { VITE_API_URL: API_URL } = import.meta.env
-
-// 응답 데이터 타입 지정
-interface ResponseTodosData {
-  message: string
-  todos: Todo[]
-}
-
-interface Todo {
-  id: number
-  content: string
-  completed: boolean
-  userId: number
-}
 
 export default function TodoSearch() {
   // 리액트로 하여금 화면을 변경
@@ -30,7 +15,7 @@ export default function TodoSearch() {
   // 사용자 ID 값이 변경될 때마다 이펙트 함수 실행
   useEffect(() => {
     // 비동기 함수 (데이터 페칭(GET 가져오기))
-    const getTodos = async () => {
+    const fetchTodos = async () => {
       // userId 상태 값이 빈 문자열인 경우, 함수 종료 (상태 초기화)
       if (userId === '') {
         // todos 상태 초기화
@@ -42,17 +27,19 @@ export default function TodoSearch() {
       setLoading(true)
 
       // 데이터 요청/응답 (비동기 처리)
-      const response = await fetch(`${API_URL}/api/todos?userId=${userId}`)
-      const data: ResponseTodosData = await response.json()
-
+      const todos = await getTodos(userId)
       // todos 상태 업데이트 (리스트 렌더링)
-      setTodos(data.todos)
+      setTodos(todos)
       // loading 상태 업데이트 (로딩 화면 감춤)
       setLoading(false)
     }
 
-    getTodos()
+    fetchTodos()
   }, [userId])
+
+  // 파생된 상태 (Derived State)
+  // 테스트를 목적으로 todos 순환하여 랜덤으로 completed 상태 전환
+  const dummyTodos = getRandomCompletedTodos(todos)
 
   return (
     <section className={S.container}>
@@ -78,29 +65,26 @@ export default function TodoSearch() {
 
       {!loading && todos.length > 0 && (
         <ul className={S.list}>
-          {todos.map(({ id, content/* , completed 실제 데이터 */ }) => {
-            const isDone = getRandomDone() // 할 일 완료 상태 확인 (목적)
-            const doneClassname = isDone ? S.completed : ''
-
-            return (
-              <li key={id} className={S.item}>
-                <span className={`${S.textContent} ${doneClassname}`}>{content}</span>
-                <span
-                  aria-label={isDone ? '완료' : '예정'}
-                  style={{ opacity: isDone ? 1 : 0.3 }}
-                >
-                  {isDone ? '✅' : '❎'}
-                </span>
-              </li>
-            )
-          })}
+          {dummyTodos.map(({ id, content, completed }) => (
+            <li key={id} className={S.item}>
+              <span
+                className={`${S.textContent} ${completed ? S.completed : ''}`}
+              >
+                {content}
+              </span>
+              <span
+                aria-label={completed ? '완료' : '예정'}
+                style={{ opacity: completed ? 1 : 0.3 }}
+              >
+                {completed ? '✅' : '❎'}
+              </span>
+            </li>
+          ))}
         </ul>
       )}
 
       <div role="status" className={S.statusRegion}>
-        {loading && (
-          <p className={S.loading}>데이터를 가져오고 있습니다...</p>
-        )}
+        {loading && <p className={S.loading}>데이터를 가져오고 있습니다...</p>}
 
         {!loading && userId && todos.length === 0 && (
           <p>검색 결과가 없습니다.</p>
@@ -111,4 +95,8 @@ export default function TodoSearch() {
 }
 
 // 유틸리티 함수
-const getRandomDone = () => Math.random() >= 0.5
+const getRandomCompletedTodos = (todos: Todo[]) =>
+  todos.map((todo) => ({
+    ...todo,
+    completed: Math.random() >= 0.5,
+  }))
