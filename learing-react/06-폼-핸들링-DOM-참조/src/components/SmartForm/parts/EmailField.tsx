@@ -11,23 +11,17 @@ interface Props {
 
 export default function EmailField({ value, onChange }: Props) {
   const filedId = useId()
+  
+  const [isTouched, setIsTouched] = useState(false)
 
-  // 에러 상태 (string)
-  const [error, setError] = useState('') // 에러 없음: '' / 에러 있음: '유효한 이메일이 아닙니다.'
-
-  // 터치 상태 (boolean)
-  const [isTouched, setIsTouched] = useState(false) // 터치 안했음: false / 터치 했음: true
-
-  // 파생된 상태 (선언된 상태들에 의존하는 계산된 변수)
-  const showError = isTouched && !!error
-
-  // blur 이벤트 핸들러
-  const handleCheck = (e: React.FocusEvent<HTMLInputElement>) => {
-    /* 터치 상태 전환, 이메일 유효성 검사 */
-    setIsTouched(true) // 사용자 터치한 상태 업데이트
-    const isValidEmail = EMAIL_PATTERN.test(e.target.value)
-    setError(isValidEmail ? '' : '유효한 이메일 아닙니다.') // 이메일의 유효 여부에 따라 에러 상태 업데이트
+  const getErrorMessage = () => {
+    if (!isTouched) return ''
+    if (!value) return '이메일을 입력하세요.'
+    return EMAIL_PATTERN.test(value) ? '' : '유효한 이메일이 아닙니다.'
   }
+
+  const error = getErrorMessage()
+  const showError = error !== ''
 
   return (
     <div className={S.field}>
@@ -41,7 +35,7 @@ export default function EmailField({ value, onChange }: Props) {
         className={showError ? S.inputError : S.input}
         aria-invalid={showError ? 'true' : 'false'}
         onChange={(e) => onChange(e.target.value)}
-        onBlur={handleCheck}
+        onBlur={() => setIsTouched(true)}
         value={value}
       />
 
