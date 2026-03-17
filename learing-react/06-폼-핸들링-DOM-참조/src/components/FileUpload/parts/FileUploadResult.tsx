@@ -6,12 +6,11 @@ export type UploadedData = {
   displayUrl: string
 } | null
 
-interface Props {
-  uploadedData?: UploadedData
-  isCopied?: boolean
-}
+export default function UploadResult() {
 
-export default function UploadResult({ uploadedData, isCopied }: Props) {
+  const uploadedData: UploadedData = { url: '', displayUrl: '' }
+  const isCopied = false
+
   if (!uploadedData) return null
 
   return (

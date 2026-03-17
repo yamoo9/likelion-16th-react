@@ -1,11 +1,15 @@
 import S from '../FileUpload.module.css'
 import { CloseIcon, UploadIcon } from './SvgIcon'
 
-interface Props {
-  previewUrl?: string | undefined
-}
+// ---------------------------------------------------------------------
+// 실습 가이드
+// ---------------------------------------------------------------------
+// 1.
+// ---------------------------------------------------------------------
 
-export default function FileUploadField({ previewUrl }: Props) {
+export default function FileUploadField() {
+  const previewUrl = ''
+
   return (
     <div className={S.field}>
       <span className={S.label}>프로필 사진</span>
