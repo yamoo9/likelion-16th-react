@@ -12,7 +12,7 @@ export interface User {
   createdAt: string
 }
 
-interface ResponseUserData {
+export interface ResponseUserData {
   message: string
   user: User
 }

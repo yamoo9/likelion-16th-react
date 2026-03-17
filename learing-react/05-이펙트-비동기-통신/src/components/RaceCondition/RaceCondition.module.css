@@ -53,7 +53,7 @@
     border-radius: 12px;
     animation: slideUp 0.3s ease-out;
 
-    & p {
+    &.error {
       color: #ef4444; 
       font-weight: bold;
     }
