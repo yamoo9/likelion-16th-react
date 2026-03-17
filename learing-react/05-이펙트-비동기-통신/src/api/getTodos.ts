@@ -19,3 +19,9 @@ export const getTodos = async (userId: string) => {
   const data: ResponseTodosData = await response.json()
   return data.todos
 }
+
+export const getRandomCompletedTodos = (todos: Todo[]) =>
+  todos.map((todo) => ({
+    ...todo,
+    completed: Math.random() >= 0.5,
+  }))

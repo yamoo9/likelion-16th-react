@@ -1,45 +1,26 @@
 import { useEffect, useState } from 'react'
-import { getTodos, type Todo } from '@/api/getTodos'
+import { getRandomCompletedTodos, getTodos, type Todo } from '@/api/getTodos'
 import S from './TodoSearch.module.css'
 
 export default function TodoSearch() {
-  // 리액트로 하여금 화면을 변경
-  // 선언적 API로 제어 (상태 선언)
-  // - 로딩(loading) 상태
   const [loading, setLoading] = useState(false)
-  // - 할 일 목록(todos) 상태
   const [todos, setTodos] = useState<Todo[]>([])
-  // - 사용자 ID(userId) 상태
   const [userId, setUserId] = useState('')
 
-  // 사용자 ID 값이 변경될 때마다 이펙트 함수 실행
   useEffect(() => {
-    // 비동기 함수 (데이터 페칭(GET 가져오기))
     const fetchTodos = async () => {
-      // userId 상태 값이 빈 문자열인 경우, 함수 종료 (상태 초기화)
-      if (userId === '') {
-        // todos 상태 초기화
-        setTodos([])
-        return // 함수 종료 (비동기 요청 안함)
-      }
-
-      // loading 상태 업데이트 (로딩 화면 표시)
+      if (userId === '') return setTodos([])
+      
       setLoading(true)
-
-      // 데이터 요청/응답 (비동기 처리)
       const todos = await getTodos(userId)
-      // todos 상태 업데이트 (리스트 렌더링)
       setTodos(todos)
-      // loading 상태 업데이트 (로딩 화면 감춤)
       setLoading(false)
     }
 
     fetchTodos()
   }, [userId])
 
-  // 파생된 상태 (Derived State)
-  // 테스트를 목적으로 todos 순환하여 랜덤으로 completed 상태 전환
-  const dummyTodos = getRandomCompletedTodos(todos)
+  const randomCompletedTodos = getRandomCompletedTodos(todos)
 
   return (
     <section className={S.container}>
@@ -65,7 +46,7 @@ export default function TodoSearch() {
 
       {!loading && todos.length > 0 && (
         <ul className={S.list}>
-          {dummyTodos.map(({ id, content, completed }) => (
+          {randomCompletedTodos.map(({ id, content, completed }) => (
             <li key={id} className={S.item}>
               <span
                 className={`${S.textContent} ${completed ? S.completed : ''}`}
@@ -93,10 +74,3 @@ export default function TodoSearch() {
     </section>
   )
 }
-
-// 유틸리티 함수
-const getRandomCompletedTodos = (todos: Todo[]) =>
-  todos.map((todo) => ({
-    ...todo,
-    completed: Math.random() >= 0.5,
-  }))
