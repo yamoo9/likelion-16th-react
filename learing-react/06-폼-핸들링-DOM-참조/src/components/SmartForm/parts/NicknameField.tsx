@@ -1,8 +1,9 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import S from '../SmartForm.module.css'
 
 const MAX_NICKNAME = 10
 const PROFANITY_PATTERN = '바보 멍청이 또라이'.split(' ').join('|')
+const PROFANITY_REG = new RegExp(PROFANITY_PATTERN)
 const PROFANITY_SUBSTITUTION = '???'
 
 interface Props {
@@ -13,30 +14,33 @@ interface Props {
 export default function NicknameField({ value, onChange }: Props) {
   const fieldId = useId()
 
+  const [isTouched, setIsTouched] = useState(false)
+
+  const getErrorMessage = () => {
+    if (!isTouched) return ''
+    if (!value) return '닉네임을 입력하세요.'
+    return PROFANITY_REG.test(value) ? '비속어는 닉네임으로 사용할 수 없습니다.' : ''
+  }
+
+  const error = getErrorMessage()
+  const showError = error !== ''
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
 
-    // TODO 1: [글자 수 제한]
-    // 입력값이 MAX_NICKNAME을 넘으면 잘라내고 리턴하세요.
     if (value.length > MAX_NICKNAME) {
       const truncatedValue = value.slice(0, MAX_NICKNAME)
       onChange(truncatedValue)
-      return // 함수 종료
+      return
     }
 
     onChange(value)
   }
-  
+
   const changeProfanity = (value: string) => {
-    // TODO 2: [영문/숫자/조합 완료 시 필터링]
-    // String.prototype.replace와 정규식(Regular Expression, RegExp)을 사용해
-    // 한글 조합이 완전히 끝나는 시점에 다시 한번 비속어를 걸러주세요.
-    const filteredValue = value.replace(
-      new RegExp(PROFANITY_PATTERN, 'g'), // /바보|멍청이|또라이/g
-      PROFANITY_SUBSTITUTION, // '???'
+    onChange(
+      value.replace(new RegExp(PROFANITY_PATTERN, 'g'), PROFANITY_SUBSTITUTION),
     )
-  
-    onChange(filteredValue) // 닉네임 상태 업데이트 요청 (다음번 렌더링에서 반영)
   }
 
   return (
@@ -51,13 +55,24 @@ export default function NicknameField({ value, onChange }: Props) {
       </div>
       <input
         id={fieldId}
-        className={S.input}
         placeholder="닉네임을 입력하세요"
         value={value}
+        className={showError ? S.inputError : S.input}
+        aria-invalid={showError ? 'true' : 'false'}
         onChange={handleChange}
         onCompositionEnd={(e) => changeProfanity(e.currentTarget.value)}
-        onBlur={(e) => changeProfanity(e.target.value)}
+        onBlur={(e) => {
+          if (!isTouched) setIsTouched(true)
+          changeProfanity(e.target.value)
+        }}
       />
+      {
+        showError && (
+          <p role='alert' className={S.errorMessage}>
+            {error}
+          </p>
+        )
+      }
     </div>
   )
 }
