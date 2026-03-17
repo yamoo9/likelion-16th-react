@@ -1,33 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useId, useState } from 'react'
+import { useId } from 'react'
 import NicknameField from './parts/NicknameField'
 import EmailField from './parts/EmailField'
 import PasswordField from './parts/PasswordField'
 import PasswordConfirmField from './parts/PasswordConfirmField'
 import S from './MultiInputForm.module.css'
 
-// TODO 1: 모든 필드의 초기값을 가진 객체 'INITIAL_STATE'를 컴포넌트 외부에 정의하세요.
+// -------------------------------------------------------------------
+// 실습 가이드
+// -------------------------------------------------------------------
+// 1. 모든 필드의 초기값을 가진 객체 'INITIAL_STATE'를 컴포넌트 외부에 정의하세요.
+// 2. INITIAL_STATE를 사용하는 하나의 'formState' 상태(객체형)를 선언합니다.
+// 3. name과 value를 인자로 받아 formState를 업데이트하는 함수를 작성하세요.
+// 4. 폼 제출(submit) 및 초기화(reset) 핸들러를 작성하세요.
+// -------------------------------------------------------------------
 
 export default function MultiInputForm() {
   const sectionId = useId()
 
-  // TODO 2: 아래 4개의 개별 State를 제거하고,
-  // INITIAL_STATE를 사용하는 하나의 'formState'로 통합하세요.
-  const [nickname] = useState('')
-  const [email] = useState('')
-  const [password] = useState('')
-  const [passwordConfirm] = useState('')
-
-  // TODO 3: [name]과 value를 인자로 받아
-  // formState를 업데이트하는 핸들러를 작성하세요.
-  const handleChange = () => {
-    // 로직 작성
-  }
-
-  // TODO 5: 폼 초기화 핸들러를 작성하세요.
-  const handleReset = () => {
-    // 로직 작성
-  }
+  const nickname = ''
+  const email = ''
+  const password = ''
+  const passwordConfirm = ''
 
   return (
     <article className={S.card} aria-labelledby={sectionId}>
@@ -40,35 +33,24 @@ export default function MultiInputForm() {
         </p>
       </header>
 
-      <form
-        className={S.form}
-        onSubmit={(e) => e.preventDefault()}
-        onReset={handleReset}
-        noValidate
-      >
-        {/* TODO 4: 각 필드의 value를 formState에서 가져오고, 
-            onChange에 handleChange를 연결하세요. */}
+      <form className={S.form}>
         <NicknameField
           value={nickname}
-          onChange={(value) => {} /* 여기에 handleChange 연결 */}
+          onChange={() => {}}
         />
-
         <EmailField
           value={email}
-          onChange={(value) => {} /* 여기에 handleChange 연결 */}
+          onChange={() => {}}
         />
-
         <PasswordField
           value={password}
-          onChange={(value) => {} /* 여기에 handleChange 연결 */}
+          onChange={() => {}}
         />
-
         <PasswordConfirmField
           value={passwordConfirm}
           basePassword={password}
-          onChange={(value) => {} /* 여기에 handleChange 연결 */}
+          onChange={() => {}}
         />
-
         <div role="group" className={S.buttonGroup}>
           <button type="reset" className={S.resetButton}>
             취소
