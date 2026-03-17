@@ -12,3 +12,6 @@ export { default as DataFetching } from './DataFetching/DataFetching'
 
 // 경쟁 상태 (Race Condition)
 export { default as RaceCondition } from './RaceCondition/RaceCondition'
+
+// 상태 업데이트 무시 (Ignore State Update)
+export { default as IgnoreStateUpdate } from './IgnoreStateUpdate/IgnoreStateUpdate'
