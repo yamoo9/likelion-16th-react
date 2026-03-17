@@ -11,7 +11,7 @@ import S from './MultiInputForm.module.css'
 // 1. 모든 필드의 초기값을 가진 객체 'INITIAL_STATE'를 컴포넌트 외부에 정의하세요.
 // 2. INITIAL_STATE를 사용하는 하나의 'formState' 상태(객체형)를 선언합니다.
 // 3. name과 value를 인자로 받아 formState를 업데이트하는 함수를 작성하세요.
-// 4. 폼 제출(submit) 및 초기화(reset) 핸들러를 작성하세요.
+// 4. 폼 초기화(reset) 이벤트 핸들러를 작성하세요.
 // -------------------------------------------------------------------
 
 export default function MultiInputForm() {

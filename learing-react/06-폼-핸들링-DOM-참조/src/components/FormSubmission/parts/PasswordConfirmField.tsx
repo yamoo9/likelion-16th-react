@@ -1,6 +1,17 @@
 import { useId, useState } from 'react'
+import { createValidator } from '../util'
 import { PasswordInput } from './PasswordInput'
+import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
 import S from '../FormSubmission.module.css'
+
+const validatePasswordConfirm = createValidator(
+  '확인용 패스워드를 입력하세요.',
+  (value, basePassword) => {
+    return value !== basePassword
+      ? '패스워드와 동일한 값을 입력해야 합니다.'
+      : ''
+  },
+)
 
 interface Props {
   value: string
@@ -14,17 +25,13 @@ export default function PasswordConfirmField({
   onChange,
 }: Props) {
   const fieldId = useId()
+  const messageId = useId()
   const [isTouched, setIsTouched] = useState(false)
-
-  const getErrorMessage = () => {
-    if (!isTouched) return ''
-    if (!value) return '비밀번호를 한 번 더 입력해주세요.'
-
-    return value === basePassword ? '' : '비밀번호가 일치하지 않습니다.'
-  }
-
-  const error = getErrorMessage()
-  const showError = error !== ''
+  const [error, showError] = validatePasswordConfirm(
+    value,
+    isTouched,
+    basePassword,
+  )
 
   return (
     <div className={S.field}>
@@ -38,11 +45,12 @@ export default function PasswordConfirmField({
         onBlur={() => setIsTouched(true)}
         isError={showError}
       />
-      {showError && (
-        <p className={S.errorMessage} role="alert">
-          {error}
-        </p>
-      )}
+      <ShowErrorOrInfoMessage
+        id={messageId}
+        error={error}
+        showError={showError}
+        infoMessage="확인용 패스워드를 입력하세요."
+      />
     </div>
   )
 }
