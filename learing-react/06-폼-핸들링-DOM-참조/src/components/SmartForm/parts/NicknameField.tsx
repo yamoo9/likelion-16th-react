@@ -13,13 +13,16 @@ interface Props {
 
 export default function NicknameField({ value, onChange }: Props) {
   const fieldId = useId()
+  const messageId = useId()
 
   const [isTouched, setIsTouched] = useState(false)
 
   const getErrorMessage = () => {
     if (!isTouched) return ''
     if (!value) return '닉네임을 입력하세요.'
-    return PROFANITY_REG.test(value) ? '비속어는 닉네임으로 사용할 수 없습니다.' : ''
+    return PROFANITY_REG.test(value)
+      ? '비속어는 닉네임으로 사용할 수 없습니다.'
+      : ''
   }
 
   const error = getErrorMessage()
@@ -59,6 +62,7 @@ export default function NicknameField({ value, onChange }: Props) {
         value={value}
         className={showError ? S.inputError : S.input}
         aria-invalid={showError ? 'true' : 'false'}
+        aria-describedby={messageId}
         onChange={handleChange}
         onCompositionEnd={(e) => changeProfanity(e.currentTarget.value)}
         onBlur={(e) => {
@@ -66,13 +70,15 @@ export default function NicknameField({ value, onChange }: Props) {
           changeProfanity(e.target.value)
         }}
       />
-      {
-        showError && (
-          <p role='alert' className={S.errorMessage}>
-            {error}
-          </p>
-        )
-      }
+      {showError ? (
+        <p id={messageId} role="alert" className={S.errorMessage}>
+          {error}
+        </p>
+      ) : (
+        <p id={messageId} className={S.infoMessage}>
+          비속어 (예: 바보, 멍청이, 또라이) 사용 금지
+        </p>
+      )}
     </div>
   )
 }

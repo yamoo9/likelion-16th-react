@@ -3,6 +3,7 @@ import S from '../SmartForm.module.css'
 
 interface PasswordInputProps {
   id: string
+  describeId: string
   value: string
   onChange: (val: string) => void
   onBlur: () => void
@@ -12,6 +13,7 @@ interface PasswordInputProps {
 
 export function PasswordInput({
   id,
+  describeId,
   value,
   onChange,
   onBlur,
@@ -32,6 +34,7 @@ export function PasswordInput({
         className={isError ? S.inputError : S.input}
         placeholder={placeholder || '••••••••'}
         aria-invalid={isError ? 'true' : 'false'}
+        aria-describedby={describeId}
       />
       <button
         type="button"

@@ -11,6 +11,7 @@ interface Props {
 
 export default function EmailField({ value, onChange }: Props) {
   const filedId = useId()
+  const messageId = useId()
   
   const [isTouched, setIsTouched] = useState(false)
 
@@ -34,16 +35,19 @@ export default function EmailField({ value, onChange }: Props) {
         placeholder="user@email.com"
         className={showError ? S.inputError : S.input}
         aria-invalid={showError ? 'true' : 'false'}
+        aria-describedby={messageId}
         onChange={(e) => onChange(e.target.value)}
         onBlur={() => setIsTouched(true)}
         value={value}
       />
 
-      {showError && (
-        <p role="alert" className={S.errorMessage}>
+      {showError ? (
+        <p id={messageId} role="alert" className={S.errorMessage}>
           {error}
         </p>
-      )}
+      ) : (
+          <p id={messageId} className={S.infoMessage}>올바른 이메일 주소 입력</p>
+        )}
     </div>
   )
 }
