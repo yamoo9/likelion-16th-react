@@ -81,6 +81,7 @@
   }
 
   .button {
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -89,7 +90,6 @@
     font-size: 0.875rem;
     font-weight: 500;
     border-radius: 0.375rem;
-    cursor: pointer;
     transition: background-color 0.2s;
     border: 1px solid #e2e8f0;
     background-color: #ffffff;
@@ -164,10 +164,11 @@
 }
 
 .scrollContent {
-  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 8px;
+  height: 400px;
 }
 
 .buttonGroup {
