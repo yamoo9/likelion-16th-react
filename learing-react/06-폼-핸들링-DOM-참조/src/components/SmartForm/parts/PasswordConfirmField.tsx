@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useId } from 'react'
 import S from '../SmartForm.module.css'
 import { PasswordInput } from './PasswordInput'
@@ -9,6 +8,20 @@ interface Props {
   onChange: (val: string) => void
 }
 
+// -------------------------------------------------------------------
+// 실습 가이드
+// -------------------------------------------------------------------
+// 1. 입력 필드의 '도움말 메시지 ID'를 생성합니다.
+// 2. 사용자의 '입력 여부'를 관리할 상태를 선언합니다.
+// 3. '패스워드'와 '패스워드 확인' 값을 비교해 에러 메시지를 반환하는 함수를 작성합니다.
+//    - 아직 입력 전이라면 빈 문자열('')을 반환합니다.
+//    - 입력 이후, 값이 없다면 '비밀번호를 한 번 더 입력해주세요.'를 반환합니다.
+//    - 입력 이후, 두 값이 다르면 '비밀번호가 일치하지 않습니다.'를 반환합니다.
+//    - 입력 이후, 두 값이 같다면 빈 문자열('')을 반환합니다.
+// 4. 에러 메시지 반환 함수를 실행해 '에러(error, 파생된 상태)' 변수를 작성합니다.
+// 5. 에러 변수를 토대로 '에러 표시 여부(showError, 파생된 상태)' 변수를 작성합니다.
+// -------------------------------------------------------------------
+
 export default function PasswordConfirmField({
   value,
   basePassword,
@@ -16,36 +29,25 @@ export default function PasswordConfirmField({
 }: Props) {
   const fieldId = useId()
 
-  // TODO 1: '필드 방문 여부'를 관리할 상태를 만드세요.
-
-  // TODO 2: 현재 값(value)과 원본(basePassword)을 비교해 에러 메시지를 반환하는 함수를 완성하세요.
-  const getErrorMessage = () => {
-    // 힌트 1: 방문하지 않았다면 빈 문자열을 반환하세요.
-    // 힌트 2: 값이 없다면 '비밀번호를 한 번 더 입력해주세요.'를 반환하세요.
-    // 힌트 3: 두 값이 다르면 '비밀번호가 일치하지 않습니다.'를 반환하세요.
-  }
-
-  // TODO 3: 위 함수를 호출하여 현재 에러 여부(showError)를 판단하는 변수를 만드세요.
-
   return (
     <div className={S.field}>
       <label htmlFor={fieldId} className={S.label}>
         패스워드 확인
       </label>
 
-      {/* TODO 4: PasswordInput 컴포넌트에 필요한 Props를 연결하세요. (onBlur 시 방문 상태 업데이트) */}
       <PasswordInput
         id={fieldId}
         value={value}
         onChange={onChange}
-        onBlur={() => {}}
-        isError={false}
       />
 
-      {/* TODO 5: showError가 true일 때만 에러 메시지를 렌더링하세요. */}
-      {/* <p className={S.errorMessage} role="alert">
-        {'에러 메시지'}
-      </p> */}
+      {/* <p role="alert" className={S.errorMessage}>
+            {'에러 메시지'}
+          </p> */}
+
+      {/* <p id={messageId} className={S.infoMessage}>
+            패스워드와 동일한 값 입력
+          </p> */}
     </div>
   )
 }

@@ -28,16 +28,27 @@ export default function SmartForm() {
         onSubmit={(e) => e.preventDefault()}
         noValidate
       >
-        <NicknameField value={nickname} onChange={setNickname} />
-        <EmailField value={email} onChange={setEmail} />
-        <PasswordField value={password} onChange={setPassword} />
+        <NicknameField 
+          value={nickname} 
+          onChange={setNickname} 
+        />
+        <EmailField 
+          value={email} 
+          onChange={setEmail} 
+        />
+        <PasswordField 
+          value={password} 
+          onChange={setPassword} 
+        />
         <PasswordConfirmField
           value={passwordConfirm}
           basePassword={password}
           onChange={setPasswordConfirm}
         />
-
-        <button type="submit" className={S.submitButton}>
+        <button
+          type="submit"
+          className={S.submitButton}
+        >
           가입
         </button>
       </form>

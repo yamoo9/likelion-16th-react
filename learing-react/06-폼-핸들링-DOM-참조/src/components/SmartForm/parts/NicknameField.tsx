@@ -70,15 +70,17 @@ export default function NicknameField({ value, onChange }: Props) {
           changeProfanity(e.target.value)
         }}
       />
-      {showError ? (
-        <p id={messageId} role="alert" className={S.errorMessage}>
-          {error}
-        </p>
-      ) : (
-        <p id={messageId} className={S.infoMessage}>
-          비속어 (예: 바보, 멍청이, 또라이) 사용 금지
-        </p>
-      )}
+      {
+        showError ? (
+          <p id={messageId} role="alert" className={S.errorMessage}>
+            {error}
+          </p>
+        ) : (
+          <p id={messageId} className={S.infoMessage}>
+            비속어(예: 바보, 멍청이, 또라이 등) 사용 금지
+          </p>
+        )
+      }
     </div>
   )
 }
