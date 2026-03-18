@@ -1,6 +1,6 @@
-import { useId } from 'react'
-import S from '../SmartForm.module.css'
+import { useId, useState } from 'react'
 import { PasswordInput } from './PasswordInput'
+import S from '../SmartForm.module.css'
 
 interface Props {
   value: string
@@ -28,6 +28,18 @@ export default function PasswordConfirmField({
   onChange,
 }: Props) {
   const fieldId = useId()
+  const messageId = useId()
+
+  const [isTouched, setIsTouched] = useState(false)
+
+  const getErrorMessage = () => {
+    if (!isTouched) return ''
+    if (!value) return '확인용 패스워드를 입력해야 합니다.'
+    return value !== basePassword ? '패스워드와 동일한 값을 입력해야 합니다.' : ''
+  }
+
+  const error = getErrorMessage()
+  const showError = error !== ''
 
   return (
     <div className={S.field}>
@@ -37,17 +49,22 @@ export default function PasswordConfirmField({
 
       <PasswordInput
         id={fieldId}
+        describeId={messageId}
         value={value}
         onChange={onChange}
+        onBlur={() => setIsTouched(true)}
+        isError={showError}
       />
 
-      {/* <p role="alert" className={S.errorMessage}>
-            {'에러 메시지'}
-          </p> */}
-
-      {/* <p id={messageId} className={S.infoMessage}>
-            패스워드와 동일한 값 입력
-          </p> */}
+      {showError ? (
+        <p role="alert" className={S.errorMessage}>
+          {error}
+        </p>
+      ) : (
+        <p id={messageId} className={S.infoMessage}>
+          패스워드와 동일한 값 입력
+        </p>
+      )}
     </div>
   )
 }

@@ -41,8 +41,8 @@ export default function SmartForm() {
           onChange={setPassword} 
         />
         <PasswordConfirmField
-          value={passwordConfirm}
           basePassword={password}
+          value={passwordConfirm}
           onChange={setPasswordConfirm}
         />
         <button

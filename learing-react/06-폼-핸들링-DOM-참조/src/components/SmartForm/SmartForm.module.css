@@ -122,6 +122,7 @@
   font-weight: 500;
   color: var(--color-error);
   margin: 0;
+  padding-inline-start: 12px;
 }
 
 .submitButton {

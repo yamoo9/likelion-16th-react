@@ -25,6 +25,8 @@ export default function NicknameField({ value, onChange }: Props) {
       : ''
   }
 
+  // 반응성 데이터: isTouched (State), value (Props)
+  // 파생된 상태: 반응성 데이터에 의해 계산되는 값
   const error = getErrorMessage()
   const showError = error !== ''
 
@@ -42,7 +44,7 @@ export default function NicknameField({ value, onChange }: Props) {
 
   const changeProfanity = (value: string) => {
     onChange(
-      value.replace(new RegExp(PROFANITY_PATTERN, 'g'), PROFANITY_SUBSTITUTION),
+      value.replace(PROFANITY_REG, PROFANITY_SUBSTITUTION),
     )
   }
 
