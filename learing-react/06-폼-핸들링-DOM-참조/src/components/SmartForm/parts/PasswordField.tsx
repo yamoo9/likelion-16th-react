@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import { PasswordInput } from './PasswordInput'
 import S from '../SmartForm.module.css'
+import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
 
 // 8자 이상, 대문자, 숫자, 특수문자(!@#$%^&*) 포함 정규식
 const PW_PATTERN = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/
@@ -45,15 +46,11 @@ export default function PasswordField({ value, onChange }: Props) {
         isError={showError}
       />
 
-      {showError ? (
-        <p id={messageId} className={S.errorMessage} role="alert">
-          {error}
-        </p>
-      ) : (
-        <p id={messageId} className={S.infoMessage}>
-          대문자, 숫자, 특수문자(!@#$%^&*) 포함 8자 이상 입력
-        </p>
-      )}
+      <ShowErrorOrInfoMessage
+        id={messageId}
+        hint="대문자, 숫자, 특수문자(!@#$%^&*) 포함 8자 이상 입력"
+        error={error}
+      />
     </div>
   )
 }
