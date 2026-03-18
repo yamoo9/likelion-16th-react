@@ -110,11 +110,20 @@
   }
 }
 
+.infoMessage {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+  padding-inline-start: 12px;
+}
+
 .errorMessage {
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--color-error);
   margin: 0;
+  padding-inline-start: 12px;
 }
 
 .inputContainer {

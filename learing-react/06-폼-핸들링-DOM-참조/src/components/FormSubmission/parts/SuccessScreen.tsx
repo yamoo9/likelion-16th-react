@@ -1,10 +1,10 @@
 import S from './SuccessScreen.module.css'
 
 interface SuccessMessageProps {
-  onBack: () => void
+  onGoBack: () => void
 }
 
-export default function SuccessMessage({ onBack }: SuccessMessageProps) {
+export default function SuccessMessage({ onGoBack: onBack }: SuccessMessageProps) {
   return (
     <article className={S.card} role="region" aria-labelledby="success-title">
       <div className={S.content}>
@@ -24,9 +24,9 @@ export default function SuccessMessage({ onBack }: SuccessMessageProps) {
           type="button"
           className={S.backButton}
           onClick={onBack}
-          aria-label="가입 완료 메시지를 닫고 홈으로 돌아가기"
+          aria-label="가입 완료 메시지를 닫고 회원가입 폼으로 돌아가기"
         >
-          홈으로 돌아가기
+          회원가입 폼으로 돌아가기
         </button>
       </div>
     </article>
