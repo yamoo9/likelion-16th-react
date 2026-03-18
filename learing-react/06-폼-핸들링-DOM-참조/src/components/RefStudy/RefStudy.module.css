@@ -59,7 +59,7 @@
 
   .display {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-bottom: 1.25rem;
     padding: 1rem;
@@ -68,13 +68,20 @@
     border: 1px solid #f1f5f9;
 
     div {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: #64748b;
+
+      dfn {
+        display: block;
+        font-style: normal;
+        font-weight: 700;
+      }
 
       strong {
         display: block;
-        font-size: 1.25rem;
+        margin-block-start: 8px;
         color: #0f172a;
+        font-size: 1.25rem;
         font-family: 'JetBrains Mono', monospace;
       }
     }
