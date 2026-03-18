@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
-import S from '../SmartForm.module.css'
+import { createValidator } from '../util'
 import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
+import S from '../SmartForm.module.css'
 
 const MAX_NICKNAME = 10
 const PROFANITY_PATTERN = '바보 멍청이 또라이'.split(' ').join('|')
@@ -12,24 +13,20 @@ interface Props {
   onChange: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function NicknameField({ value, onChange }: Props) {
-  const fieldId = useId()
-  const messageId = useId()
-
-  const [isTouched, setIsTouched] = useState(false)
-
-  const getErrorMessage = () => {
-    if (!isTouched) return ''
-    if (!value) return '닉네임을 입력하세요.'
+const validateNickName = createValidator(
+  '닉네임을 입력하세요.',
+  (value: string) => {
     return PROFANITY_REG.test(value)
       ? '비속어는 닉네임으로 사용할 수 없습니다.'
       : ''
-  }
+  },
+)
 
-  // 반응성 데이터: isTouched (State), value (Props)
-  // 파생된 상태: 반응성 데이터에 의해 계산되는 값
-  const error = getErrorMessage()
-  const showError = error !== ''
+export default function NicknameField({ value, onChange }: Props) {
+  const fieldId = useId()
+  const messageId = useId()
+  const [isTouched, setIsTouched] = useState(false)
+  const [error, showError] = validateNickName(value, isTouched)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
