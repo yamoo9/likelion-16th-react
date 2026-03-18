@@ -13,7 +13,7 @@ const validateNickname = createValidator('닉네임을 입력하세요.', (value
 
 interface Props {
   value: string
-  onChange: (val: string) => void
+  onChange: (value: string) => void
 }
 
 export default function NicknameField({ value, onChange }: Props) {
@@ -56,7 +56,10 @@ export default function NicknameField({ value, onChange }: Props) {
         aria-invalid={showError ? 'true' : 'false'}
         onChange={handleChange}
         onCompositionEnd={(e) => checkProfanity(e.currentTarget.value)}
-        onBlur={(e) => { setIsTouched(true); checkProfanity(e.target.value) }}
+        onBlur={(e) => {
+          setIsTouched(true)
+          checkProfanity(e.target.value)
+        }}
         placeholder="닉네임을 입력하세요 (비속어 금지)"
         maxLength={MAX_NICKNAME}
       />
