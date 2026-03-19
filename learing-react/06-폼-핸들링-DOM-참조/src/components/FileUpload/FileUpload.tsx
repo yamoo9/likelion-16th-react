@@ -17,7 +17,7 @@ console.log(API_ENDPOINT)
 //
 // 2. 상태(State) 생성
 //    - `previewUrl`: 선택한 이미지의 미리보기 주소 (string) ✅
-//    - `isUploading`: 업로드 진행 상태 (boolean)
+//    - `isUploading`: 업로드 진행 상태 (boolean) ✅
 //    - `uploadedData`: 업로드 완료 후 서버로부터 받은 데이터 (객체 또는 null)
 //    - `isCopied`: 클립보드 복사 완료 여부 (boolean)
 //
