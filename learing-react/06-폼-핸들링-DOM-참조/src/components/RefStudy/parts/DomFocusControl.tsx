@@ -5,7 +5,7 @@ import styles from '../RefStudy.module.css'
 // 실습 가이드
 // ---------------------------------------------------------------------
 // 1. inputRef 참조 생성 (input 요소 포커스 제어용) ✅
-// 2. handleSelect 핸들러 로직 작성 (input에 포커스 및 텍스트 선택)
+// 2. handleFocusInput 핸들러 로직 작성 (input에 포커스 및 텍스트 선택) ✅
 // 3. scrollBoxRef 참조 생성 (스크롤 박스 DOM 조작용)
 // 4. scrollToTop 함수 로직 작성 (스크롤 위치를 0으로 이동)
 // 5. scrollToBottom 함수 로직 작성 (스크롤 위치를 맨 아래로 이동)
@@ -15,14 +15,25 @@ import styles from '../RefStudy.module.css'
 // 7. 스크롤 이벤트가 발생하는 주기를 조정해 성능 최적화 (쓰로틀링 활용)
 // ---------------------------------------------------------------------
 
-const SCROLL_ITEMS_COUNT = 10 // 스크롤 아이템 개수
+const SCROLL_ITEMS_COUNT = 1000 // 스크롤 아이템 개수
 
 export default function DomFocusControl() {
-
-  // 렌더링과 상관없이 특정(JavaScript 데이터 또는 DOM 객체) 값을 
+  // 렌더링과 상관없이 특정(JavaScript 데이터 또는 DOM 객체) 값을
   // 기억할 수 있으려면 Ref 객체를 사용한다. (RefObject의 필요성)
   const inputRef = useRef<HTMLInputElement>(null)
-  const handleFocusInput = () => inputRef.current?.select()  
+  const handleFocusInput = () => inputRef.current?.select()
+
+  // 스크롤 위/아래 이동 제어
+  const scrollBoxRef = useRef<HTMLDivElement>(null)
+  const handleScrollBottom = () => {
+    // 스크롤 박스 요소의 scrollTo(옵션) 실행
+    const scrollBox = scrollBoxRef.current
+    
+    scrollBox?.scrollTo({
+      top: scrollBox.scrollHeight,
+      behavior: 'smooth'
+    })
+  }
 
   return (
     <section className={styles.section}>
@@ -48,15 +59,19 @@ export default function DomFocusControl() {
 
       <div className={styles.scrollContainer}>
         <div className={styles.buttonGroup}>
-          <button type="button" className={styles.button} aria-disabled={false}>
+          <button type="button" className={styles.button}>
             맨 위로 ▲
           </button>
-          <button type="button" className={styles.button} aria-disabled={true}>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={handleScrollBottom}
+          >
             맨 아래로 ▼
           </button>
         </div>
 
-        <div className={styles.scrollBox}>
+        <div ref={scrollBoxRef} className={styles.scrollBox}>
           <div className={styles.scrollContent}>
             <p>📜 스크롤 테스트 영역입니다.</p>
             <p>내용이 아주 길어서 스크롤바가 생겼습니다.</p>
