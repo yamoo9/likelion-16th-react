@@ -15,7 +15,7 @@ import styles from '../RefStudy.module.css'
 // 7. 스크롤 이벤트가 발생하는 주기를 조정해 성능 최적화 (쓰로틀링 활용)
 // ---------------------------------------------------------------------
 
-const SCROLL_ITEMS_COUNT = 1000 // 스크롤 아이템 개수
+const SCROLL_ITEMS_COUNT = 1e2 // 스크롤 아이템 개수
 
 export default function DomFocusControl() {
   // 렌더링과 상관없이 특정(JavaScript 데이터 또는 DOM 객체) 값을
@@ -25,15 +25,21 @@ export default function DomFocusControl() {
 
   // 스크롤 위/아래 이동 제어
   const scrollBoxRef = useRef<HTMLDivElement>(null)
-  const handleScrollBottom = () => {
+
+  // 목적지로 스크롤하는 이동 함수
+  const scrollTo = (position: 'top' | 'bottom') => {
     // 스크롤 박스 요소의 scrollTo(옵션) 실행
     const scrollBox = scrollBoxRef.current
     
     scrollBox?.scrollTo({
-      top: scrollBox.scrollHeight,
+      top: position === 'bottom' ? scrollBox.scrollHeight : 0,
       behavior: 'smooth'
     })
   }
+
+  // 이벤트 핸들러
+  const handleScrollTop = () => scrollTo('top')
+  const handleScrollBottom = () => scrollTo('bottom')
 
   return (
     <section className={styles.section}>
@@ -59,7 +65,11 @@ export default function DomFocusControl() {
 
       <div className={styles.scrollContainer}>
         <div className={styles.buttonGroup}>
-          <button type="button" className={styles.button}>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={handleScrollTop}
+          >
             맨 위로 ▲
           </button>
           <button
