@@ -1,20 +1,26 @@
 import S from '../FileUpload.module.css'
 import { CloseIcon, UploadIcon } from './SvgIcon'
 
-// ---------------------------------------------------------------------
-// 실습 가이드
-// ---------------------------------------------------------------------
-// 1.
-// ---------------------------------------------------------------------
+interface Props {
+  previewUrl: string
+  ref: React.RefObject<HTMLInputElement | null>
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onDeleteFile: () => void
+}
 
-export default function FileUploadField() {
-  const previewUrl = ''
-
+export default function FileUploadField({
+  ref,
+  previewUrl,
+  onFileChange,
+  onDeleteFile,
+}: Props) {
   return (
     <div className={S.field}>
       <span className={S.label}>프로필 사진</span>
       <div className={S.uploadWrapper}>
         <input
+          ref={ref}
+          onChange={onFileChange}
           type="file"
           id="profileImage"
           name="profileImage"
@@ -32,7 +38,12 @@ export default function FileUploadField() {
         ) : (
           <div className={S.previewContainer}>
             <img src={previewUrl} className={S.previewImg} alt="미리보기" />
-            <button type="button" className={S.removeButton} aria-label="삭제">
+            <button
+              type="button"
+              className={S.removeButton}
+              aria-label="삭제"
+              onClick={onDeleteFile}
+            >
               <CloseIcon />
             </button>
           </div>

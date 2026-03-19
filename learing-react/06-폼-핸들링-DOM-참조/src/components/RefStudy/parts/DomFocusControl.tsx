@@ -15,7 +15,7 @@ import styles from '../RefStudy.module.css'
 // 7. 스크롤 이벤트가 발생하는 주기를 조정해 성능 최적화 (쓰로틀링 활용) ✅
 // ---------------------------------------------------------------------
 
-const SCROLL_ITEMS_COUNT = 20 // 스크롤 아이템 개수
+const SCROLL_ITEMS_COUNT = 200 // 스크롤 아이템 개수
 const THROTTLE_TIME = 600 // 쓰로틀(조정) 타임(ms)
 
 export default function DomFocusControl() {
