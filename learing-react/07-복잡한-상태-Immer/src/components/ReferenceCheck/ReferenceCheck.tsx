@@ -1,14 +1,14 @@
 import S from './ReferenceCheck.module.css'
 
-const user = {
-  name: '이두나',
-  age: 21,
-  profile: {
-    city: '서울',
-  },
-}
-
 export default function ReferenceCheck() {
+  
+  const user = {
+    name: '이두나',
+    age: 21,
+    profile: {
+      city: '서울',
+    },
+  }
 
   const handleWrongUpdate = () => {
     // ❌ Mutation: 데이터는 바뀌지만 참조가 같음
@@ -17,7 +17,7 @@ export default function ReferenceCheck() {
 
   const handleRightUpdate = () => {
     // ✅ Immutability: 새로운 객체 생성 (새로운 참조 주소)
-    console.log('%c✅ 불변성 유지', 'color: #04a200;')
+    console.log('%c✅ 불변성 유지:', 'color: #04a200;')
   }
 
   const handleReset = () => {

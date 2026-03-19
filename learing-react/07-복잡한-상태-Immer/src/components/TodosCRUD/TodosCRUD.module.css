@@ -27,11 +27,6 @@
         border: 1px solid #d1d5db;
         border-radius: 8px;
         font-size: 0.875rem;
-
-        &:focus {
-          outline: 2px solid #2563eb;
-          border-color: transparent;
-        }
       }
 
       .buttonAdd {
