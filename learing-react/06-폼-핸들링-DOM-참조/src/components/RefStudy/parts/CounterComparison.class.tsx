@@ -13,9 +13,9 @@ class CounterComparisonClass extends React.Component<Props, State> {
   // 생성자
   constructor(props: Props) {
     // Props 할당 (this 멤버 구성)
-    super(props)
+    super(props) // 컴포넌트 외부에서 전달된 props 객체를 this.props에 설정
 
-    // 상태
+    // 상태 (클래스 컴포넌트 → 인스턴스 생성 → 생성된 인스턴스 === this)
     this.state = { count: 0 }
 
     // 이벤트 핸들러 (this 바인딩)
@@ -27,12 +27,16 @@ class CounterComparisonClass extends React.Component<Props, State> {
   // (이 함수는 this 바인딩이 필요)
   handleIncreamentState() {
     // 상태 업데이트 (렌더 트리거)
+    const nextState = {
+      count: this.state.count + 1,
+    }
+
     this.setState(
-      {
-        count: this.state.count + 1,
-      },
+      nextState,
       this.updateLogState,
     )
+
+    console.log(`this.setState() 이후에 state.count 값 = ${this.state.count}`)
   }
   
   // 상태 업데이트 후, 콜백되는 함수
@@ -50,7 +54,7 @@ class CounterComparisonClass extends React.Component<Props, State> {
   // ----------------------------------------------------------------------
 
   // 클래스 인스턴스의 멤버
-  count = 0
+  count = 0 // 10
 
   // 클래스 인스턴스 값을 업데이트하는 이벤트 핸들러
   // (이 함수는 this 바인딩이 필요)
@@ -61,7 +65,7 @@ class CounterComparisonClass extends React.Component<Props, State> {
 
   // ----------------------------------------------------------------------
 
-  public render() {
+  render() {
     // 렌더 메서드의 지역 변수
     let countVariable = 0
 

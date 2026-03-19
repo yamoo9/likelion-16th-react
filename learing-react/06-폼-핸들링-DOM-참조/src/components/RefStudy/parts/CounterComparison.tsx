@@ -1,25 +1,30 @@
 /* eslint-disable react-hooks/immutability */
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import S from '../RefStudy.module.css'
 
 export default function CounterComparison() {
-  // State
+  // State (Memoized + Change View : Immutable)
   const [countState, setCountState] = useState(0)
-  const handleIncreamentState = () => setCountState((c) => c + 1)
+  const handleIncreamentState = () => {
+    setCountState((c) => c + 1)
+  }
 
-  // Variable
+  // Variable (.) === render() 지역 변수
   let countVariable = 0
   const handleIncreamentVariable = () => {
     console.log(`지역 변수 count의 현재 값 ${countVariable}`)
     countVariable += 1
   }
 
-  // Ref
-  const countRef = { current: 0 }
+  // Ref (Memoized : Mutation)
+  // const countRef = { current: 0 } // 지역 변수 (렌더링 될 때마다ㅏ 초기화)
+  const countRef /* { current: 0 } */ = useRef(0) // React.useRef(number) -> React.RefObject<number>
+
   const handleIncreamentRef = () => {
     console.log(`Ref 객체 countRef의 현재 값 ${countRef.current}`)
-    countRef.current += 1
+    // 일반 자바스크립트 오브젝트일 뿐 (뮤테이션 허용)
+    countRef.current += 1 // 뮤테이션(변이)
   }
 
   return (
