@@ -8,10 +8,10 @@ export default function RefStudy() {
   return (
     <div className={S.container}>
       <h2 className={S.mainTitle}>useRef 훅 함수 활용</h2>
-      <CounterComparisonClass />
-      <CounterComparison />
       <TimerIdentifier />
       <DomFocusControl />
+      <CounterComparison />
+      <CounterComparisonClass />
     </div>
   )
 }
