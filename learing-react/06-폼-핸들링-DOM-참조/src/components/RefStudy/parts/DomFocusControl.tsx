@@ -1,10 +1,10 @@
-import { useId, useRef } from 'react'
+import { useRef } from 'react'
 import styles from '../RefStudy.module.css'
 
 // ---------------------------------------------------------------------
 // 실습 가이드
 // ---------------------------------------------------------------------
-// 1. inputRef 참조 생성 (input 요소 포커스 제어용)
+// 1. inputRef 참조 생성 (input 요소 포커스 제어용) ✅
 // 2. handleSelect 핸들러 로직 작성 (input에 포커스 및 텍스트 선택)
 // 3. scrollBoxRef 참조 생성 (스크롤 박스 DOM 조작용)
 // 4. scrollToTop 함수 로직 작성 (스크롤 위치를 0으로 이동)
@@ -21,10 +21,8 @@ export default function DomFocusControl() {
 
   // 렌더링과 상관없이 특정(JavaScript 데이터 또는 DOM 객체) 값을 
   // 기억할 수 있으려면 Ref 객체를 사용한다. (RefObject의 필요성)
-
-  const focusInputRef = useRef<HTMLInputElement>(null)
-  const moveFocusButtonRef = useRef<HTMLButtonElement>(null)
-
+  const inputRef = useRef<HTMLInputElement>(null)
+  const handleFocusInput = () => inputRef.current?.select()  
 
   return (
     <section className={styles.section}>
@@ -33,9 +31,7 @@ export default function DomFocusControl() {
       {/* 포커스 제어 영역 */}
       <div className={styles.inputGroup}>
         <input
-          ref={(inputElement) => {
-            focusInputRef.current = inputElement
-          }}
+          ref={inputRef}
           type="text"
           className={styles.input}
           aria-label="초점 이동 테스트"
@@ -43,24 +39,8 @@ export default function DomFocusControl() {
         />
         <button
           type="button"
-          // ref callback
-          ref={(element) => {
-            // Ref 참조의 current 값 업데이트(뮤테이션)
-            moveFocusButtonRef.current = element
-          }}
           className={`${styles.button} ${styles.primary}`}
-          onClick={/* 이벤트 핸들러 = 사용자에 의해 브라우저 실행 (실제 DOM 존재) */() => {
-            
-            // 자바스크립트 방식 (DOM 접근/조작)
-            document.querySelector<HTMLElement>(`.${styles.input}`)?.focus()
-
-            // 리액트 방식 (DOM 접근/조작)
-            // console.log('리액트 방식:', focusInputRef.current)
-
-            // 초점 이동 (브라우저에서)
-            // focusInputRef.current?.focus()
-            focusInputRef.current?.select()  
-          }}
+          onClick={handleFocusInput}
         >
           초점 이동
         </button>
