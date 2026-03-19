@@ -1,3 +1,4 @@
+import { useId, useRef } from 'react'
 import styles from '../RefStudy.module.css'
 
 // ---------------------------------------------------------------------
@@ -18,6 +19,13 @@ const SCROLL_ITEMS_COUNT = 10 // 스크롤 아이템 개수
 
 export default function DomFocusControl() {
 
+  // 렌더링과 상관없이 특정(JavaScript 데이터 또는 DOM 객체) 값을 
+  // 기억할 수 있으려면 Ref 객체를 사용한다. (RefObject의 필요성)
+
+  const focusInputRef = useRef<HTMLInputElement>(null)
+  const moveFocusButtonRef = useRef<HTMLButtonElement>(null)
+
+
   return (
     <section className={styles.section}>
       <h3 className={styles.title}>3. DOM 직접 제어 (Focus & Scroll)</h3>
@@ -25,13 +33,34 @@ export default function DomFocusControl() {
       {/* 포커스 제어 영역 */}
       <div className={styles.inputGroup}>
         <input
+          ref={(inputElement) => {
+            focusInputRef.current = inputElement
+          }}
           type="text"
           className={styles.input}
+          aria-label="초점 이동 테스트"
           placeholder="여기에 초점이 이동됩니다."
         />
         <button
           type="button"
+          // ref callback
+          ref={(element) => {
+            // Ref 참조의 current 값 업데이트(뮤테이션)
+            moveFocusButtonRef.current = element
+          }}
           className={`${styles.button} ${styles.primary}`}
+          onClick={/* 이벤트 핸들러 = 사용자에 의해 브라우저 실행 (실제 DOM 존재) */() => {
+            
+            // 자바스크립트 방식 (DOM 접근/조작)
+            document.querySelector<HTMLElement>(`.${styles.input}`)?.focus()
+
+            // 리액트 방식 (DOM 접근/조작)
+            // console.log('리액트 방식:', focusInputRef.current)
+
+            // 초점 이동 (브라우저에서)
+            // focusInputRef.current?.focus()
+            focusInputRef.current?.select()  
+          }}
         >
           초점 이동
         </button>
@@ -39,18 +68,10 @@ export default function DomFocusControl() {
 
       <div className={styles.scrollContainer}>
         <div className={styles.buttonGroup}>
-          <button 
-            type="button"
-            className={styles.button}
-            aria-disabled={false}
-          >
+          <button type="button" className={styles.button} aria-disabled={false}>
             맨 위로 ▲
           </button>
-          <button
-            type="button"
-            className={styles.button}
-            aria-disabled={true}
-          >
+          <button type="button" className={styles.button} aria-disabled={true}>
             맨 아래로 ▼
           </button>
         </div>
@@ -74,8 +95,8 @@ export default function DomFocusControl() {
       </div>
 
       <p className={styles.info}>
-        명령적으로 DOM을 조작해야 할 때(포커스, 스크롤, 애니메이션 등) 
-        Ref를 사용합니다.
+        명령적으로 DOM을 조작해야 할 때(포커스, 스크롤, 애니메이션 등) Ref를
+        사용합니다.
       </p>
     </section>
   )
