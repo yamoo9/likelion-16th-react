@@ -1,41 +1,120 @@
+import { useRef, useState } from 'react'
+import type { Todo } from './type'
 import S from './TodosCRUD.module.css'
 
 // --------------------------------------------------------------
 // 실습 가이드
 // --------------------------------------------------------------
-// - [Create, 생성] 새로운 할 일 추가, 생성 날짜 설정
-//    - `id` 값은 `Date.now()`로 설정
-//    - `createdAt` 값은 `new Date.toISOString()`로 설정
-// - [Read, 조회] 할 일 목록 데이터를 읽어 상태 선언
+//
+// - [Read, 조회] 할 일 목록 데이터를 읽어 상태 선언 ✅
+//
+// - [Create, 생성] 새로운 할 일 추가, 생성 날짜 설정 ✅
+//    - `id` 값은 `Date.now()`로 설정 ✅
+//    - `createdAt` 값은 `new Date().toISOString()`로 설정 ✅
+//
 // - [Update, 수정] 선택된 할 일 완료 여부 토글(toggle), 업데이트 날짜 수정
-//    - `updatedAt` 값은 `new Date.toISOString()`로 설정
+//    - `updatedAt` 값은 `new Date().toISOString()`로 설정
+//
 // - [Delete, 삭제] 선택된 할 일 삭제
+//
 // - [Formatting, 형식 변환] 완료 날짜 포맷팅 (예: '2026년 3월 20일')
+//
 // - [A11y, 접근성] 초점 이동, 버튼 비활성화 등 사용자 경험 향상 고려
+//
 // --------------------------------------------------------------
 
-export default function NestedObject() {
+const INITIAL_TODOS: Todo[] = [
+  {
+    id: 'todo-1773533484499', 
+    text: '중첩된 객체 합성',
+    done: false,
+    metadata: {
+      createdAt: '2026-03-18T17:12:41.964Z',
+      updatedAt: null,
+    },
+  },
+  {
+    id: 'todo-1773533492567',
+    text: '전개 연산자 사용 힘들어! 😭',
+    done: false,
+    metadata: {
+      createdAt: '2026-03-19T21:06:47.985Z',
+      updatedAt: null,
+    },
+  },
+]
 
-  const todos = [
-    {
-      id: 'todo-1773533484499', 
-      text: '중첩된 객체 합성',
+
+export default function NestedObject() {
+  // 할 일 목록 (상태)
+  const [todos, setTodos] = useState(INITIAL_TODOS)
+  // console.log(todos)
+
+  // 할 일을 뒤집은 목록 (파생된 상태: 상태가 변경되면 렌더링 중에 다시 계산된 값)
+  const reversedTodos = todos.toReversed()
+
+  // <input> 참조 (DOM 접근/조작)
+  const doitRef = useRef<HTMLInputElement>(null)
+
+  // 할 일 생성(Create)
+  const addTodo = (doit: Todo['text']) => {
+    
+    // 새로운 할 일 객체
+    const newTodo: Todo = {
+      id: `todo-${Date.now()}`,
+      text: doit,
       done: false,
       metadata: {
-        createdAt: '2026-03-18T17:12:41.964Z',
-        updatedAt: null,
-      },
-    },
-    {
-      id: 'todo-1773533492567',
-      text: '전개 연산자 사용 힘들어! 😭',
-      done: false,
-      metadata: {
-        createdAt: '2026-03-19T21:06:47.985Z',
-        updatedAt: null,
-      },
-    },
-  ]
+        createdAt: new Date().toISOString(),
+        updatedAt: null
+      }
+    }
+
+    // 상태 업데이트 요청 (업데이트 함수 활용)
+    const nextTodos = [...todos, newTodo]
+    setTodos(nextTodos)
+  }
+
+  // 입력 필드 사용 방식: [제어 → 선언적 해결: useState] vs [비제어 → 명령형 해결: 이펙트 대신에 이벤트 + useRef] 
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    // 브라우저 기본 작동 방지
+    e.preventDefault()
+
+    // FormData 생성 (웹 표준 방식으로 사용자 입력 값 읽기)
+    const formData = new FormData(e.currentTarget)
+    const doit = formData.get('doit') as string // 타입 단언
+    
+    // 유효성 검사 & 할 일 추가
+    if (doit && doit.trim().length > 0) {
+      // 할 일 추가
+      addTodo(doit)
+      
+      // 할 일 입력 필드 초기화
+      const doitInput = doitRef.current
+      if (doitInput) {
+        doitInput.value = ''
+        doitInput.focus()
+      }
+    }
+  }
+
+  // [방법 2] 제어 방식: 상태 선언 (상태 변경 → 리액트가 화면 제어)
+
+
+  // [방법 1] 비제어 방식: 명령형 프로그래밍으로 사용자가 직접 화면 제어
+  const addButtonRef = useRef<HTMLButtonElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleUncontrolledInput = (e: React.InputEvent<HTMLInputElement>) => {
+    const input = e.currentTarget.value
+    const addButton = addButtonRef.current
+    
+    // if 조건문
+    if (input.trim().length > 0) {
+      addButton?.setAttribute('aria-disabled', 'false')
+    } else {
+      addButton?.setAttribute('aria-disabled', 'true')
+    }
+  }
 
   return (
     <section className={S.container} aria-labelledby="todos-title">
@@ -44,21 +123,34 @@ export default function NestedObject() {
           객체/배열 <abbr title="Create Read Update Delete">CRUD</abbr> 실습
         </h2>
 
-        <form className={S.form}>
+        <form className={S.form} onSubmit={handleSubmit}>
           <input
+            ref={doitRef}
+            // [방법 1] 비제어 방식
+            // onInput={handleUncontrolledInput}
+            // [방법 2] 제어 방식
             type="text"
+            name="doit"
             className={S.input}
             aria-label="할 일"
             placeholder="오늘 할 일 입력"
           />
-          <button type="submit" className={S.buttonAdd}>
+          <button 
+            ref={addButtonRef}
+            type="submit"
+            className={S.buttonAdd}
+            // [방법 1] 비제어 방식
+            // aria-disabled="true"
+            // [방법 2] 제어 방식
+            // aria-disabled={state}
+          >
             추가
           </button>
         </form>
       </header>
 
       <ul className={S.list} aria-label="할 일 목록">
-        {todos.map((todo) => {
+        {reversedTodos.map((todo) => {
           const todoTextClassName = `${S.text} ${todo.done ? S.completed : ''}`.trim()
           const { createdAt, updatedAt } = todo.metadata
 
