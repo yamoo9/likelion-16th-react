@@ -17,7 +17,7 @@ import S from './TodosCRUD.module.css'
 // - [Update, 수정] 선택된 할 일 완료 여부 토글(toggle), 업데이트 날짜 수정 ✅
 //    - `updatedAt` 값은 `new Date().toISOString()`로 설정 ✅
 //
-// - [Delete, 삭제] 선택된 할 일 삭제
+// - [Delete, 삭제] 선택된 할 일 삭제 ✅
 //
 // - [Formatting, 형식 변환] 완료 날짜 포맷팅 (예: '2026년 3월 20일') ✅
 //
@@ -27,7 +27,7 @@ import S from './TodosCRUD.module.css'
 
 const INITIAL_TODOS: Todo[] = [
   {
-    id: 'todo-1773533484499', 
+    id: 'todo-1773533484499',
     text: '중첩된 객체 합성',
     done: false,
     metadata: {
@@ -61,7 +61,6 @@ export default function NestedObject() {
 
   // 할 일 생성(Create)
   const addTodo = (doit: Todo['text']) => {
-    
     // 새로운 할 일 객체
     const newTodo: Todo = {
       id: `todo-${Date.now()}`,
@@ -69,8 +68,8 @@ export default function NestedObject() {
       done: false,
       metadata: {
         createdAt: getCurrentDateString(),
-        updatedAt: null
-      }
+        updatedAt: null,
+      },
     }
 
     // 상태 업데이트 요청 (업데이트 함수 활용)
@@ -79,38 +78,36 @@ export default function NestedObject() {
   }
 
   // 할 일 수정(Update)
-  const updateTodo = (todoId: Todo['id']) => {
-
-    // 해당 할 일의 완료 상태를 반전(toggle)
-    // todos (원본) 수정(mutation) ❌
-    
-    // 절대 뮤테이션 안되요! 새 객체를 생성해서 반환 
-    // (왜? 그래야 리액트가 이전/현재 비교 시 다르다고 인식, 화면 변경)
-    // nextTodos (복제본) ✅
-    const nextTodos: Todo[] = todos.map((todo) => {
-      // 변경하고 싶은 할 일을 제외한 나머지는 그대로 나가~ (변경 필요 없음)
-      if (todo.id !== todoId) return todo
-      // 변경하고 싶은 할 일이라면 새로운 객체로 생성해서 반환 (변경된 결과)
-      const nextTodo = {
-        ...todo,
-        done: !todo.done,
-        metadata: {
-          ...todo.metadata,
-          updatedAt: getCurrentDateString()
-        }
-      }
-
-      return nextTodo
-    })
-    
-    setTodos(nextTodos)
-  }
+  const updateTodo = (todoId: Todo['id']) =>
+    setTodos(
+      todos.map((todo) =>
+        todo.id !== todoId
+          ? todo
+          : {
+              ...todo,
+              done: !todo.done,
+              metadata: {
+                ...todo.metadata,
+                updatedAt: getCurrentDateString(),
+              },
+            },
+      ),
+    )
 
   // 할 일 삭제(Delete)
+  const deleteTodo = (todoId: Todo['id']) => {
+    // 삭제 로직 (원본 배열을 변경하지 않고, 복제본을 사용 해결)
+
+    // 삭제할 할 일의 인덱스를 찾기
+    if (confirm('정말로 할 일을 삭제하시겠습니까?')) {
+      const nextTodos = todos.filter((todo) => todo.id !== todoId)
+      setTodos(nextTodos)
+    }
+  }
 
   // 입력 필드 사용 방식
   // - [제어 → 선언적 해결: useState]
-  // - [비제어 → 명령형 해결: 이펙트 대신에 이벤트 + useRef] 
+  // - [비제어 → 명령형 해결: 이펙트 대신에 이벤트 + useRef]
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     // 브라우저 기본 작동 방지
     e.preventDefault()
@@ -118,12 +115,12 @@ export default function NestedObject() {
     // FormData 생성 (웹 표준 방식으로 사용자 입력 값 읽기)
     const formData = new FormData(e.currentTarget)
     const doit = formData.get('doit') as string // 타입 단언
-    
+
     // 유효성 검사 & 할 일 추가
     if (doit && doit.trim().length > 0) {
       // 할 일 추가
       addTodo(doit)
-      
+
       // 할 일 입력 필드 초기화
       const doitInput = doitRef.current
       if (doitInput) {
@@ -139,7 +136,7 @@ export default function NestedObject() {
   const handleUncontrolledInput = (e: React.InputEvent<HTMLInputElement>) => {
     const input = e.currentTarget.value
     const addButton = addButtonRef.current
-    
+
     // if 조건문
     if (input.trim().length > 0) {
       addButton?.setAttribute('aria-disabled', 'false')
@@ -182,7 +179,7 @@ export default function NestedObject() {
             aria-label="할 일"
             placeholder="오늘 할 일 입력"
           />
-          <button 
+          <button
             ref={addButtonRef}
             type="submit"
             className={S.buttonAdd}
@@ -198,7 +195,8 @@ export default function NestedObject() {
 
       <ul className={S.list} aria-label="할 일 목록">
         {reversedTodos.map((todo) => {
-          const todoTextClassName = `${S.text} ${todo.done ? S.completed : ''}`.trim()
+          const todoTextClassName =
+            `${S.text} ${todo.done ? S.completed : ''}`.trim()
           const { createdAt, updatedAt } = todo.metadata
 
           return (
@@ -224,6 +222,7 @@ export default function NestedObject() {
                   type="button"
                   className={S.buttonDelete}
                   aria-label={`${todo.text} 삭제`}
+                  onClick={() => deleteTodo(todo.id)}
                 >
                   삭제
                 </button>
@@ -239,4 +238,3 @@ export default function NestedObject() {
     </section>
   )
 }
-
