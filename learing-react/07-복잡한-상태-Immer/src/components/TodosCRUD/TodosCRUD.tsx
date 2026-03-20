@@ -75,7 +75,9 @@ export default function NestedObject() {
     setTodos(nextTodos)
   }
 
-  // 입력 필드 사용 방식: [제어 → 선언적 해결: useState] vs [비제어 → 명령형 해결: 이펙트 대신에 이벤트 + useRef] 
+  // 입력 필드 사용 방식
+  // - [제어 → 선언적 해결: useState]
+  // - [비제어 → 명령형 해결: 이펙트 대신에 이벤트 + useRef] 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     // 브라우저 기본 작동 방지
     e.preventDefault()
@@ -98,9 +100,6 @@ export default function NestedObject() {
     }
   }
 
-  // [방법 2] 제어 방식: 상태 선언 (상태 변경 → 리액트가 화면 제어)
-
-
   // [방법 1] 비제어 방식: 명령형 프로그래밍으로 사용자가 직접 화면 제어
   const addButtonRef = useRef<HTMLButtonElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -116,6 +115,19 @@ export default function NestedObject() {
     }
   }
 
+  // [방법 2] 제어 방식: 상태 선언 (상태 변경 → 리액트가 화면 제어)
+  // 상태
+  const [doit, setDoit] = useState('')
+
+  // 파생된 상태
+  const isDisabled = 1 > doit.trim().length
+
+  // 이벤트 핸들러 (상태 업데이트 로직 포함)
+  const handleChangeDoit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setDoit(value)
+  }
+
   return (
     <section className={S.container} aria-labelledby="todos-title">
       <header className={S.header}>
@@ -129,6 +141,8 @@ export default function NestedObject() {
             // [방법 1] 비제어 방식
             // onInput={handleUncontrolledInput}
             // [방법 2] 제어 방식
+            value={doit}
+            onChange={handleChangeDoit}
             type="text"
             name="doit"
             className={S.input}
@@ -142,7 +156,7 @@ export default function NestedObject() {
             // [방법 1] 비제어 방식
             // aria-disabled="true"
             // [방법 2] 제어 방식
-            // aria-disabled={state}
+            aria-disabled={isDisabled}
           >
             추가
           </button>
