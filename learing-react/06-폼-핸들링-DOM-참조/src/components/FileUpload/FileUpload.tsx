@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react'
+import { uploadFile } from './api/upload'
+import type { ImageData } from './api/type'
 import NickNameField from './parts/NickNameField'
 import FileUploadField from './parts/FileUploadField'
 import SaveButton from './parts/SaveButton'
-// import FileUploadResult from './parts/FileUploadResult'
+import FileUploadResult from './parts/FileUploadResult'
 import S from './FileUpload.module.css'
-import { uploadFile } from './api/upload'
 
 // --------------------------------------------------------------------------------------
 // 실습 가이드
@@ -15,7 +16,7 @@ import { uploadFile } from './api/upload'
 // 2. 상태(State) 생성
 //    - `previewUrl`: 선택한 이미지의 미리보기 주소 (string) ✅
 //    - `isUploading`: 업로드 진행 상태 (boolean) ✅
-//    - `uploadedData`: 업로드 완료 후 서버로부터 받은 데이터 (객체 또는 null)
+//    - `uploadedData`: 업로드 완료 후 서버로부터 받은 데이터 (객체 또는 null) ✅
 //    - `isCopied`: 클립보드 복사 완료 여부 (boolean)
 //
 // 3. 파일 변경 핸들링 로직 작성 ✅
@@ -48,6 +49,9 @@ export default function FileUpload() {
   // 업로드 상태 선언 (화면 변경 표시)
   const [isUploading, setIsUploading] = useState(false)
 
+  // 업로드 된 파일
+  const [uploadedData, setUploadedData] = useState<null|ImageData>(null)
+
   // [참조] FileUploadField 내부의 <input type="file" /> 요소를 참조하기 위한 Ref 객체 생성
   const fileRef = useRef<HTMLInputElement>(null) // { current: null } -> { current: HTMLInputElement }
 
@@ -67,7 +71,7 @@ export default function FileUpload() {
 
   // [이벤트 핸들러]
   // 파일 업로드 (change 이벤트)
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target
     const file = files?.item(0)
     if (!file) return // 업로드 할 파일이 없다면 함수 종료 (early return)
@@ -113,6 +117,9 @@ export default function FileUpload() {
 
       // 파일 업로드 성공이라면?
       if (result.success) {
+        // 업로드된 파일 데이터를 uploadedData 상태 업데이트
+        setUploadedData(result.data)
+
         // 업로드 파일 미리보기 및 파일 인풋 초기화
         resetPreviewAndFile()
         // 노티피케이션(알림)
@@ -137,12 +144,12 @@ export default function FileUpload() {
         <FileUploadField
           ref={fileRef}
           previewUrl={previewUrl}
-          onFileChange={handleFileChange}
+          onChangeFile={handleChangeFile}
           onDeleteFile={handleDeleteFile}
         />
         <SaveButton isDisabled={isDisabled} isUploading={isUploading} />
       </form>
-      {/* <FileUploadResult /> */}
+      <FileUploadResult uploadedData={uploadedData} />
     </section>
   )
 }

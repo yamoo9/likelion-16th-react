@@ -4,14 +4,14 @@ import S from '../FileUpload.module.css'
 interface Props {
   previewUrl: string
   ref: React.RefObject<HTMLInputElement | null>
-  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeFile: (e: React.ChangeEvent<HTMLInputElement>) => void
   onDeleteFile: () => void
 }
 
 export default function FileUploadField({
   ref,
   previewUrl,
-  onFileChange,
+  onChangeFile: onFileChange,
   onDeleteFile,
 }: Props) {
   return (
