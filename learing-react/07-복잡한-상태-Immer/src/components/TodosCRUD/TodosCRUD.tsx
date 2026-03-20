@@ -12,7 +12,7 @@ import S from './TodosCRUD.module.css'
 // - [Create, 생성] 새로운 할 일 추가, 생성 날짜 설정 ✅
 //    - `id` 값은 `Date.now()`로 설정 ✅
 //    - `createdAt` 값은 `new Date().toISOString()`로 설정 ✅
-//    - 디바운싱(Debouncing) 적용 → 렌더링 횟수 줄여서 성능 저하 방지
+//    - 디바운싱(Debouncing) 적용 → 렌더링 횟수 줄여서 성능 저하 방지 ✅
 //
 // - [Update, 수정] 선택된 할 일 완료 여부 토글(toggle), 업데이트 날짜 수정 ✅
 //    - `updatedAt` 값은 `new Date().toISOString()`로 설정 ✅
@@ -45,6 +45,8 @@ const INITIAL_TODOS: Todo[] = [
     },
   },
 ]
+
+const DEBOUNCE_TIME = 350
 
 const getCurrentDateString = () => new Date().toISOString()
 
@@ -98,7 +100,6 @@ export default function NestedObject() {
   const deleteTodo = (todoId: Todo['id']) => {
     // 삭제 로직 (원본 배열을 변경하지 않고, 복제본을 사용 해결)
 
-    // 삭제할 할 일의 인덱스를 찾기
     if (confirm('정말로 할 일을 삭제하시겠습니까?')) {
       const nextTodos = todos.filter((todo) => todo.id !== todoId)
       setTodos(nextTodos)
@@ -152,10 +153,24 @@ export default function NestedObject() {
   // 파생된 상태
   const isDisabled = 1 > doit.trim().length
 
+  // [디바운스: 렌더링 횟수 완화]
+  // 리액트 렌더링 프로세스와 무관하게 특정 값을 기억해야 한다. (타이머 ID 기억)
+  const timeoutIdRef = useRef<null|number>(null) // ReturnType<typeof setTimeout>
+
   // 이벤트 핸들러 (상태 업데이트 로직 포함)
   const handleChangeDoit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    setDoit(value)
+    
+    const timeoutId = timeoutIdRef.current
+
+    // 타이머가 이미 설정되어 있다면 (timeoutIdRef.current 값이 null이 아닌 경우),
+    // 사용자가 입력할 때마다 설정된 타이머 해제
+    if (timeoutId) clearTimeout(timeoutId)
+    
+    // 특정 시간이 지난 후 상태 업데이트 (타이머 설정)
+    timeoutIdRef.current = setTimeout(() => {
+      setDoit(value)
+    }, DEBOUNCE_TIME)
   }
 
   return (
@@ -171,7 +186,7 @@ export default function NestedObject() {
             // [방법 1] 비제어 방식
             // onInput={handleUncontrolledInput}
             // [방법 2] 제어 방식
-            value={doit}
+            defaultValue={doit}
             onChange={handleChangeDoit}
             type="text"
             name="doit"
