@@ -1,5 +1,5 @@
-import S from '../FileUpload.module.css'
 import { CloseIcon, UploadIcon } from './SvgIcon'
+import S from '../FileUpload.module.css'
 
 interface Props {
   previewUrl: string

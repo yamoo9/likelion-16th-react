@@ -1,13 +1,18 @@
+import { useRef, useState } from 'react'
+import type { ResponseData } from './api/type'
 import NickNameField from './parts/NickNameField'
 import FileUploadField from './parts/FileUploadField'
 import SaveButton from './parts/SaveButton'
 // import FileUploadResult from './parts/FileUploadResult'
 import S from './FileUpload.module.css'
-import { useRef, useState } from 'react'
 
-const { VITE_IMGBB_URL: apiUrl, VITE_IMGBB_API_KEY: apiKey } = import.meta.env
-const API_ENDPOINT = `${apiUrl}?key=${apiKey}`
-console.log(API_ENDPOINT)
+const { VITE_IMGBB_URL, VITE_IMGBB_API_KEY } = import.meta.env
+
+const getEndpoint = () => {
+  const url = new URL(VITE_IMGBB_URL)
+  url.searchParams.append('key', VITE_IMGBB_API_KEY)
+  return url.toString()
+}
 
 // --------------------------------------------------------------------------------------
 // 실습 가이드
@@ -48,8 +53,25 @@ export default function FileUpload() {
   // [상태]
   const [previewUrl, setPreviewUrl] = useState('')
 
+  // 업로드 상태 선언 (화면 변경 표시)
+  const [isUploading, setIsUploading] = useState(false)
+
   // [참조] FileUploadField 내부의 <input type="file" /> 요소를 참조하기 위한 Ref 객체 생성
   const fileRef = useRef<HTMLInputElement>(null) // { current: null } -> { current: HTMLInputElement }
+
+  // [재사용 함수]
+  // 업로드 파일 미리보기 및 파일 인풋 초기화 함수
+  const resetPreviewAndFile = () => {
+    // 미리보기 이미지 초기화
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl) 
+      setPreviewUrl('')
+    }
+
+    // 인풋 파일의 값 초기화
+    const file = fileRef.current
+    if (file) file.value = ''
+  }
 
   // [이벤트 핸들러]
   // 파일 업로드 (change 이벤트)
@@ -70,24 +92,17 @@ export default function FileUpload() {
 
   // 미리보기 이미지 및 파일 삭제 (click 이벤트)
   const handleDeleteFile = () => {
-    // 미리보기 이미지 초기화
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl) 
-      setPreviewUrl('')
-    }
-
-    // 인풋 파일의 값 초기화
-    const file = fileRef.current
-    if (file) file.value = ''
+    // 업로드 파일 미리보기 및 파일 인풋 초기화
+    resetPreviewAndFile()
   }
-
-  // 업로드 상태 선언 (화면 변경 표시)
-  const [isUploading, setIsUploading] = useState(false)
 
   // 파일 업로드 API 서버에 요청 (submit 이벤트)
   const handleUploadSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     // 브라우저 기본 작동 방지
     e.preventDefault()
+
+    // 현재 서버에 저장 요청 중이라면 함수 실행 중단
+    if (isUploading || isDisabled) return
     
     // 업로드할 파일 검사
     const file = fileRef.current?.files?.[0]
@@ -95,6 +110,7 @@ export default function FileUpload() {
     
     const formData = new FormData()
     formData.append('image', file)
+    // console.log(Object.fromEntries(formData))
 
     try {
       setIsUploading(true)
@@ -102,6 +118,20 @@ export default function FileUpload() {
       // 서버에 파일 업로드 요청
       // 폼 데이터(formData)
 
+      const response = await fetch(getEndpoint(), {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        throw new Error('파일 업로드 실패!')
+      }
+
+      const responseData: ResponseData = await response.json()
+      console.log(responseData)
+      
+      // 업로드 파일 미리보기 및 파일 인풋 초기화
+      resetPreviewAndFile()
 
       alert('파일 업로드 성공!')
     } catch(error) {
@@ -111,6 +141,9 @@ export default function FileUpload() {
     }
     
   }
+
+  // 파생된 상태: 미리보기 이미지가 화면에 표시된 상태인지 아닌지 여부
+  const isDisabled = 1 > previewUrl.trim().length
 
   return (
     <section className={S.card}>
@@ -123,7 +156,7 @@ export default function FileUpload() {
           onFileChange={handleFileChange}
           onDeleteFile={handleDeleteFile}
         />
-        <SaveButton />
+        <SaveButton isDisabled={isDisabled} isUploading={isUploading} />
       </form>
       {/* <FileUploadResult /> */}
     </section>
