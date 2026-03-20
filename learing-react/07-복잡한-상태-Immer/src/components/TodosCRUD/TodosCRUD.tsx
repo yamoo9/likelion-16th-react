@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { formatDate } from '@/utils'
 import type { Todo } from './type'
 import S from './TodosCRUD.module.css'
 
@@ -11,15 +12,16 @@ import S from './TodosCRUD.module.css'
 // - [Create, 생성] 새로운 할 일 추가, 생성 날짜 설정 ✅
 //    - `id` 값은 `Date.now()`로 설정 ✅
 //    - `createdAt` 값은 `new Date().toISOString()`로 설정 ✅
+//    - 디바운싱(Debouncing) 적용 → 렌더링 횟수 줄여서 성능 저하 방지
 //
-// - [Update, 수정] 선택된 할 일 완료 여부 토글(toggle), 업데이트 날짜 수정
-//    - `updatedAt` 값은 `new Date().toISOString()`로 설정
+// - [Update, 수정] 선택된 할 일 완료 여부 토글(toggle), 업데이트 날짜 수정 ✅
+//    - `updatedAt` 값은 `new Date().toISOString()`로 설정 ✅
 //
 // - [Delete, 삭제] 선택된 할 일 삭제
 //
-// - [Formatting, 형식 변환] 완료 날짜 포맷팅 (예: '2026년 3월 20일')
+// - [Formatting, 형식 변환] 완료 날짜 포맷팅 (예: '2026년 3월 20일') ✅
 //
-// - [A11y, 접근성] 초점 이동, 버튼 비활성화 등 사용자 경험 향상 고려
+// - [A11y, 접근성] 초점 이동, 버튼 비활성화 등 사용자 경험 향상 고려 ✅
 //
 // --------------------------------------------------------------
 
@@ -44,6 +46,7 @@ const INITIAL_TODOS: Todo[] = [
   },
 ]
 
+const getCurrentDateString = () => new Date().toISOString()
 
 export default function NestedObject() {
   // 할 일 목록 (상태)
@@ -65,7 +68,7 @@ export default function NestedObject() {
       text: doit,
       done: false,
       metadata: {
-        createdAt: new Date().toISOString(),
+        createdAt: getCurrentDateString(),
         updatedAt: null
       }
     }
@@ -74,6 +77,36 @@ export default function NestedObject() {
     const nextTodos = [...todos, newTodo]
     setTodos(nextTodos)
   }
+
+  // 할 일 수정(Update)
+  const updateTodo = (todoId: Todo['id']) => {
+
+    // 해당 할 일의 완료 상태를 반전(toggle)
+    // todos (원본) 수정(mutation) ❌
+    
+    // 절대 뮤테이션 안되요! 새 객체를 생성해서 반환 
+    // (왜? 그래야 리액트가 이전/현재 비교 시 다르다고 인식, 화면 변경)
+    // nextTodos (복제본) ✅
+    const nextTodos: Todo[] = todos.map((todo) => {
+      // 변경하고 싶은 할 일을 제외한 나머지는 그대로 나가~ (변경 필요 없음)
+      if (todo.id !== todoId) return todo
+      // 변경하고 싶은 할 일이라면 새로운 객체로 생성해서 반환 (변경된 결과)
+      const nextTodo = {
+        ...todo,
+        done: !todo.done,
+        metadata: {
+          ...todo.metadata,
+          updatedAt: getCurrentDateString()
+        }
+      }
+
+      return nextTodo
+    })
+    
+    setTodos(nextTodos)
+  }
+
+  // 할 일 삭제(Delete)
 
   // 입력 필드 사용 방식
   // - [제어 → 선언적 해결: useState]
@@ -174,8 +207,8 @@ export default function NestedObject() {
                 {todo.text}
                 <span className="sr-only">
                   {!todo.done
-                    ? `${createdAt} 생성`
-                    : `${updatedAt} 완료`}
+                    ? `${formatDate(createdAt)} 생성`
+                    : `${formatDate(updatedAt ?? '')} 완료`}
                 </span>
               </span>
               <div className={S.buttonGroup}>
@@ -183,6 +216,7 @@ export default function NestedObject() {
                   type="button"
                   className={S.buttonToggle}
                   aria-pressed={todo.done}
+                  onClick={() => updateTodo(todo.id)}
                 >
                   {todo.done ? '취소' : '완료'}
                 </button>
@@ -205,3 +239,4 @@ export default function NestedObject() {
     </section>
   )
 }
+
