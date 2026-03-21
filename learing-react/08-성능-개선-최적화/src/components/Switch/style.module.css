@@ -1,0 +1,37 @@
+.switchRoot {
+  all: unset;
+  width: 42px;
+  height: 24px;
+  background-color: #e2e8f0;
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  box-sizing: border-box;
+
+  &.checked {
+    background-color: #3f4383;
+
+    & .switchThumb {
+      transform: translateX(18px);
+    }
+  }
+
+  & .switchThumb {
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+}

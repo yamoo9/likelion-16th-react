@@ -1,0 +1,66 @@
+.panelContainer {
+  width: clamp(320px, 80%, 540px);
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
+
+  & header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1rem;
+
+    & h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+    }
+
+    & p {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+  }
+
+  & .deviceList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.deviceItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background-color: #f8faff;
+  border-radius: 1.5rem;
+  margin-bottom: 1rem;
+  min-height: 100px;
+
+  & .deviceName {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  & .controls {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+
+    & .statusText {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #475569;
+      letter-spacing: -0.02em;
+    }
+  }
+}

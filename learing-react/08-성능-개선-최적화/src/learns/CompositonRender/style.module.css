@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 80vw;
+  max-width: 640px;
+  margin: 100px auto 0;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.05);
+
+  & .timerSection {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+
+    & .title {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6c757d;
+    }
+
+    & .timeDisplay {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 2.5rem;
+      font-weight: 100;
+      color: #2d3436;
+    }
+
+    & .button {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:active {
+        scale: 0.975;
+      }
+    }
+  }
+
+  & .counterSection {
+    display: block;
+    padding-block-start: 1.5rem;
+    border-top: 2px dashed #dee2e6;
+  }
+}

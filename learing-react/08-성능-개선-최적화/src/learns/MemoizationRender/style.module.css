@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 80vw;
+  max-width: 640px;
+  margin: 100px auto 0;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.05);
+
+  & .timerSection {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+
+    & .title {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6c757d;
+    }
+
+    & .timeDisplay {
+      font-size: 2.5rem;
+      font-weight: 100;
+      color: #2d3436;
+    }
+  }
+
+  & .counterSection {
+    display: block;
+    padding-block-start: 1.5rem;
+    border-top: 2px dashed #dee2e6;
+  }
+}
