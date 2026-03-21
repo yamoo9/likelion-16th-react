@@ -101,7 +101,6 @@
 
 .inputError {
   composes: input;
-  /* 이전 답변에서 다룬 에러 방지를 위해 최상단 이동 권장 */
   border-color: var(--color-error);
 
   &:focus {
