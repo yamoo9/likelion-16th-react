@@ -1,5 +1,5 @@
 .container {
-  
+
   --background: #ffffff;
   --foreground: #020817;
   --card: #ffffff;
@@ -164,7 +164,7 @@
     }
   }
 
-  .clearButton {
+  .transitionButton {
     width: 100%;
     margin-top: 1.5rem;
     padding: 0.75rem;
@@ -184,7 +184,7 @@
 
   .emptyMessage {
     text-align: center;
-    padding: 4rem 0;
+    padding: 3rem 0;
     color: var(--muted-foreground);
     font-size: 0.875rem;
     border: 2px dashed var(--border);
