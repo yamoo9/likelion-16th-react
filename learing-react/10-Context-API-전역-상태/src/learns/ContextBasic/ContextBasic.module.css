@@ -1,0 +1,105 @@
+.title {
+  margin-block-end: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #878f91;
+}
+
+.familyTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-block-end: 12px;
+
+  &.grandFather {
+    font-size: 1.4rem;
+  }
+  
+  &.father {
+    font-size: 1.2rem;
+  }
+  
+  &.child {
+    font-size: 1rem;
+  }
+}
+
+.box {
+  border: 2px solid #ccc;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.container {
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.active {
+  border-color: #f0ba33;
+  background-color: #fff8e7;
+}
+
+.summary {
+  display: flex;
+  flex-flow: column;
+  gap: 4px;
+  margin-block: 16px;
+  margin-inline: 8px;
+  padding: 12px;
+  background-color: #f5f4ef;
+  border-radius: 6px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-block-start: 8px;
+  border: none;
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #495057;
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #bdb9ad;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

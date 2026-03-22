@@ -1,0 +1,116 @@
+.card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+}
+
+.title {
+  font-size: 1.42rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+
+.description {
+  color: #71717a;
+  margin-bottom: 32px;
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+
+  p {
+    font-size: 0.875rem;
+    color: #555;
+  }
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.statusBox {
+  display: flex;
+  flex-flow: column;
+  gap: 6px;
+  align-items: start;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #f4f4f5;
+  background-color: #fafafa;
+}
+
+.statusActive {
+  border-color: #dcfce7;
+  background-color: #f0fdf4;
+}
+
+.statusTitle {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusList {
+  padding-inline-start: 8px;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.debugSection {
+  margin-top: 32px;
+  background: #18181b;
+  color: #f4f4f5;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+.debugHeadline {
+  fontWeight: 600; 
+  color: #ff5f85;
+}
+
+.codeBlock {
+  color: #756969;
+  background: #232122;
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-top: 12px;
+  font-family: monospace;
+}
+
+.logoutButton {
+  border-radius: 4px;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #e4e4e7;
+  color: #71717a;
+  font-size: 12px;
+
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    filter: grayscale(1);
+    opacity: 0.85;
+  }
+
+  &:hover:not([aria-disabled="true"]) {
+    color: #111;
+    background-color: #fdfdff;
+    border-color: #e4e4e7;
+  }
+
+  &:active:not([aria-disabled="true"]) {
+    background-color: #e4e4e7;
+  }
+}
