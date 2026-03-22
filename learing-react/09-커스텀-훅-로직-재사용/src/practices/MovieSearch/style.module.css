@@ -1,0 +1,299 @@
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 80px auto 0;
+  padding: 0 1.5rem;
+
+  .searchHeader {
+    margin-bottom: 4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+
+    .inputWrapper {
+      position: relative;
+      display: flex;
+      width: 100%;
+      max-width: 560px;
+      gap: 0.5rem;
+      padding: 0.25rem;
+      background-color: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+
+      &:focus-within {
+        border-color: #94a3b8;
+        box-shadow: 0 0 0 2px rgba(226, 232, 240, 0.8), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      input {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        border: none;
+        background: transparent;
+        font-size: 1rem;
+        color: #0f172a;
+        outline: none;
+
+        &::placeholder {
+          color: #94a3b8;
+        }
+
+        &::-webkit-search-cancel-button {
+          cursor: pointer;
+        }
+      }
+
+      .searchButton {
+        padding: 0.5rem 1.25rem;
+        background-color: #0f172a;
+        color: #f8fafc;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #1e293b;
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+    }
+  }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16rem 1.5rem;
+    text-align: center;
+    border: 1px dashed #e2e8f0; 
+    border-radius: 0.75rem; 
+    background-color: #f8fafc; 
+    margin: 2rem auto;
+    transition: all 0.2s ease;
+    
+    p {
+      margin: 0;
+      font-size: 1rem; 
+      font-weight: 500; 
+      color: #64748b; 
+      line-height: 1.6;
+      
+      &::before {
+        content: "🔎";
+        display: block;
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        filter: grayscale(0.5);
+      }
+    }
+
+    &:hover {
+      border-color: #cbd5e1;
+      background-color: #f1f5f9;
+    }
+  }
+
+  .movieGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin-block-end: 3rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .cardLink {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    
+    &:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 4px;
+      border-radius: 12px;
+    }
+  }
+
+  .card {
+    cursor: pointer;
+  }
+
+  .movieCard {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-6px);
+      border-color: #cbd5e1;
+      box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
+    }
+
+    .posterWrapper {
+      position: relative;
+      aspect-ratio: 2 / 3;
+      background: #f1f5f9;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .badgeGroup {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 0.4rem;
+      }
+
+      .badge {
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.4rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        backdrop-filter: blur(8px);
+        color: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      .rating {
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .lang {
+        background: rgba(59, 130, 246, 0.85);
+        text-transform: uppercase;
+      }
+    }
+
+    .info {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .movieTitle {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .overview {
+        font-size: 0.875rem;
+        color: #64748b;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .footer {
+        margin-top: 0.5rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #f1f5f9;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .moreWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    padding-bottom: 4rem;
+    border-top: 1px solid var(--border, #e2e8f0);
+    padding-top: 2rem;
+
+    .moreButton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.75rem;
+      padding: 0 2rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #0f172a;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+      &:hover:not(:disabled) {
+        background-color: #f8fafc;
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+      }
+
+      &:active:not(:disabled) {
+        background-color: #f1f5f9;
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #f8fafc;
+      }
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 0;
+        height: 1rem;
+        transition: all 0.2s;
+      }
+    }
+  }
+}

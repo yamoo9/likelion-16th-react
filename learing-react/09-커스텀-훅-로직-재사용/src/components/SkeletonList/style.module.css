@@ -1,0 +1,52 @@
+.skeletonList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: clamp(300px, 90vw, 960px);
+  margin-inline: auto;
+}
+
+.skeletonItem {
+  --skeleton-color: #e5ecf1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 1rem;
+  background-color: transparent;
+  border: 1px solid var(--skeleton-color);
+  border-radius: 0.5rem;
+
+  .lineTitle {
+    height: 1.25rem;
+    width: 35%;
+    background-color: var(--skeleton-color);
+    border-radius: 0.25rem;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .lineBody {
+    height: 0.875rem;
+    width: 100%;
+    background-color: var(--skeleton-color);
+    border-radius: 0.25rem;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    &:last-child {
+      width: 85%;
+    }
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}

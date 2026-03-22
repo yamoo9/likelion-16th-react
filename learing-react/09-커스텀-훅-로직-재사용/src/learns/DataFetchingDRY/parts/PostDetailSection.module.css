@@ -1,0 +1,257 @@
+.container {
+  width: clamp(320px, 98%, 960px);
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  font-family: 'Inter', system-ui, sans-serif;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .navLink {
+        cursor: pointer;
+        display: block;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.375rem;
+        padding: 3px 6px;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: #fff;
+        color: var(--accent-color);
+
+        &:hover:not([aria-disabled="true"]) {
+          background: #f8fafc;
+        }
+
+        &:focus-visible {
+          outline-color: currentColor;
+          outline-offset: 3px;
+          border-radius: 1px;
+        }
+
+        &[aria-disabled="true"] {
+          cursor: not-allowed;
+          filter: grayscale(1);
+          opacity: 0.5;
+        }
+      }
+
+      .idBadge {
+        min-width: 4ch;
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #64748b;
+        background: #f1f5f9;
+        padding: 5.5px;
+        border-radius: 6px;
+      }
+    }
+  }
+}
+
+.mainLayout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 포스트 본문 카드 */
+.postCard {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .postTitle {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+  }
+
+  .postMeta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+  }
+
+  .postContent {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #334155;
+    white-space: pre-wrap;
+  }
+}
+
+/* 댓글 섹션 */
+.commentSection {
+  .sectionTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .commentList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .commentItem {
+      padding: 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      background: #ffffff;
+
+      .commentHeader {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+
+        .commentUser {
+          font-weight: 600;
+          font-size: 0.875rem;
+          color: #1e293b;
+        }
+
+        .commentDate {
+          font-size: 0.75rem;
+          color: #94a3b8;
+        }
+      }
+
+      .commentText {
+        font-size: 0.9375rem;
+        color: #475569;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+/* 사이드바 */
+.sidebarCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+
+  .sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1e293b;
+  }
+
+  .otherPostList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .otherPostItem {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      & a {
+        display: block;
+        padding: 0.75rem;
+        text-decoration: none;
+
+        &:focus-visible {
+          outline-color: var(--accent-color);
+          outline-offset: 4px;
+          border-radius: 4px;
+        }
+      }
+
+      &:hover {
+        border-color: #2563eb;
+        transform: translateY(-2px);
+      }
+
+      .otherPostTitle {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 0.25rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .otherPostDate {
+        font-size: 0.75rem;
+        color: #94a3b8;
+      }
+    }
+  }
+}
+
+.skeleton {
+  padding: 2rem;
+  background: #f1f5f9;
+  border-radius: 0.5rem;
+  color: #94a3b8;
+  text-align: center;
+  font-size: 0.875rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.errorBox {
+  padding: 1rem;
+  background: #fef2f2;
+  color: #991b1b;
+  border-radius: 0.5rem;
+  border: 1px solid #fee2e2;
+}
+
+.empty {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  text-align: center;
+  padding: 1rem;
+}
