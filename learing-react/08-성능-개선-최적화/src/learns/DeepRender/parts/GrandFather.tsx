@@ -14,7 +14,7 @@ interface Props {
 
 export default function GrandFather({ count, setCount }: Props) {
 
-  console.log('%cGrandFather 렌더링', 'color: #349bf0')
+  // console.log('%cGrandFather 렌더링', 'color: #349bf0')
 
   return (
     <section className={S.container}>

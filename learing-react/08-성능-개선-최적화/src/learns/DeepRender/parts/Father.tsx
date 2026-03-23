@@ -6,7 +6,7 @@ const iconSize = 20
 
 export function Father() {
   
-  console.log('%cFather 렌더링', 'color: #3a9874')
+  // console.log('%cFather 렌더링', 'color: #3a9874')
 
   return (
     <div className={S.father}>

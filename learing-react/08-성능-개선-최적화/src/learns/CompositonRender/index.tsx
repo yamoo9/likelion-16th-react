@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { formatTime } from './util/formatTime'
 import GrandFather from './parts/GrandFather'
 import S from './style.module.css'
+import Father from './parts/Father'
+import Child from './parts/Child'
 
 const getCurrentDatetime = () => new Date()
 
@@ -9,7 +11,7 @@ export default function CompositionRender() {
   const [time, setTime] = useState(getCurrentDatetime)
   const handleGetCurrentDateTime = () => setTime(getCurrentDatetime())
 
-  const [count, setCount] = useState(0)
+  console.log('CompositionRender 렌더링')
 
   return (
     <div className={S.container}>
@@ -28,7 +30,11 @@ export default function CompositionRender() {
       </section>
 
       <div className={S.counterSection}>
-        <GrandFather count={count} setCount={setCount} />
+        <GrandFather> {/* JSX = React.createElement(GrandFather) */}
+          <Father>
+            <Child />
+          </Father>
+        </GrandFather>
       </div>
     </div>
   )
