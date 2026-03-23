@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import grandFatherImage from '@/assets/icons/grand-father.png'
 import Father from './Father'
 import S from './style.module.css'
@@ -12,7 +13,7 @@ interface Props {
   setCount: React.Dispatch<React.SetStateAction<number>>
 }
 
-export default function GrandFather({ count, setCount }: Props) {
+function GrandFather({ count, setCount }: Props) {
 
   console.log('%cGrandFather 렌더링', 'color: #349bf0')
 
@@ -31,3 +32,9 @@ export default function GrandFather({ count, setCount }: Props) {
     </section>
   )
 }
+
+export default memo(GrandFather, (prevProps, nextProps) => {
+  // return true // re-render ❌
+  // return false // re-render ✅
+  return prevProps.count === nextProps.count
+})

@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { blockThread } from '@/util/blockThread'
 import childImage from '@/assets/icons/child.png'
 import { blockThreadTime } from './GrandFather'
@@ -5,7 +6,7 @@ import S from './style.module.css'
 
 const iconSize = 18
 
-export default function Child() {
+export default memo(function Child() {
   
   // 의도적인 부하 생성 (100ms 동안 브라우저를 멈추게 함)
   blockThread(blockThreadTime * 1000)
@@ -24,4 +25,4 @@ export default function Child() {
       </p>
     </div>
   )
-}
+})

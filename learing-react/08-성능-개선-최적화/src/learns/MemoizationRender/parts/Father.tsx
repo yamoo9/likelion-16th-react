@@ -1,10 +1,11 @@
+import { memo } from 'react'
 import fatherImage from '@/assets/icons/father.png'
 import Child from './Child'
 import S from './style.module.css'
 
 const iconSize = 20
 
-export default function Father() {
+function Father() {
   
   console.log('%cFather 렌더링', 'color: #3a9874')
 
@@ -19,3 +20,5 @@ export default function Father() {
     </div>
   )
 }
+
+export default memo(Father)
