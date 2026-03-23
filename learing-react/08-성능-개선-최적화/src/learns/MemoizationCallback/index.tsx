@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { formatTime } from './util/formatTime'
 import GrandFather from './parts/GrandFather'
 import S from './style.module.css'
@@ -17,7 +17,7 @@ export default function MemoizationCallback() {
   }, [])
   
   const [count, setCount] = useState(0)
-  const incrementCount = () => setCount(count + 1)
+  const incrementCount = useCallback(() => setCount(count + 1), [count])
 
   return (
     <div className={S.container}>

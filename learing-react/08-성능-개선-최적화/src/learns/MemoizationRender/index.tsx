@@ -28,7 +28,7 @@ export default function MemoizationRender() {
       </section>
 
       <div className={S.counterSection}>
-        <GrandFather count={count} setCount={setCount} time={time} />
+        <GrandFather count={count} setCount={setCount} />
       </div>
     </div>
   )
