@@ -13,6 +13,8 @@ const delay = 50
 export function DeviceItem({ name, status, onToggle }: DeviceItemProps) {
   blockThread(delay)
 
+  console.log(`%c🔌 DeviceItem ${name} 렌더링`, 'color: #5856d6; font-weight: 500')
+
   return (
     <li className={S.deviceItem}>
       <span className={S.deviceName}>{name}</span>

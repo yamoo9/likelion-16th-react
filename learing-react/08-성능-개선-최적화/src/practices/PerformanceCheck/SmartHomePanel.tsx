@@ -33,6 +33,8 @@ export default function SmartHomePanel() {
     }
   }, [])
 
+  console.log('%c⚙️ SmartHomePanel 렌더링', 'color: #0272bc; font-weight: 700')
+
   return (
     <section className={S.panelContainer}>
       <header>
