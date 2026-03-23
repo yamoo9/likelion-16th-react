@@ -14,3 +14,15 @@ export function getExpensiveValue(count: number, min = 300, max = 400) {
   blockThread(expensiveValue)
   return expensiveValue
 }
+
+export const getFibonacci = (n: number): number => {
+  if (n <= 1) return n
+  return getFibonacci(n - 1) + getFibonacci(n - 2)
+}
+
+export const computedTime = (calcCallback: () =>  void): number => {
+  const startTime = performance.now()
+  calcCallback?.()
+  const endTime = performance.now() - startTime
+  return endTime
+}

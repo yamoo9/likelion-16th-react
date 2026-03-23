@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { formatTime } from './util/formatTime'
 import GrandFather from './parts/GrandFather'
+import { formatTime } from './util/formatTime'
 import S from './style.module.css'
 
 export default function MemoizationValue() {
@@ -20,7 +20,9 @@ export default function MemoizationValue() {
   }
 
   // 비용이 많이 드는 계산
-  // const expensiveValue = getExpensiveValue(count)
+  // - getExpensiveValue
+  // - computedTime
+  const calcurateTime = 0
 
   return (
     <div className={S.container}>
@@ -30,13 +32,11 @@ export default function MemoizationValue() {
           {formatTime(time)}
         </time>
       </section>
-
-      {/* 
+      
       <section className={S.section}>
-        <h2 className={S.title}>계산된 값</h2>
-        <p className={S.display}>{expensiveValue}</p>
+        <h3 className={S.title}>렌더링될 때마다 계산된 시간</h3>
+        <p className={S.display}>{calcurateTime.toLocaleString()+'ms'}</p>
       </section>
-      */}
 
       <div className={S.counterSection}>
         <GrandFather {...grandFatherProps} />
