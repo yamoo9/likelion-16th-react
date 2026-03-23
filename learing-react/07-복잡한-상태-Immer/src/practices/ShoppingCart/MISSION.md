@@ -5,7 +5,7 @@
 **1. 데이터 구조 및 상태 관리 (State)**
 - `CartItem` 인터페이스를 정의합니다: `id(number)`, `name(string)`, `price(number)`, `quantity(number)`.
 - `useState` 대신 **`useImmer`** 훅을 사용하여 초기 상품 목록(기계식 키보드, 게이밍 마우스 등)을 상태로 선언합니다.
-- (옵션) `inventory` 항목을 추가한 후, 상품 수량이 재고를 초과하지 못하도록 설정합니다.
+- (옵션) `inStock` 항목을 추가한 후, 상품 수량이 재고를 초과하지 못하도록 설정합니다.
 
 **2. 수량 변경 로직 구현 (Handler)**
 - 상품의 `id`와 변화량(`delta`)을 인자로 받는 `updateQuantity` 함수를 작성합니다.

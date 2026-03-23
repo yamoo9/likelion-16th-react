@@ -21,14 +21,14 @@ export const INITIAL_PRODUCTS: Product[] = [
     id: 'product-1773535481456',
     name: '애플 워치 울트라 2',
     price: 1149000,
-    quantity: 0,
+    quantity: 1,
     options: { color: '오렌지 오션', inStock: false },
   },
   {
     id: 'product-1773535492567',
     name: '스튜디오 디스플레이',
     price: 2090000,
-    quantity: 0,
+    quantity: 1,
     options: { color: '스탠다드 글래스', inStock: true },
   },
   {
