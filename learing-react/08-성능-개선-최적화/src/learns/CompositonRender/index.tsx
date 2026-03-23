@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { formatTime } from './util/formatTime'
-import GrandFather from './parts/GrandFather'
 import S from './style.module.css'
-import Father from './parts/Father'
-import Child from './parts/Child'
+
 
 const getCurrentDatetime = () => new Date()
 
-export default function CompositionRender() {
+export default function CompositionRender({children}: React.PropsWithChildren) {
   const [time, setTime] = useState(getCurrentDatetime)
   const handleGetCurrentDateTime = () => setTime(getCurrentDatetime())
 
@@ -30,11 +28,7 @@ export default function CompositionRender() {
       </section>
 
       <div className={S.counterSection}>
-        <GrandFather> {/* JSX = React.createElement(GrandFather) */}
-          <Father>
-            <Child />
-          </Father>
-        </GrandFather>
+        {children}
       </div>
     </div>
   )
