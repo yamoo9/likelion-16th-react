@@ -1,3 +1,4 @@
+import { useImmer } from 'use-immer'
 import { useState, useRef, useId } from 'react'
 import S from './TodosCurdWithImmer.module.css'
 
@@ -33,11 +34,28 @@ const INITIAL_TODOS: Todo[] = [
 ]
 
 export default function TodosCrudWithImmer() {
-  const [todos, setTodos] = useState<Todo[]>(INITIAL_TODOS)
+  // 핸들러
+  const handleAddTodo = (e: React.SubmitEvent) => {
+    e.preventDefault()
+    if (isDisabled) return
+    addTodo()
+  }
 
+  // 상태
+  const sectionId = useId()
   const [doIt, setDoIt] = useState('')
   const todoInputRef = useRef<HTMLInputElement>(null)
 
+  // 파생된 상태
+  const isDisabled = 1 > doIt.trim().length
+
+  // [읽기]
+  // const [todos, setTodos] = useState<Todo[]>(INITIAL_TODOS)
+
+  // Immer 사용 예시 코드
+  const [todos, setTodos] = useImmer(INITIAL_TODOS)
+
+  // [쓰기]
   const addTodo = () => {
     const newTodo: Todo = {
       id: `todo-${Date.now()}`,
@@ -49,42 +67,68 @@ export default function TodosCrudWithImmer() {
       },
     }
 
-    setTodos((prev) => [...prev, newTodo])
+    // setTodos((prev) => [...prev, newTodo])
+
+    // Immer 사용 예시 코드
+    setTodos((draft) => {
+      draft.push(newTodo)
+    })
+
+    // 입력 필드 초기화 & 초점 이동
     setDoIt('')
     todoInputRef.current?.focus()
   }
 
+  // [수정]
   const toggleTodo = (todoId: Todo['id']) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === todoId
-          ? {
-              ...todo,
-              done: !todo.done,
-              metadata: {
-                ...todo.metadata,
-                updatedAt: getCurrentDate(),
-              },
-            }
-          : todo,
-      ),
-    )
+    // Immer 사용 예시 코드
+    setTodos((draft) => {
+      // 초안(대체자) 배열에서 todoId와 일치하는 아이템 찾기
+      const item = draft.find((item) => item.id === todoId)
+
+      // 만약 item이 있다면?
+      if (item) {
+        // 완료(done) 여부 토글
+        item.done = !item.done
+        // 수정(updatedAt) 날짜 설정
+        item.metadata.updatedAt = getCurrentDate()
+      }
+    })
+
+    // useState 상태 관리 예시 코드
+    // setTodos((prev) =>
+    //   prev.map((todo) =>
+    //     todo.id === todoId
+    //       ? {
+    //           ...todo,
+    //           done: !todo.done,
+    //           metadata: {
+    //             ...todo.metadata,
+    //             updatedAt: getCurrentDate(),
+    //           },
+    //         }
+    //       : todo,
+    //   ),
+    // )
   }
 
+  // [삭제]
   const deleteTodo = (todoId: Todo['id']) => {
-    // if (confirm('정말 삭제하시겠습니까?')) {
-      setTodos((prev) => prev.filter((todo) => todo.id !== todoId))
-    // }
-  }
+    if (confirm('정말 삭제하시겠습니까?')) {
+      // setTodos((prev) => prev.filter((todo) => todo.id !== todoId))
 
-  const handleAddTodo = (e: React.SubmitEvent) => {
-    e.preventDefault()
-    if (isDisabled) return
-    addTodo()
-  }
+      // Immer 사용 예시 코드
+      // setTodos((draft) => {
+      //   draft.filter((item) => item.id !== todoId)
+      // })
 
-  const sectionId = useId()
-  const isDisabled = 1 > doIt.trim().length
+      setTodos((draft) => {
+        const index = draft.findIndex((item) => item.id === todoId)
+        if (index < 0) return
+        draft.splice(index, 1)
+      })
+    }
+  }
 
   return (
     <section className={S.container} aria-labelledby={sectionId}>
@@ -115,7 +159,8 @@ export default function TodosCrudWithImmer() {
 
       <ul className={S.list} aria-label="할 일 목록">
         {todos.toReversed().map((todo) => {
-          const todoTextClassName = `${S.text} ${todo.done ? S.completed : ''}`.trim()
+          const todoTextClassName =
+            `${S.text} ${todo.done ? S.completed : ''}`.trim()
           const { createdAt, updatedAt } = todo.metadata
 
           return (
