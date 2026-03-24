@@ -1,11 +1,11 @@
+import { memo } from 'react'
 import S from '../style.module.css'
 
 interface Props {
   isError: boolean
 }
 
-export default function ErrorMessage({ isError = false }: Props) {
-
+export default memo(function ErrorMessage({ isError = false }: Props) {
   if (!isError) return null
 
   return (
@@ -28,4 +28,4 @@ export default function ErrorMessage({ isError = false }: Props) {
       현재 에러 상태가 활성화되었습니다!
     </div>
   )
-}
+})
