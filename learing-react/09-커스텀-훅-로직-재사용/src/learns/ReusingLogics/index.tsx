@@ -1,4 +1,4 @@
-import { useInputV2, useToggle } from '@/hooks'
+import { useInput, useToggle } from '@/hooks'
 import S from './style.module.css'
 
 export default function ReusingLogics() {
@@ -7,15 +7,18 @@ export default function ReusingLogics() {
 
   // 간소화 버전 (simple)
   // const nameInput = useInputV1('')
-  // const emailInput = useInputV2('')
+  // const emailInput = useInputV1('')
 
-  // props, methods 반환 버전 (advanced)
-  const [nameProps, nameMethods] = useInputV2('')
-  const [emailProps, emailMethods] = useInputV2('')
+  // { props, methods } 반환 버전 (advanced)
+  // const nameInput = useInputV2('')
+  // const emailInput = useInputV2('')
+  
+  const nameInput = useInput('')
+  const emailInput = useInput('')
 
   const handleResetAll = () => {
-    nameMethods.reset()
-    emailMethods.reset()
+    nameInput.methods.reset()
+    emailInput.methods.reset()
   }
 
   return (
@@ -38,7 +41,7 @@ export default function ReusingLogics() {
             type="text"
             placeholder="이름을 입력하세요"
             className={S.input}
-            {...nameProps}
+            {...nameInput.props}
           />
         </div>
 
@@ -51,16 +54,16 @@ export default function ReusingLogics() {
             type="email"
             placeholder="이메일을 입력하세요"
             className={S.input}
-            {...emailProps}
+            {...emailInput.props}
           />
         </div>
 
         <div className={S.resultBox}>
           <p className={S.resultText}>
-            입력된 이름: <span>{nameProps.value ?? '없음'}</span>
+            입력된 이름: <span>{nameInput.props.value ?? '없음'}</span>
           </p>
           <p className={S.resultText}>
-            입력된 이메일: <span>{emailProps.value ?? '없음'}</span>
+            입력된 이메일: <span>{emailInput.props.value ?? '없음'}</span>
           </p>
         </div>
 
@@ -68,14 +71,20 @@ export default function ReusingLogics() {
         <div role="group" className={S.actionGroup}>
           <button
             type="button"
-            onClick={toggleVisible}
+            onClick={() => {
+              toggleVisible()
+              emailInput.methods.select()
+            }}
             className={S.buttonOutline}
           >
             상세 정보 {isVisible ? '숨기기' : '보기'}
           </button>
           <button
             type="button"
-            onClick={toggleDarkMode}
+            onClick={() => {
+              toggleDarkMode() 
+              nameInput.methods.focus()
+            }}
             className={S.buttonOutline}
           >
             {isDarkMode ? '라이트 모드' : '다크 모드'}

@@ -1,6 +1,11 @@
 import { useCallback, useState } from 'react'
 
-export function useInputV1(initialValue = '') {
+/**
+ * useInputV1 커스텀 훅 v1
+ * @param initialValue 초기값
+ * @returns {Object} 입력 값, 입력 핸들러, 초기화 함수
+ */
+export function useInputV1(initialValue = ''): object {
   const [value, setValue] = useState(initialValue)
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
