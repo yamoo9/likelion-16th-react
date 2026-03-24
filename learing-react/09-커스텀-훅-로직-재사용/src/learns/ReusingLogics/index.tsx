@@ -1,18 +1,21 @@
-import { useInput, useToggle } from '@/hooks'
+import { useInputV2, useToggle } from '@/hooks'
 import S from './style.module.css'
-
-// - 인풋(input) 로직
 
 export default function ReusingLogics() {
   const [isVisible, toggleVisible] = useToggle(true)
   const [isDarkMode, toggleDarkMode] = useToggle(false)
 
-  const nameInput = useInput('')
-  const emailInput = useInput('')
+  // 간소화 버전 (simple)
+  // const nameInput = useInputV1('')
+  // const emailInput = useInputV2('')
+
+  // props, methods 반환 버전 (advanced)
+  const [nameProps, nameMethods] = useInputV2('')
+  const [emailProps, emailMethods] = useInputV2('')
 
   const handleResetAll = () => {
-    nameInput.reset()
-    emailInput.reset()
+    nameMethods.reset()
+    emailMethods.reset()
   }
 
   return (
@@ -33,10 +36,9 @@ export default function ReusingLogics() {
           <input
             id="user-name"
             type="text"
-            value={nameInput.value}
-            onChange={nameInput.handleChange}
             placeholder="이름을 입력하세요"
             className={S.input}
+            {...nameProps}
           />
         </div>
 
@@ -47,19 +49,18 @@ export default function ReusingLogics() {
           <input
             id="user-email"
             type="email"
-            value={emailInput.value}
-            onChange={emailInput.handleChange}
             placeholder="이메일을 입력하세요"
             className={S.input}
+            {...emailProps}
           />
         </div>
 
         <div className={S.resultBox}>
           <p className={S.resultText}>
-            입력된 이름: <span>{nameInput.value ?? '없음'}</span>
+            입력된 이름: <span>{nameProps.value ?? '없음'}</span>
           </p>
           <p className={S.resultText}>
-            입력된 이메일: <span>{emailInput.value ?? '없음'}</span>
+            입력된 이메일: <span>{emailProps.value ?? '없음'}</span>
           </p>
         </div>
 
