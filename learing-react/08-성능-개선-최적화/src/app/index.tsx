@@ -1,10 +1,10 @@
-import { MemoizationValue } from '@/learns'
+import SmartHomePanel from '@/practices/SmartHomePanel-step-1'
 import S from './style.module.css'
 
 export default function App() {
   return (
     <div className={S.container}>
-      <MemoizationValue />
+      <SmartHomePanel />
     </div>
   )
 }

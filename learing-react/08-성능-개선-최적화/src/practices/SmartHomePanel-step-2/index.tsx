@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { DeviceItem } from './parts/DeviceItem'
-import S from './SmartHomePanel.module.css'
+import S from './style.module.css'
 
 const INITIAL_DEVICES = [
   { name: '거실 전등', status: false },
@@ -34,7 +34,7 @@ export default function SmartHomePanel() {
     }
   }, [])
 
-  console.log('%c⚙️ SmartHomePanel 렌더링', 'color: #0272bc; font-weight: 700')
+  // console.log('%c⚙️ SmartHomePanel 렌더링', 'color: #0272bc; font-weight: 700')
 
   return (
     <section className={S.panelContainer}>
