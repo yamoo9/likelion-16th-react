@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import S from './BookDetailSection.module.css'
-import { formatDate } from '@/util'
+import { formatDate } from '@/utils'
 
 // API 참고
 // - https://koreandummyjson.vercel.app/docs/books
@@ -146,10 +146,7 @@ export default function BookDetailSection() {
                 <h3 className={S.bookTitle}>{book.title}</h3>
                 <p className={S.author}>✍️ 저자: {book.author}</p>
                 <div className={S.metaInfo}>
-                  <span>
-                    출판일:{' '}
-                    {formatDate(book.publicationDate)}
-                  </span>
+                  <span>출판일: {formatDate(book.publicationDate)}</span>
                   <span>페이지: {book.totalPage}P</span>
                 </div>
               </div>
@@ -167,9 +164,7 @@ export default function BookDetailSection() {
                 reviews.map((review) => (
                   <li key={review.id} className={S.reviewItem}>
                     <div className={S.reviewHeader}>
-                      <span className={S.userName}>
-                        리뷰 #{review.userId}
-                      </span>
+                      <span className={S.userName}>리뷰 #{review.userId}</span>
                       <span className={S.rating}>
                         ⭐ {review.rating.toFixed(1)}
                       </span>
