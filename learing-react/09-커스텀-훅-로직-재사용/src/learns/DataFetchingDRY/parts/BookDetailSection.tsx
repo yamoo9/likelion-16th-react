@@ -72,6 +72,7 @@ export default function BookDetailSection() {
   // 중복 로직 2: 리뷰 목록 가져오기
   const [reviews, setReviews] = useState<Review[]>([])
   const [isReviewLoading, setIsReviewLoading] = useState(false)
+  const [reviewError, setReviewError] = useState<string | null>(null)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -88,7 +89,7 @@ export default function BookDetailSection() {
         setReviews(data.reviews)
       } catch (err) {
         if (err instanceof Error && err.name === 'AbortError') return
-        console.error(err)
+        setReviewError(err instanceof Error ? err.message : '에러 발생')
       } finally {
         if (!signal.aborted) setIsReviewLoading(false)
       }
@@ -158,6 +159,10 @@ export default function BookDetailSection() {
           <h4 className={S.sectionLabel}>독자 리뷰 ({reviews.length})</h4>
           {isReviewLoading ? (
             <div className={S.skeleton}>리뷰 로딩 중...</div>
+          ) : reviewError ? (
+            <div role="alert" className={S.errorBox}>
+              {reviewError}
+            </div>
           ) : (
             <ul className={S.reviewList}>
               {reviews.length > 0 ? (

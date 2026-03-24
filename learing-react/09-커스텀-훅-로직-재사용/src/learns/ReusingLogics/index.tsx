@@ -4,14 +4,6 @@ import S from './style.module.css'
 export default function ReusingLogics() {
   const [isVisible, toggleVisible] = useToggle(true)
   const [isDarkMode, toggleDarkMode] = useToggle(false)
-
-  // 간소화 버전 (simple)
-  // const nameInput = useInputV1('')
-  // const emailInput = useInputV1('')
-
-  // { props, methods } 반환 버전 (advanced)
-  // const nameInput = useInputV2('')
-  // const emailInput = useInputV2('')
   
   const nameInput = useInput('')
   const emailInput = useInput('')
