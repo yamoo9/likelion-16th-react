@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import GrandFather from './parts/GrandFather'
+import { useEffect, useMemo, useState } from 'react'
+import { computedTime, getExpensiveValue } from '@/util/blockThread'
 import { formatTime } from './util/formatTime'
+import GrandFather from './parts/GrandFather'
 import S from './style.module.css'
 
 export default function MemoizationValue() {
@@ -14,15 +15,18 @@ export default function MemoizationValue() {
   const [count, setCount] = useState(1)
 
   // GrandFather 컴포넌트에 props 객체로 전달할 경우
-  const grandFatherProps = {
+  const grandFatherProps = useMemo(() => ({
     count,
     onIncreament: () => setCount((prev) => prev + 1),
-  }
+  }), [count])
 
   // 비용이 많이 드는 계산
   // - getExpensiveValue
   // - computedTime
-  const calcurateTime = 0
+  const calcurateTime = useMemo(
+    () => computedTime(() => getExpensiveValue(count)),
+    [count],
+  )
 
   return (
     <div className={S.container}>
