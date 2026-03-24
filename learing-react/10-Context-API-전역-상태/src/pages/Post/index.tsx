@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { wait } from '@/util'
+import { wait } from '@/utils'
 import S from './style.module.css'
 
 export default function PostPage() {

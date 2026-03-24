@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { createValidator } from '@/util'
+import { createValidator } from '@/utils'
 import { PW_PATTERN } from '../patterns'
 import { PasswordInput } from './PasswordInput'
 import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'

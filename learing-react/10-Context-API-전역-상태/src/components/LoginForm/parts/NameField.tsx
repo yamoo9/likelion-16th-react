@@ -1,5 +1,5 @@
 import { useId, useState, type ChangeEvent } from 'react'
-import { createValidator } from '@/util'
+import { createValidator } from '@/utils'
 import ShowErrorOrInfoMessage from './ShowErrorOrInfoMessage'
 import S from '../style.module.css'
 

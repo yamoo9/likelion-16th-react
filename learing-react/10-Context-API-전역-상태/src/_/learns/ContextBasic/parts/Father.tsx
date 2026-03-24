@@ -1,7 +1,7 @@
-import Child from './Child'
 import fatherIcon from '../icons/father.png'
-import S from '../ContextBasic.module.css'
 import type { FamilyProps } from './GrandFather'
+import Child from './Child'
+import S from '../style.module.css'
 
 export default function Father(props: FamilyProps) {
   return (

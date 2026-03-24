@@ -1,8 +1,8 @@
-import GrandFather from './parts/GrandFather'
-import S from './ContextBasic.module.css'
 import { useState } from 'react'
+import GrandFather from './parts/GrandFather'
+import S from './style.module.css'
 
-export default function ContextAPIBasic() {
+export default function ContextBasic() {
   const [name, setName] = useState('박하루')
   const [email, setEmail] = useState('haru@child.family')
   const [checked, setChecked] = useState(false)

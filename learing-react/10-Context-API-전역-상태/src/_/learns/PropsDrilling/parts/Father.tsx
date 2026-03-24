@@ -1,6 +1,6 @@
 import Child from './Child'
 import fatherIcon from '../icons/father.png'
-import S from '../ContextAdvanced.module.css'
+import S from '../style.module.css'
 
 export default function Father() {
   return (
@@ -9,7 +9,7 @@ export default function Father() {
         <img src={fatherIcon} alt="" width={26} height={26} />{' '}
         아버지 (박준오)
       </h3>
-      <p>(응? 뭐가 지나갔나?)</p>
+      <p>(나는 왜... 중간에서 배달을...)</p>
       <Child />
     </section>
   )

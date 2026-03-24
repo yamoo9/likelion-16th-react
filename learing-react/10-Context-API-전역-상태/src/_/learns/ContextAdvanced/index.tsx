@@ -1,20 +1,20 @@
 import { createContext, useState } from 'react'
 import GrandFather from './parts/GrandFather'
-import S from './ContextAdvanced.module.css'
+import S from './style.module.css'
 
-type DispatchAction<T> = React.Dispatch<React.SetStateAction<T>>
+type SetAction<T> = React.Dispatch<React.SetStateAction<T>>
 
 interface FamilyContextValue {
   name: string
+  setName: SetAction<string>
   email: string
+  setEmail: SetAction<string>
   checked: boolean
-  setName: DispatchAction<string>
-  setEmail: DispatchAction<string>
-  setChecked: DispatchAction<boolean>
+  setChecked: SetAction<boolean>
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const FamilyContext = createContext<null | FamilyContextValue>(null)
+export const FamilyContext = createContext<null|FamilyContextValue>(null)
 
 export default function ContextAdvanced() {
   const [name, setName] = useState('박하루')

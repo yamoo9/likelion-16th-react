@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import childIcon from '../icons/child.png'
-import { FamilyContext } from '../ContextAdvanced'
-import S from '../ContextAdvanced.module.css'
+import { FamilyContext } from '../index'
+import S from '../style.module.css'
 
 export default function Child() {
   const familyContextValue = useContext(FamilyContext)

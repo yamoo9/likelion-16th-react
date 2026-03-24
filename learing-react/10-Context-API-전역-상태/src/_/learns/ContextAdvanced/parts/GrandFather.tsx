@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import grandFatherIcon from '../icons/grand-father.png'
-import { FamilyContext } from '../ContextAdvanced'
+import { FamilyContext } from '../index'
 import Father from './Father'
-import S from '../ContextAdvanced.module.css'
+import S from '../style.module.css'
 
 export default function GrandFather() {
 

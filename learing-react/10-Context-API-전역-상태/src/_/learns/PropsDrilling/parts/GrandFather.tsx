@@ -1,6 +1,6 @@
 import Father from './Father'
 import grandFatherIcon from '../icons/grand-father.png'
-import S from '../PropsDrilling.module.css'
+import S from '../style.module.css'
 
 export default function GrandFather() {
   const name = '박하루'

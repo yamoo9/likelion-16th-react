@@ -1,6 +1,6 @@
 import childIcon from '../icons/child.png'
-import S from '../ContextBasic.module.css'
 import type { FamilyProps } from './GrandFather'
+import S from '../style.module.css'
 
 export default function Child(props: FamilyProps) {
   const { name, setName, email, setEmail, checked, setChecked } = props

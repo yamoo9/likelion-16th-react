@@ -1,6 +1,6 @@
-import Father from './Father'
 import grandFatherIcon from '../icons/grand-father.png'
-import S from '../ContextBasic.module.css'
+import Father from './Father'
+import S from '../style.module.css'
 
 type DispatchAction<T> = React.Dispatch<React.SetStateAction<T>>
 

@@ -1,5 +1,5 @@
 import childIcon from '../icons/child.png'
-import S from '../PropsDrilling.module.css'
+import S from '../style.module.css'
 
 export default function Child() {
   const name = '박하루'

@@ -1,5 +1,5 @@
-import S from './PropsDrilling.module.css'
 import GrandFather from './parts/GrandFather'
+import S from './style.module.css'
 
 export default function PropsDrilling() {
 

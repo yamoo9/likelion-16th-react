@@ -1,5 +1,4 @@
 export async function request<T>(url: string, options: RequestInit = {}) {
-  
   // 기본 헤더 설정
   const defaultHeaders = {
     'Content-Type': 'application/json',
