@@ -10,10 +10,10 @@ const iconSize = 22
 
 interface Props {
   count: number
-  onIncreament: () => void
+  setCount: React.Dispatch<React.SetStateAction<number>>
 }
 
-function GrandFather({ count, onIncreament }: Props) {
+function GrandFather({ count, setCount }: Props) {
 
   console.log('%cGrandFather 렌더링', 'color: #349bf0')
 
@@ -24,7 +24,7 @@ function GrandFather({ count, onIncreament }: Props) {
           <img src={grandFatherImage} alt="" width={iconSize} height={iconSize} />
           그랜 파더 카운트: {count}
         </h2>
-        <button type="button" aria-label='카운트 1증가' onClick={onIncreament}>
+        <button type="button" aria-label='카운트 1증가' onClick={() => setCount(count + 1)}>
           카운트 ↑
         </button>
         <Father />
