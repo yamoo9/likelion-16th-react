@@ -1,0 +1,43 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <style>
+    /* 기본값: 라이트 모드 (어두운 글자) */
+    .logo-text-poke { fill: #1e293b; transition: fill 0.3s ease; }
+    .logo-text-dot { fill: #e6684d; }
+    
+    /* 다크 모드 감지: 밝은 글자로 변경 */
+    @media (prefers-color-scheme: dark) {
+      .logo-text-poke { fill: #F1F5F9; }
+    }
+  </style>
+  <!-- 몬스터볼 섹션 -->
+  <g transform="translate(10, 10)">
+    <g>
+      <!-- 테두리 -->
+      <path d="M8 0H32V4H36V8H40V32H36V36H32V40H8V36H4V32H0V8H4V4H8V0Z" fill="#374151"/>
+      <!-- 상단 레드 -->
+      <path d="M8 4H32V8H36V18H4V8H8V4Z" fill="#e6684d"/>
+      <!-- 하단 화이트 -->
+      <path d="M4 22H36V32H32V36H8V32H4V22Z" fill="#F8FAFC"/>
+      <!-- 중앙 가로선 및 버튼 -->
+      <rect x="0" y="18" width="40" height="4" fill="#374151"/>
+      <rect x="14" y="14" width="12" height="12" fill="#374151"/>
+      <rect x="16" y="16" width="8" height="8" fill="#F8FAFC"/>
+      <rect x="18" y="18" width="4" height="4" fill="#374151"/>
+      <!-- 하이라이트 -->
+      <rect x="8" y="8" width="4" height="4" fill="#FFFFFF" opacity="0.3"/>
+      <!-- 흔들림 애니메이션 -->
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        values="0 20 20; -6 20 20; 6 20 20; -6 20 20; 6 20 20; 0 20 20; 0 20 20" 
+        keyTimes="0; 0.05; 0.1; 0.15; 0.2; 0.25; 1" 
+        dur="3s" 
+        repeatCount="indefinite" />
+    </g>
+  </g>
+  <!-- 반응형 텍스트 로고 섹션 -->
+  <text x="60" y="41" font-family="Pretendard, Inter, system-ui, sans-serif" font-size="30" font-weight="900" letter-spacing="-0.04em">
+    <tspan class="logo-text-poke">Poke</tspan>
+    <tspan class="logo-text-dot" dx="2">dot</tspan>
+  </text>
+</svg>

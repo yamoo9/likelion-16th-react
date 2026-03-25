@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>갤럭시 익스플로러 (바닐라 SPA)</title>
+    <meta name="description" content="바닐라 싱글 페이지 애플리케이션(SPA) 작동 원리를 학습합니다." />
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./script.js"></script>
+  </head>
+
+  <body>
+
+    <header>
+      <h1>🚀 갤럭시 익스플로러</h1>
+      <nav class="nav" aria-label="탐사지 선택">
+        <ul>
+          <li><a href="/explore?planet=mars&level=1" class="nav-link">화성 탐사</a></li>
+          <li><a href="/explore?planet=jupiter&level=3" class="nav-link">목성 탐사</a></li>
+          <li><a href="/explore?planet=saturn&level=5" class="nav-link">토성 탐사</a></li>
+          <li><a href="/unknown" class="nav-link">알 수 없는 탐사</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="app" aria-live="polite">
+      <noscript>⚠️ 이 애플리케이션은 자바스크립트가 활성화되어야 사용 가능합니다.</noscript>
+      <p>탐사 버튼을 눌러 행성 데이터를 수신하세요.</p>
+    </main>
+
+  </body>
+
+</html>

@@ -1,0 +1,28 @@
+.main {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--container-padding);
+}
+
+.headerSection {
+  margin-block: var(--space-4xl);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--font-size-h1);
+  margin-block-end: var(--space-xs);
+  color: var(--color-text);
+}
+
+.subtitle {
+  display: inline-block;
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  background-image: linear-gradient(to bottom, hsl(var(--primary-raw)), hsl(var(--primary-dark-raw)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}

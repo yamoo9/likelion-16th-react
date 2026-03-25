@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  gap: 20px;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+
+  & .link {
+    text-decoration: none;
+    color: #666;
+  }
+
+  /* active 클래스는 NavLink에서 동적으로 주입 */
+  & .active {
+    color: #007bff;
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+  }
+}

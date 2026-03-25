@@ -1,0 +1,20 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  background-color: var(--color-danger-light);
+  border: var(--border-width-thin) solid var(--color-danger);
+  border-radius: var(--border-radius-md);
+  color: var(--color-danger-dark);
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.icon {
+  font-size: var(--font-size-2xl);
+  margin-block-end: var(--space-md);
+}

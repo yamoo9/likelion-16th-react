@@ -1,0 +1,129 @@
+.formSection {
+  background-color: light-dark(
+    hsla(var(--white-raw), 1), 
+    hsla(var(--gray-900-raw), 0.5)
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-xl);
+  width: 100%;
+  max-width: 400px;
+  
+  transition: transform var(--transition-fast) var(--easing-standard);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground);
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background-color: hsla(var(--danger-raw), 0.1);
+  border: var(--border-width-thin) solid hsla(var(--danger-raw), 0.2);
+  border-radius: var(--border-radius-md);
+  color: var(--color-danger);
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  
+  /* 애니메이션 효과 */
+  animation: shake 0.4s var(--easing-standard);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  
+  & label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-muted-foreground);
+    margin-left: var(--space-xxs);
+  }
+  
+  & input {
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-background);
+    border: var(--border-width-thin) solid var(--color-input);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-md);
+    color: var(--color-foreground);
+    transition: all var(--transition-fast) var(--easing-standard);
+    
+    &::placeholder {
+      color: var(--color-muted-foreground);
+      opacity: 0.5;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px hsla(var(--primary-raw), 0.2);
+    }
+
+    &:disabled {
+      background-color: var(--color-muted);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+}
+
+.loginButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--button-padding);
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--easing-standard);
+  margin-top: var(--space-sm);
+  
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--color-muted);
+    color: var(--color-muted-foreground);
+    opacity: 0.8;
+  }
+}
+
+/* 에러 발생 시 흔들림 효과 */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}

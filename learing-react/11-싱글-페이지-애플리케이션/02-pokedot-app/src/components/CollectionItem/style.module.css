@@ -1,0 +1,76 @@
+.collectionItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: var(--border-width-thin) solid var(--color-gray-300);
+  border-radius: var(--border-radius-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.collectionItemActions {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.nickname {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nicknameText {
+  font-weight: 500;
+}
+
+.noNickname {
+  color: var(--color-gray-500);
+  font-style: italic;
+}
+
+.nicknameEdit {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.nicknameInput {
+  flex: 1;
+  padding: var(--space-xs);
+  border: var(--border-width-thin) solid var(--color-gray-400);
+  border-radius: var(--border-radius-sm);
+}
+
+.saveButton,
+.editButton {
+  padding: var(--space-xs);
+  background-color: var(--color-success);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+.editButton {
+  background-color: var(--color-info);
+}
+
+.collectionDate {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+}
+
+.removeButton {
+  padding: var(--space-xs);
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  margin-top: var(--space-xs);
+}

@@ -1,0 +1,12 @@
+.layout {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  & .content {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+  }
+}

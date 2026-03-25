@@ -1,0 +1,100 @@
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f4f6;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 2rem;
+    background: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    color: #4b5563;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f9fafb;
+      color: #111827;
+      border-color: #d1d5db;
+    }
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    border-top: 2px solid #f3f4f6;
+    border-bottom: 2px solid #f3f4f6;
+    padding: 1.5rem 0;
+
+    li {
+      font-size: 1.125rem;
+      color: #374151;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+
+      &:last-child {
+        margin-bottom: 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: #2563eb;
+      }
+  
+      &:first-child {
+        font-size: 0.875rem;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+
+        &::before {
+          content: "MOVIE ID : ";
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    color: #6b7280;
+    line-height: 1.6;
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    margin: 1rem;
+    padding: 1.5rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    ul li:last-child {
+      font-size: 1.25rem;
+    }
+  }
+}

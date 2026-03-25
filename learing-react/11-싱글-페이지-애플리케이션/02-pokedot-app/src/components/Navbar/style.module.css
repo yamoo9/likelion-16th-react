@@ -1,0 +1,135 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  border-block-end: 1px solid var(--color-border);
+  background-color: var(--color-navbar-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.container {
+  display: flex;
+  height: 64px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.logo {
+  flex-shrink: 0;
+  margin: 0;
+
+  & a {
+    display: flex;
+    align-items: center;
+    width: 140px;
+    
+    &:focus-visible {
+      border-radius: var(--border-radius-xs);
+    }
+  }
+}
+
+.rightContent {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.userGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.username {
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.rank {
+  color: var(--color-muted-foreground);
+  font-size: var(--font-size-xs);
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: var(--border-radius-sm);
+
+  .emoji {
+    font-size: var(--font-size-lg);
+  }
+
+  &:hover {
+    background-color: var(--color-gray-100);
+  }
+}
+
+.utilGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.logoutButton,
+.loginButton {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted-foreground);
+  background: none;
+  border: none;
+  white-space: nowrap;
+  border-radius: var(--border-radius-sm);
+
+  &:hover {
+    color: var(--color-foreground);
+    background-color: var(--color-gray-100);
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 14px;
+  background-color: var(--color-border);
+}
+
+/* 📱 모바일 대응 */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  /* 사용자 아이디(등급) 숨김 */
+  .userInfo {
+    display: none;
+  }
+
+  /* 간격 좁히기 */
+  .rightContent {
+    gap: var(--space-md);
+  }
+
+  .userGroup {
+    gap: var(--space-md);
+  }
+}

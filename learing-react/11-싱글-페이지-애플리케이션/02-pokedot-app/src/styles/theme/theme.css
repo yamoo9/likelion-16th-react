@@ -1,0 +1,396 @@
+/* --------------------------------------------------------------------------
+   기초 컬러 토큰 (PRIMITIVE RAW HSL)
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* 무채색 계열 (Gray - H:0) */
+  --gray-50-raw: 220, 15%, 98.5%;
+  --gray-100-raw: 220, 15%, 98%;
+  --gray-200-raw: 220, 15%, 95%;
+  --gray-300-raw: 220, 10%, 90%;
+  --gray-400-raw: 220, 10%, 80%;
+  --gray-500-raw: 220, 8%, 60%;
+  --gray-600-raw: 220, 8%, 45%;
+  --gray-700-raw: 220, 10%, 35%;
+  --gray-800-raw: 220, 12%, 25%;
+  --gray-900-raw: 220, 15%, 15%;
+  --gray-950-raw: 220, 15%, 10%;
+
+  /* 청회색 계열 (Slate - H:210) */
+  --slate-50-raw: 210, 36%, 96%;
+  --slate-100-raw: 210, 31%, 91%;
+  --slate-200-raw: 211, 28%, 80%;
+  --slate-300-raw: 211, 25%, 71%;
+  --slate-400-raw: 209, 21%, 60%;
+  --slate-500-raw: 210, 22%, 49%;
+  --slate-600-raw: 210, 28%, 39%;
+  --slate-700-raw: 210, 34%, 30%;
+  --slate-800-raw: 211, 39%, 23%;
+  --slate-900-raw: 209, 61%, 16%;
+  --slate-950-raw: 210, 60%, 8%;
+
+  /* 대지 계열 (Stone - H:10) */
+  --stone-50-raw: 10, 1%, 95%;
+  --stone-100-raw: 10, 1%, 90%;
+  --stone-200-raw: 10, 1%, 80%;
+  --stone-300-raw: 10, 1%, 70%;
+  --stone-400-raw: 10, 1%, 60%;
+  --stone-500-raw: 10, 1%, 50%;
+  --stone-600-raw: 10, 1%, 40%;
+  --stone-700-raw: 10, 1%, 30%;
+  --stone-800-raw: 10, 1%, 20%;
+  --stone-900-raw: 10, 1%, 10%;
+  --stone-950-raw: 10, 1%, 5%;
+
+  /* 자연 계열 (Nature - H:120) */
+  --nature-50-raw: 120, 1%, 95%;
+  --nature-100-raw: 120, 1%, 90%;
+  --nature-200-raw: 120, 1%, 80%;
+  --nature-300-raw: 120, 1%, 70%;
+  --nature-400-raw: 120, 1%, 60%;
+  --nature-500-raw: 120, 1%, 50%;
+  --nature-600-raw: 120, 1%, 40%;
+  --nature-700-raw: 120, 1%, 30%;
+  --nature-800-raw: 120, 1%, 20%;
+  --nature-900-raw: 120, 1%, 10%;
+  --nature-950-raw: 120, 1%, 5%;
+
+  /* 유채색 팔레트 (Vibrant Colors) */
+  --red-50-raw: 0, 45%, 95%;
+  --red-100-raw: 0, 45%, 90%;
+  --red-200-raw: 0, 45%, 80%;
+  --red-300-raw: 0, 45%, 70%;
+  --red-400-raw: 0, 45%, 60%;
+  --red-500-raw: 0, 45%, 50%;
+  --red-600-raw: 0, 45%, 40%;
+  --red-700-raw: 0, 45%, 30%;
+  --red-800-raw: 0, 45%, 20%;
+  --red-900-raw: 0, 45%, 10%;
+  --red-950-raw: 0, 45%, 5%;
+
+  --orange-50-raw: 20, 65%, 95%;
+  --orange-100-raw: 20, 65%, 90%;
+  --orange-200-raw: 20, 65%, 80%;
+  --orange-300-raw: 20, 65%, 70%;
+  --orange-400-raw: 20, 65%, 60%;
+  --orange-500-raw: 20, 65%, 50%;
+  --orange-600-raw: 20, 65%, 40%;
+  --orange-700-raw: 20, 65%, 30%;
+  --orange-800-raw: 20, 65%, 20%;
+  --orange-900-raw: 20, 65%, 10%;
+  --orange-950-raw: 20, 65%, 5%;
+
+  --yellow-50-raw: 50, 90%, 95%;
+  --yellow-100-raw: 50, 90%, 90%;
+  --yellow-200-raw: 50, 90%, 80%;
+  --yellow-300-raw: 50, 90%, 70%;
+  --yellow-400-raw: 50, 90%, 60%;
+  --yellow-500-raw: 50, 90%, 50%;
+  --yellow-600-raw: 50, 90%, 40%;
+  --yellow-700-raw: 50, 90%, 30%;
+  --yellow-800-raw: 50, 90%, 20%;
+  --yellow-900-raw: 50, 90%, 10%;
+  --yellow-950-raw: 50, 90%, 5%;
+
+  --green-50-raw: 150, 90%, 95%;
+  --green-100-raw: 150, 90%, 90%;
+  --green-200-raw: 150, 90%, 80%;
+  --green-300-raw: 150, 90%, 70%;
+  --green-400-raw: 150, 90%, 60%;
+  --green-500-raw: 150, 90%, 50%;
+  --green-600-raw: 150, 90%, 40%;
+  --green-700-raw: 150, 90%, 30%;
+  --green-800-raw: 150, 90%, 20%;
+  --green-900-raw: 150, 90%, 10%;
+  --green-950-raw: 150, 90%, 5%;
+
+  --blue-50-raw: 220, 90%, 95%;
+  --blue-100-raw: 220, 90%, 90%;
+  --blue-200-raw: 220, 90%, 80%;
+  --blue-300-raw: 220, 90%, 70%;
+  --blue-400-raw: 220, 90%, 60%;
+  --blue-500-raw: 220, 90%, 50%;
+  --blue-600-raw: 220, 90%, 40%;
+  --blue-700-raw: 220, 90%, 30%;
+  --blue-800-raw: 220, 90%, 20%;
+  --blue-900-raw: 220, 90%, 10%;
+  --blue-950-raw: 220, 90%, 5%;
+
+  --purple-50-raw: 260, 30%, 95%;
+  --purple-100-raw: 260, 30%, 90%;
+  --purple-200-raw: 260, 30%, 80%;
+  --purple-300-raw: 260, 30%, 70%;
+  --purple-400-raw: 260, 30%, 60%;
+  --purple-500-raw: 260, 30%, 50%;
+  --purple-600-raw: 260, 30%, 40%;
+  --purple-700-raw: 260, 30%, 30%;
+  --purple-800-raw: 260, 30%, 20%;
+  --purple-900-raw: 260, 30%, 10%;
+  --purple-950-raw: 260, 30%, 5%;
+
+  --pink-50-raw: 350, 45%, 95%;
+  --pink-100-raw: 350, 45%, 90%;
+  --pink-200-raw: 350, 45%, 80%;
+  --pink-300-raw: 350, 45%, 70%;
+  --pink-400-raw: 350, 45%, 60%;
+  --pink-500-raw: 350, 45%, 50%;
+  --pink-600-raw: 350, 45%, 40%;
+  --pink-700-raw: 350, 45%, 30%;
+  --pink-800-raw: 350, 45%, 20%;
+  --pink-900-raw: 350, 45%, 10%;
+  --pink-950-raw: 350, 45%, 5%;
+}
+
+/* --------------------------------------------------------------------------
+   브랜드 및 상태 컬러 토큰 (BRAND & STATUS RAW)
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* 브랜드 컬러 기초값 */
+  --primary-raw: 11, 75%, 60%;
+  --primary-dark-raw: 11, 65%, 50%;
+  --primary-light-raw: 11, 85%, 75%;
+  
+  --secondary-raw: 222, 45%, 55%;
+  --secondary-dark-raw: 222, 40%, 45%;
+  --secondary-light-raw: 222, 50%, 70%;
+
+  /* 절대 중립 컬러 기초값 */
+  --black-raw: 220, 15%, 10%;
+  --white-raw: 0, 0%, 100%;
+
+  /* 상태 컬러 기초값 */
+  --success-raw: 150, 45%, 50%;
+  --success-light-raw: 150, 45%, 65%;
+  --success-dark-raw: 150, 50%, 35%;
+  
+  --danger-raw: 355, 80%, 65%;
+  --danger-light-raw: 355, 60%, 65%;
+  --danger-dark-raw: 355, 60%, 20%;
+  
+  --warning-raw: 40, 85%, 60%;
+  --warning-light-raw: 40, 85%, 65%;
+  --warning-dark-raw: 40, 80%, 45%;
+  
+  --info-raw: 200, 70%, 60%;
+  --info-light-raw: 200, 70%, 65%;
+  --info-dark-raw: 200, 60%, 45%;
+}
+
+/* --------------------------------------------------------------------------
+   3. 포켓몬 타입 컬러 토큰 (POKEMON TYPE RAW)
+   -------------------------------------------------------------------------- */
+
+:root {
+  --type-normal-raw: 60, 10%, 65%;
+  --type-fire-raw: 18, 70%, 60%;
+  --type-water-raw: 200, 60%, 60%;
+  --type-grass-raw: 110, 45%, 55%;
+  --type-electric-raw: 48, 85%, 60%;
+  --type-ice-raw: 185, 50%, 75%;
+  --type-fighting-raw: 5, 50%, 55%;
+  --type-poison-raw: 280, 45%, 60%;
+  --type-ground-raw: 40, 45%, 60%;
+  --type-flying-raw: 230, 60%, 75%;
+  --type-psychic-raw: 340, 75%, 70%;
+  --type-bug-raw: 80, 50%, 50%;
+  --type-rock-raw: 45, 30%, 55%;
+  --type-ghost-raw: 255, 35%, 60%;
+  --type-dragon-raw: 255, 60%, 65%;
+  --type-dark-raw: 20, 15%, 45%;
+  --type-steel-raw: 210, 20%, 75%;
+  --type-fairy-raw: 340, 50%, 80%;
+}
+
+/* --------------------------------------------------------------------------
+   4. 시맨틱 컬러 토큰 (THEME LAYER)
+   -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light dark;
+
+  /* 기본 배경 및 텍스트 */
+  --color-background: light-dark(hsl(var(--white-raw)), hsl(var(--gray-950-raw)));
+  --color-text: light-dark(hsl(var(--gray-900-raw)), hsl(var(--gray-100-raw)));
+
+  /* 브랜드 시맨틱 */
+  --color-primary: light-dark(hsl(var(--primary-raw)), hsl(var(--primary-dark-raw)));
+  --color-primary-dark: light-dark(hsl(var(--primary-dark-raw)), hsl(var(--primary-raw)));
+  --color-primary-light: light-dark(hsl(var(--primary-light-raw)), hsl(var(--primary-dark-raw)));
+  --color-primary-foreground: hsl(var(--white-raw));
+  
+  --color-secondary: light-dark(hsl(var(--secondary-raw)), hsl(var(--secondary-light-raw)));
+  --color-secondary-dark: light-dark(hsl(var(--secondary-dark-raw)), hsl(var(--secondary-raw)));
+  --color-secondary-light: light-dark(hsl(var(--secondary-light-raw)), hsl(var(--secondary-dark-raw)));
+
+  /* UI 요소 시맨틱 */
+  --color-border: light-dark(hsl(var(--gray-200-raw)), hsl(var(--gray-900-raw)));
+  --color-input: light-dark(hsl(var(--gray-300-raw)), hsl(var(--gray-800-raw)));
+  --color-ring: light-dark(hsl(var(--primary-raw)), hsl(var(--primary-light-raw)));
+  
+  --color-foreground: light-dark(hsl(var(--gray-900-raw)), hsl(var(--gray-100-raw)));
+  --color-muted: light-dark(hsl(var(--gray-200-raw)), hsl(var(--gray-800-raw)));
+  --color-muted-foreground: light-dark(hsl(var(--gray-600-raw)), hsl(var(--gray-400-raw)));
+  
+  --color-accent: light-dark(hsl(var(--gray-100-raw)), hsl(var(--gray-800-raw)));
+  --color-accent-foreground: light-dark(hsl(var(--gray-900-raw)), hsl(var(--gray-100-raw)));
+
+  /* UI 컴포넌트 시맨틱 */
+  --color-navbar-bg: light-dark(hsla(var(--white-raw), 0.8), hsla(var(--gray-950-raw), 0.8));
+
+  /* 중립 컬러 시맨틱 */
+  --color-black: light-dark(hsl(var(--black-raw)), hsl(var(--white-raw)));
+  --color-white: light-dark(hsl(var(--white-raw)), hsl(var(--gray-950-raw)));
+  --color-gray-50: light-dark(hsl(var(--gray-50-raw)), hsl(var(--gray-900-raw)));
+  --color-gray-100: light-dark(hsl(var(--gray-100-raw)), hsl(var(--gray-800-raw)));
+  --color-gray-200: light-dark(hsl(var(--gray-200-raw)), hsl(var(--gray-700-raw)));
+  --color-gray-300: light-dark(hsl(var(--gray-300-raw)), hsl(var(--gray-600-raw)));
+  --color-gray-400: light-dark(hsl(var(--gray-400-raw)), hsl(var(--gray-500-raw)));
+  --color-gray-500: light-dark(hsl(var(--gray-500-raw)), hsl(var(--gray-400-raw)));
+  --color-gray-600: light-dark(hsl(var(--gray-600-raw)), hsl(var(--gray-300-raw)));
+  --color-gray-700: light-dark(hsl(var(--gray-700-raw)), hsl(var(--gray-200-raw)));
+  --color-gray-800: light-dark(hsl(var(--gray-800-raw)), hsl(var(--gray-100-raw)));
+  --color-gray-900: light-dark(hsl(var(--gray-900-raw)), hsl(var(--white-raw)));
+  --color-gray-950: light-dark(hsl(var(--gray-950-raw)), hsl(var(--white-raw)));
+
+  /* 상태 시맨틱 */
+  --color-success: light-dark(hsl(var(--success-raw)), hsl(var(--success-dark-raw)));
+  --color-success-light: light-dark(hsl(var(--success-light-raw)), hsl(var(--success-dark-raw)));
+  --color-success-dark: light-dark(hsl(var(--success-dark-raw)), hsl(var(--success-light-raw)));
+  
+  --color-danger: light-dark(hsl(var(--danger-raw)), hsl(var(--danger-light-raw)));
+  --color-danger-light: light-dark(hsl(var(--danger-light-raw)), hsl(var(--danger-dark-raw)));
+  --color-danger-dark: light-dark(hsl(var(--danger-dark-raw)), hsl(var(--danger-light-raw)));
+  
+  --color-warning: light-dark(hsl(var(--warning-raw)), hsl(var(--warning-dark-raw)));
+  --color-warning-light: light-dark(hsl(var(--warning-light-raw)), hsl(var(--warning-dark-raw)));
+  --color-warning-dark: light-dark(hsl(var(--warning-dark-raw)), hsl(var(--warning-light-raw)));
+  
+  --color-info: light-dark(hsl(var(--info-raw)), hsl(var(--info-dark-raw)));
+  --color-info-light: light-dark(hsl(var(--info-light-raw)), hsl(var(--info-dark-raw)));
+  --color-info-dark: light-dark(hsl(var(--info-dark-raw)), hsl(var(--info-light-raw)));
+
+  /* 포켓몬 타입 시맨틱 */
+  --color-type-normal: light-dark(hsl(var(--type-normal-raw)), hsl(var(--gray-600-raw)));
+  --color-type-fire: light-dark(hsl(var(--type-fire-raw)), hsl(var(--type-fire-raw)));
+  --color-type-water: light-dark(hsl(var(--type-water-raw)), hsl(var(--type-water-raw)));
+  --color-type-grass: light-dark(hsl(var(--type-grass-raw)), hsl(var(--type-grass-raw)));
+  --color-type-electric: light-dark(hsl(var(--type-electric-raw)), hsl(var(--type-electric-raw)));
+  --color-type-ice: light-dark(hsl(var(--type-ice-raw)), hsl(var(--type-ice-raw)));
+  --color-type-fighting: light-dark(hsl(var(--type-fighting-raw)), hsl(var(--type-fighting-raw)));
+  --color-type-poison: light-dark(hsl(var(--type-poison-raw)), hsl(var(--type-poison-raw)));
+  --color-type-ground: light-dark(hsl(var(--type-ground-raw)), hsl(var(--type-ground-raw)));
+  --color-type-flying: light-dark(hsl(var(--type-flying-raw)), hsl(var(--type-flying-raw)));
+  --color-type-psychic: light-dark(hsl(var(--type-psychic-raw)), hsl(var(--type-psychic-raw)));
+  --color-type-bug: light-dark(hsl(var(--type-bug-raw)), hsl(var(--type-bug-raw)));
+  --color-type-rock: light-dark(hsl(var(--type-rock-raw)), hsl(var(--type-rock-raw)));
+  --color-type-ghost: light-dark(hsl(var(--type-ghost-raw)), hsl(var(--type-ghost-raw)));
+  --color-type-dragon: light-dark(hsl(var(--type-dragon-raw)), hsl(var(--type-dragon-raw)));
+  --color-type-dark: light-dark(hsl(var(--type-dark-raw)), hsl(var(--gray-700-raw)));
+  --color-type-steel: light-dark(hsl(var(--type-steel-raw)), hsl(var(--type-steel-raw)));
+  --color-type-fairy: light-dark(hsl(var(--type-fairy-raw)), hsl(var(--type-fairy-raw)));
+}
+
+/* --------------------------------------------------------------------------
+   5. 간격 및 레이아웃 토큰 (SPACING & LAYOUT)
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* 기본 간격 스케일 */
+  --space-xxs: 0.25rem;  /* 4px */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 0.75rem;   /* 12px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+  --space-3xl: 4rem;     /* 64px */
+  --space-4xl: 5rem;     /* 80px */
+  
+  /* 컴포넌트 전용 간격 */
+  --container-padding: var(--space-md);
+  --container-padding-desktop: var(--space-xl);
+  --section-spacing: var(--space-2xl);
+  --card-padding: var(--space-md);
+  --input-padding: var(--space-md);
+  --button-padding: var(--space-md) var(--space-lg);
+
+  /* 레이아웃 브레이크포인트 */
+  --container-max-width: 1200px;
+  --container-narrow-max-width: 800px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}
+
+/* --------------------------------------------------------------------------
+   6. 타이포그래피 토큰 (TYPOGRAPHY)
+   -------------------------------------------------------------------------- */
+
+:root {
+  --font-family-base: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3rem;
+  --font-size-5xl: 4rem;
+  
+  /* 헤딩 시맨틱 */
+  --font-size-h1: var(--font-size-3xl);
+  --font-size-h2: var(--font-size-2xl);
+  --font-size-h3: var(--font-size-xl);
+  --font-size-h4: var(--font-size-lg);
+  --font-size-h5: var(--font-size-md);
+  --font-size-h6: var(--font-size-sm);
+}
+
+/* --------------------------------------------------------------------------
+   7. 테두리 및 그림자 토큰 (BORDERS & SHADOWS)
+   -------------------------------------------------------------------------- */
+
+:root {
+  --border-radius-xs: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-pill: 9999px;
+  
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+  
+  --shadow-sm: light-dark(0 1px 3px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.4));
+  --shadow-md: light-dark(0 4px 6px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.5));
+  --shadow-lg: light-dark(0 10px 15px rgba(0,0,0,0.5), 0 10px 15px rgba(0,0,0,0.6));
+  --shadow-xl: light-dark(0 20px 25px rgba(0,0,0,0.15), 0 20px 25px rgba(0,0,0,0.7));
+}
+
+/* --------------------------------------------------------------------------
+   8. 애니메이션 토큰 (ANIMATIONS)
+   -------------------------------------------------------------------------- */
+
+:root {
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   9. 시스템 설정 대응 (SYSTEM OVERRIDES)
+   -------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  img { 
+    opacity: 0.8; 
+    transition: opacity var(--transition-normal); 
+  }
+  img:hover { opacity: 1; }
+}

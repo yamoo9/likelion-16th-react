@@ -1,0 +1,18 @@
+[
+  {
+    "trainerId": "trainerId 1",
+    "pokemonId": 2,
+    "id": "1",
+    "userId": 8,
+    "addedAt": "2026-02-23T01:14:28.100Z",
+    "nickname": "풀피리"
+  },
+  {
+    "trainerId": "trainerId 2",
+    "pokemonId": 6,
+    "id": "2",
+    "userId": 8,
+    "addedAt": "2026-02-23T01:15:08.183Z",
+    "nickname": "라지라지!"
+  }
+]

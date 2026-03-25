@@ -1,0 +1,78 @@
+.overlay {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: hsla(var(--black-raw), 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+
+  transition: opacity 0.3s ease, display 0.3s ease allow-discrete;
+  opacity: 1;
+}
+
+@starting-style {
+  .overlay {
+    opacity: 0;
+  }
+
+  .modal {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
+.modal {
+  position: relative;
+  width: 90%;
+  max-width: clamp(320px, 80%, 500px);
+  border-radius: 12px;
+  padding: 0.5rem;
+
+  transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s ease allow-discrete;
+}
+
+.overlay[data-closing="true"] {
+  opacity: 0;
+}
+
+.modal[data-closing="true"] {
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+}
+
+.content {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.closeButton {
+  position: absolute;
+  right: -1rem;
+  top: -1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #fff;
+  border-radius: 9999px;
+  transition: background-color 0.2s, color 0.2s;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 1.5px solid #fff;
+    outline-offset: -6px;
+  }
+}
