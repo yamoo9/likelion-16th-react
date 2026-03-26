@@ -91,6 +91,7 @@ const useCollectionStore = create<CollectionState>()(
           if (!user) return
 
           set({ isLoading: true }, false, 'collection/loadUserCollectionStarted')
+          
           try {
             const { allPokemons } = get()
             const userCollection = await collectionApi.getUserCollection(Number(user.id))

@@ -1,49 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { pokemonApi, type Pokemon } from '@/services/pokemon'
-import { CollectionActions, ErrorState, LoadingState, PageLayout, PokemonInfo, Title } from '@/components'
+import { CollectionActions, ErrorState, PageLayout, PokemonInfo, Title } from '@/components'
 import { useIsAuthenticated } from '@/stores/authStore'
-import { useCollection, useCollectionActions, useCollectionLoading } from '@/stores/collectionStore'
+import { useCollection, useCollectionActions } from '@/stores/collectionStore'
 
 export default function PokemonDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  
+
   const isAuthenticated = useIsAuthenticated()
-  
+
   const collection = useCollection()
-  const isCollectionLoading = useCollectionLoading()
   const { addToCollection } = useCollectionActions()
 
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [pokemon, setPokemon] = useState<Pokemon | null>(null)
-
-
   // 현재 포켓몬이 컬렉션에 있는지 확인
-  const isInCollection = collection.some(
-    (item) => item.pokemonId === id,
+  const isInCollection = useMemo(
+    () => collection.some((item) => item.pokemonId === id),
+    [collection, id]
   )
 
-  useEffect(() => {
-    if (!id) return
+  // id가 없으면 null 반환
+  const queryKey = id ? ['pokemon', id] : null
 
-    const fetchPokemon = async () => {
-      try {
-        setLoading(true)
-        const data = await pokemonApi.getPokemonById(id)
-        setPokemon(data)
-      } catch (err) {
-        setError('포켓몬 정보를 불러오는 데 실패했습니다.')
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchPokemon()
-  }, [id])
+  // React Query로 포켓몬 데이터 로드 (Suspense 사용)
+  const { data: pokemon } = useSuspenseQuery<Pokemon, Error>({
+    queryKey: queryKey!, // 쿼리 키
+    queryFn: () => pokemonApi.getPokemonById(id!), // 포켓몬 데이터를 가져오는 함수
+    retry: false, // 실패 시 재시도하지 않음
+  })
 
   const handleAddToCollection = async (nickname: string) => {
     if (!id) return
@@ -56,23 +43,16 @@ export default function PokemonDetailPage() {
     await addToCollection(Number(id), nickname)
   }
 
-  if (loading) {
-    return <LoadingState message="포켓몬 정보 로딩 중..." />
-  }
-
-  if (error || !pokemon) {
-    return <ErrorState message={error || '포켓몬을 찾을 수 없습니다.'} />
-  }
-
-  return (
+  return queryKey ? (
     <PageLayout title="포켓몬 상세 정보">
       <Title>{pokemon.name}</Title>
       <PokemonInfo pokemon={pokemon} />
       <CollectionActions 
         isInCollection={isInCollection}
-        isLoading={isCollectionLoading}
         onAddToCollection={handleAddToCollection}
       />
     </PageLayout>
+  ) : (
+    <ErrorState message="포켓몬 ID가 제공되지 않았습니다." />
   )
 }

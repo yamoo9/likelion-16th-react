@@ -1,34 +1,24 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { ErrorState, PageLayout, PokemonGrid, PokemonSearch } from '@/components'
+import { PageLayout, PokemonGrid, PokemonSearch } from '@/components'
 import { pokemonApi, type Pokemon } from '@/services/pokemon'
 
 export default function HomePage() {
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('q') || ''
 
-  const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [error, setError] = useState<string | null>(null)
-
-  // 포켓몬 데이터 로드
-  useEffect(() => {
-    const fetchPokemons = async () => {
-      try {
-        const data = await pokemonApi.getAllPokemons()
-        setPokemons(data)
-      } catch (err) {
-        setError('포켓몬 목록을 불러오는 데 실패했습니다.')
-        console.error(err)
-      }
-    }
-
-    fetchPokemons()
-  }, [])
+  // React Query를 사용하여 포켓몬 데이터를 로드
+  const { data: pokemons } = useSuspenseQuery<Pokemon[]>({
+    queryKey: ['pokemons'], // 쿼리 키
+    queryFn: pokemonApi.getAllPokemons, // 포켓몬 데이터를 가져오는 함수
+    staleTime: 1000 * 60 * 5, // 데이터를 5분 동안 캐싱
+  })
 
   // 필터링된 포켓몬 데이터를 useMemo로 캐싱
   const filteredPokemons = useMemo(() => {
-    if (!pokemons.length) return []
+    if (!pokemons || pokemons.length === 0) return []
 
     return pokemons.filter(
       (pokemon) =>
@@ -36,10 +26,6 @@ export default function HomePage() {
         pokemon.id.toString().includes(searchQuery)
     )
   }, [searchQuery, pokemons])
-
-  if (error) {
-    return <ErrorState message={error} />
-  }
 
   return (
     <PageLayout

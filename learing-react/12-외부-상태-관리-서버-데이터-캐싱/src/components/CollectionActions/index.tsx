@@ -3,47 +3,53 @@ import { useNavigate } from 'react-router-dom'
 
 import { useIsAuthenticated } from '@/stores/authStore'
 import { useInput, useToggle } from '@/hooks'
+import { useMutation } from '@tanstack/react-query'
 import S from './style.module.css'
 
 interface Props {
   isInCollection: boolean
-  isLoading: boolean
   onAddToCollection: (nickname: string) => Promise<void>
 }
 
 export default function CollectionActions({
   isInCollection,
-  isLoading,
   onAddToCollection,
 }: Props) {
   const navigate = useNavigate()
   const isAuthenticated = useIsAuthenticated()
 
-  const nicknameIuput = useInput<HTMLInputElement>('')
-  const isDisabled = nicknameIuput.props.value.trim().length === 0
-
-  console.log(isDisabled)
+  const nicknameInput = useInput<HTMLInputElement>('')
+  const isDisabled = nicknameInput.props.value.trim().length === 0
 
   const [showNicknameInput, setShowNicknameInput] = useToggle(false)
 
   const buttonRef = useRef<HTMLButtonElement>(null)
 
+  // useMutation을 사용하여 컬렉션 추가 처리
+  const mutation = useMutation({
+    mutationFn: async (nickname: string) => {
+      await onAddToCollection(nickname)
+    },
+    onSuccess: () => {
+      setShowNicknameInput(false)
+      nicknameInput.methods.setValue('')
+      navigate('/my')
+    },
+    onError: (error) => {
+      console.error('컬렉션에 추가하는 데 실패했습니다:', error)
+    },
+  })
+
   /**
    * 실제 컬렉션 추가 처리 (Form Submit)
    */
-  const handleAddSubmit = async (e: React.FormEvent) => {
+  const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (isLoading || isDisabled) return
+    // isPending 또는 isMutating 사용
+    if (mutation.isPending || isDisabled) return
 
-    try {
-      await onAddToCollection(nicknameIuput.props.value)
-      setShowNicknameInput(false)
-      nicknameIuput.methods.setValue('')
-      navigate('/my')
-    } catch (err) {
-      console.error('컬렉션에 추가하는 데 실패했습니다:', err)
-    }
+    mutation.mutate(nicknameInput.props.value)
   }
 
   /**
@@ -51,8 +57,11 @@ export default function CollectionActions({
    */
   const handleInitialClick = () => {
     if (!isAuthenticated) {
-      if (confirm('포켓박스에 담으려면 로그인이 필요합니다. 로그인 페이지로 이동할까요?')) {
-        // replace: true 대신 현재 위치를 기억할 수 있도록 state를 넘기는 것이 일반적입니다.
+      if (
+        confirm(
+          '포켓박스에 담으려면 로그인이 필요합니다. 로그인 페이지로 이동할까요?',
+        )
+      ) {
         navigate('/login', { state: { from: window.location.pathname } })
       }
       return
@@ -62,8 +71,8 @@ export default function CollectionActions({
     setShowNicknameInput(true)
     // 입력창이 렌더링된 후 포커스 및 텍스트 선택
     setTimeout(() => {
-      nicknameIuput.props.ref.current?.focus()
-      nicknameIuput.props.ref.current?.select()
+      nicknameInput.props.ref.current?.focus()
+      nicknameInput.props.ref.current?.select()
     })
   }
 
@@ -98,7 +107,7 @@ export default function CollectionActions({
       <h2 id="collection-action-title" className="sr-only">
         컬렉션 액션
       </h2>
-      
+
       {showNicknameInput ? (
         <form onSubmit={handleAddSubmit} className={S.nicknameInput}>
           <label htmlFor="pokemon-nickname" className="sr-only">
@@ -110,15 +119,15 @@ export default function CollectionActions({
             className={S.input}
             placeholder="별명을 입력하세요."
             aria-label="포켓몬 별명 입력"
-            {...nicknameIuput.props}
+            {...nicknameInput.props}
           />
           <button
             type="submit"
             className={S.addButton}
-            aria-disabled={isLoading || isDisabled}
-            aria-busy={isLoading}
+            aria-disabled={mutation.isPending || isDisabled}
+            aria-busy={mutation.isPending}
           >
-            {isLoading ? '처리 중...' : '컬렉션에 추가'}
+            {mutation.isPending ? '처리 중...' : '컬렉션에 추가'}
           </button>
         </form>
       ) : (

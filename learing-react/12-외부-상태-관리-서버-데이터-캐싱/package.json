@@ -11,6 +11,7 @@
     "vanilla-spa": "vite --open ./vanilla-spa/index.html --port 3001"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.95.2",
     "immer": "^11.1.4",
     "lucide-react": "^1.7.0",
     "react": "^19.2.4",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@tanstack/react-query-devtools": "^5.95.2",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
