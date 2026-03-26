@@ -1,33 +1,41 @@
-import { useEffect, useRef, useState } from 'react'
-
-// --------------------------------------------------------------------------
-// 작성 중 (미완성 상태입니다.) 😅 v1 먼저 살펴보고 학습하세요. 
-// --------------------------------------------------------------------------
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface FetchParams {
   url: string
-  dependencies?: unknown[]
+  dependencies?: React.DependencyList
   options?: RequestInit
 }
 
-export function useFetchV2<T>({
+export function useFetch<T>({
   url,
+  // ⚠️ 참조 동일성 유지되어야만 리렌더링 방지
+  //    다른 참조 객체가 전달될 경우 요청이 무한 루프됨
   dependencies = [],
   options = {},
 }: FetchParams) {
+  
   // 상태 ( 로딩 | 에러 | 데이터 )
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const [data, setData] = useState<T | null>(null)
 
-  // 옵션 값 참조 (안전하게 사용) - (값은 기억, 리렌더 유발 ❌)
-  const optionsRef = useRef(options)
+  // 종속성, 옵션 비교를 위한 문자화
+  const optionsString = JSON.stringify(options)
+  const dependenciesString = JSON.stringify(dependencies)
 
-  // 옵션 동기화 이펙트 (옵션이 변경될 때 새 옵션으로 업데이트)
+  // 전달된 options 객체의 값 참조
+  const optionsRef = useRef(options) // { current: options }
+  
+  // 이펙트 (optionsString 변화 감지)
   useEffect(() => {
+    // options 객체가 변경되면 optionsRef.current 값으로 options 업데이트
     optionsRef.current = options
-    console.log(optionsRef.current)
-  }, [options])
+    
+    // [ESLint 비활성 주석이 추가된 이유]
+    // options이 변경될 때마다 optionsString이 바뀌므로 
+    // options 객체를 종속성 배열에 넣을 필요가 없음
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optionsString])
 
   // 이펙트 (외부 시스템과 리액트 동기화)
   useEffect(
@@ -40,24 +48,25 @@ export function useFetchV2<T>({
       const fetchData = async () => {
         setIsLoading(true)
         setError(null)
-
+        
         try {
-          const response = await fetch(url, { signal, ...optionsRef.current })
+
+          // fetch 옵션 객체 (외부에서 전달된 options 참조 객체와 signal 합성)
+          const fetchConfig = { ...optionsRef.current, signal }
+          const response = await fetch(url, fetchConfig)
 
           if (!response.ok) {
-            throw new Error(
-              `네트워크 요청이 실패했습니다. (상태 코드: ${response.status})`,
-            )
+            const errorMessage = `[에러 발생] ${response.status} ${response.statusText}`
+            throw new Error(errorMessage)
           }
 
           const responseData: T = await response.json()
           setData(responseData)
-        } catch (error) {
-          const isError = error instanceof Error
-          if (isError && error.name === 'AbortError') return
-          setError(
-            isError ? error : new Error('알 수 없는 에러가 발생했습니다.'),
-          )
+        } catch (err) {
+          const isError = err instanceof Error
+          if (isError && err.name === 'AbortError') return
+          const error = isError ? err : new Error('알 수 없는 에러가 발생했습니다.')
+          setError(error)
         } finally {
           if (!signal.aborted) setIsLoading(false)
         }
@@ -71,10 +80,18 @@ export function useFetchV2<T>({
         controller.abort()
       }
     },
-    // 옵션 의존성 제거 (optionsRef.current 사용) - 무한 루프 방지
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [url, ...dependencies],
+    [url, dependenciesString],
   )
 
-  return { isLoading, error, data }
+  // 함수를 다시 실행하기하는 상태 선언
+  const [tigger, setTrigger] = useState(0)
+  console.log(tigger)
+
+  // 리페치 (refetch) 다시 서버에 요청/응답 받는 기능(함수)
+  const refetch = useCallback(() => {
+    // 트리거 업데이트 요청 (useFetch 함수가 동일한 옵션과 종속성으로 다시 실행)
+    setTrigger((prev) => prev + 1)
+  }, [])
+
+  return { isLoading, error, data, refetch }
 }

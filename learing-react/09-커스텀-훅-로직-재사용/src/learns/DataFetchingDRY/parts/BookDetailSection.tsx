@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import S from './BookDetailSection.module.css'
 import { formatDate } from '@/utils'
+import { useFetch } from '@/hooks'
 
 // API 참고
 // - https://koreandummyjson.vercel.app/docs/books
