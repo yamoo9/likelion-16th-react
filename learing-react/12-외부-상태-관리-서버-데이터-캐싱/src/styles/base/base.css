@@ -1,0 +1,147 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%; /* 16px */
+
+  & *, 
+  & *:before, 
+  & *:after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  overflow-y: scroll;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  line-height: 1.5
+}
+
+blockquote, body, figure, h1, h2, h3, h4, h5, h6, hr, li, ol, p, pre, ul {
+  margin: 0;
+  padding: 0
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-block-end: var(--space-md);
+  line-height: 1.2;
+}
+
+h1 { font-size: var(--font-size-h1); } 
+h2 { font-size: var(--font-size-h2); } 
+h3 { font-size: var(--font-size-h3); } 
+h4 { font-size: var(--font-size-h4); } 
+h5 { font-size: var(--font-size-h5); } 
+h6 { font-size: var(--font-size-h6); }
+
+p { margin-block-end: var(--space-md); }
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+}
+
+ul {
+  list-style: none
+}
+
+button, input, select, textarea {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+
+  &:focus {
+    border-color: var(--color-primary-dark);
+    /* box-shadow: 0 0 0 2px var(--color-primary-light); */
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+}
+
+input,
+textarea,
+select {
+  padding: var(--space-md);
+  border: var(--border-width-thin) solid var(--color-gray-300);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  
+  &:disabled {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-500);
+    cursor: not-allowed;
+  }
+}
+
+input[type=text], textarea {
+  width: 100%
+}
+
+button, input, textarea {
+  border: 1px solid #808080;
+
+  &:focus-visible {
+    outline-offset: 2px;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 0;
+  padding: 0.75em 1em;
+  line-height: 1;
+  background-color: transparent
+}
+
+iframe, img, object, svg, video {
+  display: block;
+  max-width: 100%
+}
+
+img { height: auto; }
+
+table {
+  table-layout: fixed;
+  width: 100%
+}
+
+textarea {
+  resize: vertical;
+}
+
+input, textarea {
+  &::placeholder {
+    opacity: 1; /* 파이어폭스 대응 */
+    color: var(--color-gray-600);
+  }
+
+  &:focus {
+    color: var(--color-primary);
+  }
+  
+}
+
+[tabindex="-1"] {
+  outline: 0 !important
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+img::selection {
+  background-color: transparent;
+}

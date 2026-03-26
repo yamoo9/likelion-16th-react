@@ -1,0 +1,33 @@
+.filterContainer {
+  margin-block-end: 2rem;
+}
+
+.filterTitle {
+  margin-block-end: 1rem;
+  font-size: 1.2rem;
+}
+
+.typeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.typeButton {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 2px solid;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.typeButton:hover {
+  opacity: 0.8;
+}
+
+.selected {
+  color: white;
+}

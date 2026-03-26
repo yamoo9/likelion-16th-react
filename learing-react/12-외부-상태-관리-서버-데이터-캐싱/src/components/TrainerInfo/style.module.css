@@ -1,0 +1,28 @@
+.trainerInfoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+  background-color: var(--color-gray-200);
+  border-radius: var(--border-radius-md);
+  margin-block-end: var(--space-xl);
+}
+
+.trainerName {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  margin: 0;
+}
+
+.trainerRank {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.collectionCount {
+  font-size: var(--font-size-md);
+  color: var(--color-gray-600);
+  margin: 0;
+}

@@ -1,0 +1,94 @@
+.container {
+  position: relative;
+  display: inline-block;
+
+  .trigger {
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: light-dark(hsl(var(--white-raw)), hsl(var(--gray-900-raw)));
+    color: var(--color-primary);
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: light-dark(hsl(var(--gray-50-raw)), hsl(var(--gray-800-raw)));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 100;
+    min-width: 160px;
+    padding: 8px 0;
+    margin: 0;
+    list-style: none;
+    background-color: var(--color-background);
+    border: 1px solid light-dark(hsl(var(--gray-200-raw)), hsl(var(--gray-800-raw)));
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    :global([data-theme='dark']) & {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .menuItem {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    transition: background-color 0.15s;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--color-text);
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: light-dark(hsl(var(--gray-100-raw)), hsl(var(--gray-800-raw)));
+    }
+
+    &:focus-visible:hover {
+      background-color: light-dark(hsl(var(--gray-200-raw)), hsl(var(--gray-700-raw)));
+    }
+
+    &.active {
+      background-color: light-dark(hsl(var(--gray-100-raw)), hsl(var(--gray-900-raw)));
+      font-weight: 600;
+    }
+  }
+}

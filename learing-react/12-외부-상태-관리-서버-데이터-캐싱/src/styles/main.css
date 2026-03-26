@@ -1,0 +1,14 @@
+/* 레이어 우선순위 선언 (낮음 → 높음) */
+@layer theme, base, utilities;
+
+/* Theme: 디자인 시스템 변수 및 애니메이션 */
+@import './theme/theme.css' layer(theme);
+@import './theme/animation.css' layer(theme);
+
+/* Base: 초기화 및 HTML 기본 태그 스타일 */
+@import './base/normalize.css' layer(base);
+@import './base/base.css' layer(base);
+
+/* Utilities: 최우선 적용되는 유틸리티 클래스 */
+@import './utilities/a11y.css' layer(utilities);
+@import './utilities/etc.css' layer(utilities);
