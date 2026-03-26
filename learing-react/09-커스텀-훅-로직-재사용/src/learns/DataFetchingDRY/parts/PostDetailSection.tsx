@@ -1,13 +1,17 @@
 import { useState } from 'react'
 
 import { useFetch } from '@/hooks'
-import { formatDate } from '@/utils'
+import { getEndpoint } from '../util/getEndpoint'
 import type {
   ResponseCommentsData,
   ResponsePostData,
   ResponseUserPostsData,
 } from '../types/post'
-import { getEndpoint } from '../util/getEndpoint'
+
+import { FetchStatus, PrintError, SkeletonList } from '@/components'
+import UserOtherPosts from './UserOtherPosts'
+import Comments from './Comments'
+import SinglePost from './SinglePost'
 
 import S from './PostDetailSection.module.css'
 
@@ -29,16 +33,11 @@ export default function PostDetailSection() {
   const [postId, setPostId] = useState(1)
 
   // 포스트 상세 정보
-  const {
-    isLoading: isPostLoading,
-    error: postError,
-    data: postData,
-  } = useFetch<ResponsePostData>({
+  const postResponse = useFetch<ResponsePostData>({
     url: getEndpoint(`/api/posts/${postId}`),
     dependencies: [postId],
   })
-
-  const post = postData?.post // 서버에서 가져온 포스트 데이터
+  const post = postResponse.data?.post
 
   // 댓글 목록
   const commentsResponse = useFetch<ResponseCommentsData>({
@@ -98,104 +97,47 @@ export default function PostDetailSection() {
       <div className={S.mainLayout}>
         <section className={S.contentArea}>
           <article className={S.postCard}>
-            {isPostLoading ? (
-              <div role="status" className={S.skeleton}>
-                포스트 로딩 중...
-              </div>
-            ) : postError ? (
-              <div role="alert" className={S.errorBox}>
-                {postError.message}
-              </div>
-            ) : (
-              post && (
-                <>
-                  <h3 className={S.postTitle}>{post.title}</h3>
-                  <div className={S.postMeta}>
-                    <span>작성자 ID: {post.userId}</span>
-                    <span aria-hidden="true">•</span>
-                    <time dateTime={post.createdAt}>
-                      {formatDate(post.createdAt)}
-                    </time>
-                  </div>
-                  <p className={S.postContent}>{post.content}</p>
-                </>
-              )
-            )}
+            <FetchStatus
+              isLoading={postResponse.isLoading}
+              loadingFallback={<SkeletonList count={1} />}
+              error={postResponse.error}
+              // render(function) props
+              errorFallback={(message) => {
+                console.log({ message })
+                return (
+                  <PrintError
+                    message={message}
+                    onRetry={postResponse.refetch}
+                  />
+                )
+              }}
+            >
+              <SinglePost data={post} />
+            </FetchStatus>
           </article>
 
           <article className={S.commentSection}>
             <h3 className={S.sectionTitle}>댓글 ({comments?.length})</h3>
-            {commentsResponse.isLoading ? (
-              <div role="status" className={S.skeleton}>
-                댓글 로딩 중...
-              </div>
-            ) : commentsResponse.error ? (
-              <div role="alert" className={S.errorBox}>
-                {commentsResponse.error.message}
-              </div>
-            ) : (
-              <ul className={S.commentList}>
-                {comments?.map((comment) => (
-                  <li key={comment.commentId} className={S.commentItem}>
-                    <div className={S.commentHeader}>
-                      <span className={S.commentUser}>
-                        댓글 #{comment.commentId}
-                      </span>
-                      <time
-                        dateTime={comment.createdAt}
-                        className={S.commentDate}
-                      >
-                        {formatDate(comment.createdAt)}
-                      </time>
-                    </div>
-                    <p className={S.commentText}>{comment.content}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <FetchStatus
+              isLoading={commentsResponse.isLoading}
+              loadingFallback={<SkeletonList count={4} />}
+              error={commentsResponse.error}
+              onRetry={commentsResponse.refetch}
+            >
+              <Comments data={comments} />
+            </FetchStatus>
           </article>
         </section>
 
         <aside className={S.sidebar}>
           <article className={S.sidebarCard}>
             <h3 className={S.sectionTitle}>작성자의 다른 포스트</h3>
-            {userPostsResponse.isLoading ? (
-              <div className={S.skeleton}>포스트 리스트 로딩 중...</div>
-            ) : userPostsResponse.error ? (
-              <div role="alert" className={S.errorBox}>
-                {userPostsResponse.error.message}
-              </div>
-            ) : (
-              <ul className={S.otherPostList}>
-                {userOtherPosts ? (
-                  userOtherPosts.map((userPost) => (
-                    <li key={userPost.id} className={S.otherPostItem}>
-                      <a
-                        href=""
-                        role="button"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          setPostId(userPost.id)
-                        }}
-                      >
-                        <span className={S.otherPostTitle}>
-                          {userPost.title}{' '}
-                          <span className="sr-only">포스트로 이동</span>
-                        </span>
-                        <time
-                          dateTime={userPost.createdAt}
-                          className={S.otherPostDate}
-                        >
-                          {formatDate(userPost.createdAt)}
-                        </time>
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <p className={S.empty}>다른 포스트는 없습니다.</p>
-                )}
-              </ul>
-            )}
+            <FetchStatus
+              isLoading={userPostsResponse.isLoading}
+              error={userPostsResponse.error}
+            >
+              <UserOtherPosts data={userOtherPosts} setPostId={setPostId} />
+            </FetchStatus>
           </article>
         </aside>
       </div>
