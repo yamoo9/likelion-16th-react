@@ -1,10 +1,10 @@
+import PostDetailSection from "./parts/PostDetailSection"
 import BookDetailSection from "./parts/BookDetailSection"
-// import PostDetailSection from "./parts/PostDetailSection"
 
 export default function DataFetchingDRY() {
   return (
     <>
-      {/* <PostDetailSection /> */}
+      <PostDetailSection />
       <BookDetailSection />
     </>
   )

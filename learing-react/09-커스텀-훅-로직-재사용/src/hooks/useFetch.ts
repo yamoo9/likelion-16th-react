@@ -84,8 +84,7 @@ export function useFetch<T>({
   )
 
   // 함수를 다시 실행하기하는 상태 선언
-  const [tigger, setTrigger] = useState(0)
-  console.log(tigger)
+  const [, setTrigger] = useState(0) 
 
   // 리페치 (refetch) 다시 서버에 요청/응답 받는 기능(함수)
   const refetch = useCallback(() => {
