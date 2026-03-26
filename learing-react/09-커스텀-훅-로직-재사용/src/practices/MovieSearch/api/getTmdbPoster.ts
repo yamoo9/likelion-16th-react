@@ -4,5 +4,5 @@
 // 참고: https://developer.themoviedb.org/docs/image-basics
 
 export const getTmdbPoster = (path: string, size = 500) => {
-  return `${import.meta.env.VITE_TMDB_IMAGE_URL}/w${size}${path}`
+  return `${import.meta.env.VITE_TMDB_IMAGE_URL}/w${size}/${path}`
 }
