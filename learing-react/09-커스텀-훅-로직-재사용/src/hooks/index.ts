@@ -6,3 +6,5 @@ export * from './useInput' // useInput
 
 export * from './useFetch.v1' // useFetchV1
 export * from './useFetch' // useFetchV2
+
+export * from './useDebounce'

@@ -3,6 +3,20 @@
 // - p: Path (또는 Poster)
 // 참고: https://developer.themoviedb.org/docs/image-basics
 
-export const getTmdbPoster = (path: string, size = 500) => {
-  return `${import.meta.env.VITE_TMDB_IMAGE_URL}/w${size}/${path}`
+import type { Movie } from './type'
+
+export const getTmdbPoster = (movie: Movie, size = 500) => {
+  const posterPath = movie.poster_path
+
+  if (!posterPath) {
+    return {
+      poster: '/no-poster.png',
+      alt: '포스터 준비중',
+    }
+  }
+
+  return {
+    poster: `${import.meta.env.VITE_TMDB_IMAGE_URL}/w${size}/${posterPath}`,
+    alt: `${movie.title} 영화 포스터`,
+  }
 }

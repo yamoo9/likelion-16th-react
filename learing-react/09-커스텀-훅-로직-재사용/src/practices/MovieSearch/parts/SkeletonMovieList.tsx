@@ -3,9 +3,13 @@ import Sk from './SkeletonMovieList.module.css'
 
 export default function SkeletonMovieList({ count = 4 }) {
   return (
-    <div className={`${S.container} ${S.movieGrid}`}>
+    <div
+      role="status"
+      aria-busy="true"
+      className={`${S.container} ${S.movieGrid}`}
+    >
       {Array.from({ length: count }).map((_, index) => (
-        <div key={index} className={`${S.movieCard} ${Sk.skeletonBase}`}>
+        <div role="presentation" key={index} className={`${S.movieCard} ${Sk.skeletonBase}`}>
           <div className={`${S.posterWrapper} ${Sk.shimmer}`} />
           <div className={S.info}>
             <div className={`${Sk.titleLine} ${Sk.shimmer}`} />
