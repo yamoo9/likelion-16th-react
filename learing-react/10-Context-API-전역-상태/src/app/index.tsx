@@ -1,15 +1,17 @@
 import { ContextAdvanced } from '@/_/learns'
-import { AuthProvider, FamilyProvider } from '@/contexts'
+import { AuthProvider, FamilyProvider, ThemeProvider } from '@/contexts'
 import S from './style.module.css'
 
 export default function App() {
   return (
     <AuthProvider>
-      <FamilyProvider>
+      <ThemeProvider>
         <div className={S.container}>
-          <ContextAdvanced />
+          <FamilyProvider>
+            <ContextAdvanced />
+          </FamilyProvider>
         </div>
-      </FamilyProvider>
+      </ThemeProvider>
     </AuthProvider>
   )
 }

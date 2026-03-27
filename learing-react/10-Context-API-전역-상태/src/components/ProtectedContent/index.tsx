@@ -1,13 +1,17 @@
+import { useAuth, type User } from '@/contexts'
 import S from './style.module.css'
 
 interface Props {
-  user?: { name: string } | null
+  user?: User | null
 }
 
 export default function ProtectedContent({ user }: Props) {
+
+  const { logout } = useAuth()
   
   const handleLogout = () => {
     // 로그아웃 처리합니다. (동기 또는 비동기 방식 검토)
+    logout()
   }
 
   return (

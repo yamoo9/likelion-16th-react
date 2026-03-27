@@ -1,3 +1,4 @@
+import { useTheme } from '@/contexts'
 import S from '../style.module.css'
 
 interface Props {
@@ -13,13 +14,19 @@ export default function ShowErrorOrInfoMessage({
   error,
   infoMessage,
 }: Props) {
+  const { mode, scheme } = useTheme()
+
   return showError ? (
     <p id={id} role="alert" className={S.errorMessage}>
       {error}
     </p>
   ) : (
-    <p id={id} className={S.infoMessage}>
-      {infoMessage}
+    <p
+      style={{ color: scheme.textColor, background: scheme.backgroundColor }}
+      id={id}
+      className={S.infoMessage}
+    >
+      {infoMessage} ({mode})
     </p>
   )
 }

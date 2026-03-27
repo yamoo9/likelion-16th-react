@@ -1,4 +1,5 @@
 import { useId, useState } from 'react'
+
 import NameField from './parts/NameField'
 import IdField from './parts/IdField'
 import EmailField from './parts/EmailField'
@@ -25,6 +26,9 @@ type FormState = typeof INITIAL_FORM_STATE
 type FormStateKey = keyof FormState
 
 export default function LoginForm() {
+
+  const { login } = useAuth()
+
   const sectionId = useId()
   const [formState, setFormState] = useState<FormState>(TEST_FORM_STATE)
   const [formResetKey, setFormResetKey] = useState(0)
@@ -40,7 +44,10 @@ export default function LoginForm() {
     e.preventDefault()
 
     // 폼 입력 정보로 로그인을 시도합니다.
-    console.log(formState)
+    
+    const { id, password, ...userInfo } = formState
+    login(id, password, userInfo)
+
   }
 
   const handleReset = () => {

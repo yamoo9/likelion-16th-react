@@ -1,15 +1,20 @@
-import { useFamily } from '@/contexts/FamilyContext'
 import childIcon from '../icons/child.png'
+import { useFamily } from '@/contexts/FamilyContext'
+import ProtectedContent from '@/components/ProtectedContent'
+import LoginForm from '@/components/LoginForm'
 import S from '../style.module.css'
+import { useAuth } from '@/contexts'
 
 export default function Child() {
-  
-  const { name, email, checked, setName, setEmail, setChecked }  = useFamily()
+  const { name, email, checked, setName, setEmail, setChecked } = useFamily()
+
+  const { user } = useAuth()
 
   return (
     <section className={`${S.box} ${S.active}`}>
       <h4 className={`${S.familyTitle} ${S.child}`}>
-        <img src={childIcon} alt="" width={20} height={20} /> 손자 ({name || '이름 없음'})
+        <img src={childIcon} alt="" width={20} height={20} /> 손자 (
+        {name || '이름 없음'})
       </h4>
 
       <p>(오! 편한데? Context를 사용하니 직배송이군.)</p>
@@ -52,6 +57,10 @@ export default function Child() {
           <span>항렬자 사용 ({checked ? '동의함' : '미동의'})</span>
         </label>
       </fieldset>
+
+      <div style={{ display: 'flex', gap: 20, flexFlow: 'column' }}>
+        {!user ? <LoginForm /> : <ProtectedContent user={user} />}
+      </div>
     </section>
   )
 }
