@@ -4,6 +4,7 @@ import IdField from './parts/IdField'
 import EmailField from './parts/EmailField'
 import PasswordField from './parts/PasswordField'
 import S from './style.module.css'
+import { useAuth } from '@/contexts'
 
 // 로그인 테스트 정보를 채우세요.
 const TEST_FORM_STATE = {

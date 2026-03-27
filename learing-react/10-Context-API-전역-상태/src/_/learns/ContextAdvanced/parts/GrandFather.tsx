@@ -1,4 +1,4 @@
-import { useFamily } from '@/contexts/FamilyContext/context'
+import { useFamily } from '@/contexts/FamilyContext'
 import grandFatherIcon from '../icons/grand-father.png'
 import S from '../style.module.css'
 import Father from './Father'
