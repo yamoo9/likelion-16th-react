@@ -5,3 +5,5 @@ export function useToggle(initialValue = false) {
   const toggle = useCallback(() => setIsToggle((prev) => !prev), [])
   return [isToggle, toggle] as const
 }
+
+export type ReturnToggleType = ReturnType<typeof useToggle>

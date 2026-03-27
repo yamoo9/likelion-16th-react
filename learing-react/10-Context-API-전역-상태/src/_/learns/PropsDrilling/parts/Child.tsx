@@ -1,16 +1,20 @@
 import childIcon from '../icons/child.png'
 import S from '../style.module.css'
+import type { FatherProps } from './Father'
 
-export default function Child() {
-  const name = '박하루'
-  const email = 'haru@child.family'
-  const checked = false
+type Props = FatherProps
 
+export default function Child({
+  nameInput,
+  emailInput,
+  checked,
+  toggleChecked,
+}: Props) {
   return (
     <section className={`${S.box} ${S.active}`}>
       <h4 className={`${S.familyTitle} ${S.child}`}>
-        <img src={childIcon} alt="" width={20} height={20} />{' '}
-        손자 ({name || '이름 없음'})
+        <img src={childIcon} alt="" width={20} height={20} /> 손자 (
+        {nameInput.props.value || '이름 없음'})
       </h4>
 
       <p>(두분 정말 고생 많으시네. 나 때문에...)</p>
@@ -26,7 +30,8 @@ export default function Child() {
             type="text"
             id="user-name"
             className={S.input}
-            defaultValue={name}
+            value={nameInput.props.value}
+            onChange={nameInput.props.onChange}
           />
         </div>
 
@@ -38,12 +43,17 @@ export default function Child() {
             type="email"
             id="user-email"
             className={S.input}
-            defaultValue={email}
+            value={emailInput.props.value}
+            onChange={emailInput.props.onChange}
           />
         </div>
 
         <label className={S.checkboxGroup}>
-          <input type="checkbox" defaultChecked={checked} />
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={toggleChecked}
+          />
           <span>항렬자 사용 ({checked ? '동의함' : '미동의'})</span>
         </label>
       </fieldset>
