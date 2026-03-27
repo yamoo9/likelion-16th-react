@@ -1,6 +1,5 @@
-import { StrictMode } from 'react'
+import { StrictMode, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import LearingReactRouter from './_/app'
 
 const rootElement = document.getElementById('root')
 
@@ -10,11 +9,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    
-    {/* 1. 리액트 라우터 학습 */}
-    <LearingReactRouter />
-
-    {/* 2. 포케닷(Pokedot) SPA 구성 실습 */}
-    {/* <App /> */}
+    <App />
   </StrictMode>
 )
