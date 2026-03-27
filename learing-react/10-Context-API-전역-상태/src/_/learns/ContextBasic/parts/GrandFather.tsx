@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
+import { FamilyContext } from '@/contexts/FamilyContext/context'
 import grandFatherIcon from '../icons/grand-father.png'
-import { FamilyContext } from '../index'
 import Father from './Father'
 import S from '../style.module.css'
 

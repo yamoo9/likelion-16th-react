@@ -1,5 +1,6 @@
 import { useContext } from 'react'
-import { FamilyContext } from '../index'
+
+import { FamilyContext } from '@/contexts/FamilyContext/context'
 import childIcon from '../icons/child.png'
 import S from '../style.module.css'
 
