@@ -7,6 +7,7 @@ export default function Login() {
 
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email') as string
+    console.log(email)
     
   }
 

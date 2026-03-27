@@ -2,6 +2,7 @@ import S from './style.module.css'
 
 
 export default function MovieDetail() {
+
   const movie = null
 
   return (
