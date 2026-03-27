@@ -1,14 +1,16 @@
+import { useContext } from 'react'
+
 import childIcon from '../icons/child.png'
-import type { FamilyProps } from './GrandFather'
+import { FamilyContext } from '../index'
 import S from '../style.module.css'
 
-export default function Child(props: FamilyProps) {
-  const { name, setName, email, setEmail, checked, setChecked } = props
+export default function Child() {
+  const familyContextValue = useContext(FamilyContext)
 
   return (
     <section className={`${S.box} ${S.active}`}>
       <h4 className={`${S.familyTitle} ${S.child}`}>
-        <img src={childIcon} alt="" width={20} height={20} /> 손자 ({name || '이름 없음'})
+        <img src={childIcon} alt="" width={20} height={20} /> 손자 ({familyContextValue?.name || '이름 없음'})
       </h4>
 
       <p>(두분 정말 고생 많으시네. 나 때문에...)</p>
@@ -24,8 +26,8 @@ export default function Child(props: FamilyProps) {
             type="text"
             id="user-name"
             className={S.input}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={familyContextValue?.name}
+            onChange={(e) => familyContextValue?.setName(e.target.value)}
           />
         </div>
 
@@ -37,18 +39,18 @@ export default function Child(props: FamilyProps) {
             type="email"
             id="user-email"
             className={S.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={familyContextValue?.email}
+            onChange={(e) => familyContextValue?.setEmail(e.target.value)}
           />
         </div>
 
         <label className={S.checkboxGroup}>
           <input
             type="checkbox"
-            checked={checked}
-            onChange={(e) => setChecked(e.target.checked)}
+            checked={familyContextValue?.checked}
+            onChange={(e) => familyContextValue?.setChecked(e.target.checked)}
           />
-          <span>항렬자 사용 ({checked ? '동의함' : '미동의'})</span>
+          <span>항렬자 사용 ({familyContextValue?.checked ? '동의함' : '미동의'})</span>
         </label>
       </fieldset>
     </section>
