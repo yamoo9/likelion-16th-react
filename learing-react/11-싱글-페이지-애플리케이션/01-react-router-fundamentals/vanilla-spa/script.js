@@ -48,17 +48,21 @@ function handleNavigation(e) {
 function render() {
   const currentPath = getCurrentPath()
 
-  // [미션 1-1] URLSearchParams를 사용하여 파라미터를 가져오세요.
-  const params = null
-  const planet = '미정'
-  const level = '0'
+  // 현재 경로: '/explore?planet=jupiter&level=3'
 
-  // [미션 1-2] 라우트(routes)를 보호해야 합니다.
+  // [미션 1-1] URLSearchParams를 사용하여 파라미터를 가져오세요.
+  const params = new URLSearchParams(location.search)
+  const planet = params.get('planet')
+  const level = params.get('level')
+
+  // [미션 1-2] 라우트(routes)를 보호(guard)해야 합니다.
   // - 조건: 방문 페이지 경로가 `/`이 아니고, `planet` 또는 `level` 파라미터가 없음
   // - 조건이 참인 경우: notFound() 함수 실행
   // - 조건이 거짓인 경우: explorer(planet, level) 함수 실행
   // - 실행 결과를 app의 HTML 콘텐츠로 설정
-  app.innerHTML = explorer(planet, level)
+  app.innerHTML = currentPath !== '/' && (!planet || !level) 
+    ? notFound()
+    : explorer(planet, level)
 
   toggleActiveState()
 }
@@ -89,7 +93,7 @@ function toggleActiveState() {
     const isActive = link.getAttribute('href') === currentPath
     link.classList.toggle(ACTIVE_CLASSNAME, isActive)
     // [미션 5] 현재 활성화된 링크에 접근성을 설정합니다.
-    
+    a11yActiveState(link, isActive)
   }
 }
 
@@ -110,11 +114,16 @@ function getCurrentPath() {
 
 function navigateTo(path, state = null) {
   // [미션 2] 현재 경로와 전달된 path가 동일한 경우 이동을 하지 않도록 설정하세요.
+  const currentPath = getCurrentPath()
+  if (currentPath === path) return
   
   // [미션 3] history.pushState를 사용해 새로고침 없이 URL 주소를 변경하세요.
+  history.pushState(state, '', path)
   
   // [미션 4-1] PopStateEvent를 사용해 'popstate' 이벤트를 정의하세요.
+  const navigateEvent = new PopStateEvent('popstate')
   
   // [미션 4-2] dispatchEvent() 메서드로 'popstate' 이벤트를 발동시킵니다.
+  globalThis.dispatchEvent(navigateEvent) // '전역 객체야! popstate 이벤트를 생성해서 발송할께'
   
 }
