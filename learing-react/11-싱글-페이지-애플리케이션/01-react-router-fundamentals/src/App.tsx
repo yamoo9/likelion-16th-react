@@ -1,40 +1,23 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import CommonLayout from './layouts/CommonLayout'
+/* 
+  [SPA :: React Router 리마인드]
+  
+  브라우저 라우터 구성
 
-import Home from './pages/Home'
-import Login from './pages/Login'
-import MovieDetail from './pages/MovieDetail'
-import NotFound from './pages/NotFound'
-import MyPage from './pages/MyPage'
+    라우츠(routes) 스위치 → 라우트(route) path, element 
+
+    레이아웃 ← 페이지                                 (레이아웃 라우트, 중첩된 라우트)
+
+      '/'                → 페이지 <Home />          (인덱스 라우트)
+      '/login'           → 페이지 <Login />
+      '/movies/:movieId' → 페이지 <MovieDetail />   (동적 세그먼트)
+      '/my'              → 페이지 <MyPage />        (보호된 라우트)             
+      '*'                → 페이지 <NotFound />      (와일드 카드)
+
+*/
 
 export default function App() {
   return (
-    <BrowserRouter>
-      {/* 
-        라우츠(routes) 스위치 -> 라우트(route) path, element 
-
-        레이아웃 <- 페이지
-
-        '/'                -> 페이지 <Home />
-        '/login'           -> 페이지 <Login />
-        '/movies/:movieId/:release' -> 페이지 <MovieDetail /> 
-        '/my'              -> 페이지 <MyPage />
-        '*'                -> 페이지 <NotFound />
-
-      */}
-      <Routes>
-        {/* 공통 레이아웃 */}
-        <Route path="/" element={<CommonLayout />}>
-          <Route index element={<Home />} />
-          <Route path="/movies/:movieId" element={<MovieDetail />} />
-          <Route path="/my" element={<MyPage />} />
-        </Route>
-        
-        {/* 레이아웃 없음 */}
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <></>
   )
 }
