@@ -2,6 +2,7 @@
 
 import { useTransition } from 'react'
 
+import { NAVIGATION } from '@/config/paths'
 import { useCollection } from '@/contexts/CollectionContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { ThemeSwitcher } from '@/components'
@@ -55,7 +56,7 @@ export default function Navbar() {
           - 참고: https://reactrouter.com/api/components/Link
         */}
         <h1 className={S.logo}>
-          <a href="/" aria-label="포케닷 홈으로 이동">
+          <a href={NAVIGATION.home} aria-label="포케닷 홈으로 이동">
             <img src="/pokedot.svg" alt="포케닷 로고" width="140" height="32" />
           </a>
         </h1>
@@ -77,7 +78,7 @@ export default function Navbar() {
                 - location.pathname을 비교하여 시각적인 활성화 상태를 제어할 수 있습니다.
               */}
               <a
-                href="/my" 
+                href={NAVIGATION.my}
                 className={S.navLink}
                 // aria-current={location.pathname === '/my' ? 'page' : undefined}
               >
@@ -94,13 +95,13 @@ export default function Navbar() {
                 type="button"
                 onClick={handleLogout}
                 className={S.logoutButton}
-                disabled={isPending} // 로그아웃 처리 중 중복 클릭 방지
+                aria-disabled={isPending} // 로그아웃 처리 중 중복 클릭 방지
               >
-                {isPending ? '...' : '로그아웃'}
+                {isPending ? '로그아웃 중...' : '로그아웃'}
               </button>
             ) : (
               // Link 컴포넌트로 교체하세요.
-              <a href="/login" className={S.loginButton}>로그인</a>
+              <a href={NAVIGATION.login} className={S.loginButton}>로그인</a>
             )}
 
             <div className={S.divider} aria-hidden="true" />

@@ -1,5 +1,6 @@
 import { getTypeColor, type Colors } from '@/constants/colors'
 import type { Pokemon } from '@/services/pokemon'
+import { NAVIGATION } from '@/config/paths'
 import S from './style.module.css'
 
 interface Props {
@@ -24,7 +25,7 @@ export default function PokemonCard({ pokemon }: Props) {
       - 참고: https://reactrouter.com/api/components/Link
     */
     <a
-      href={`/pokemon/${id}`}
+      href={`${NAVIGATION.pokemons}/${id}`}
       className={S.card}
       aria-label={`${name} 상세 정보 보기`}
     >
