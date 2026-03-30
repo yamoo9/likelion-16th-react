@@ -10,9 +10,13 @@ export default function MyPage() {
 
   const navigate = useNavigate()
 
+  // 이벤트 핸들러 (부수 효과 처리 가능)
+  // 이펙트 (부수 효과 처리 가능)
   const handleLogout = () => {
-    logout()
+    console.log('홈 페이지로 이동')
     navigate('/')
+    console.log('로그아웃')
+    setTimeout(logout, 50) // 0.05초 뒤에 로그아웃
   }
 
   return (

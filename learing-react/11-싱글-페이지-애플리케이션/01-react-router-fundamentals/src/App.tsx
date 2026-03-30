@@ -57,6 +57,8 @@ export default function App() {
             <Route path={`${NAVIGATION_PATH.movies}/:movieId`} element={<MovieDetail />} />
             {/* 프로텍티드 라우트 */}
             <Route path={NAVIGATION_PATH.mypage} element={<ProtectedRoute><MyPage /></ProtectedRoute>} />
+            {/* 보호된 라우트 예시 (예: 배우들) */}
+            {/* <Route path={NAVIGATION_PATH.actors} element={<ProtectedRoute><div>배우들</div></ProtectedRoute>} /> */}
             {/* 와일드 카드 */}
             <Route path="*" element={<NotFound />} />
           </Route>
