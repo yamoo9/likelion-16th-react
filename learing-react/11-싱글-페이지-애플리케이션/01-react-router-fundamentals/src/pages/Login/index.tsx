@@ -1,10 +1,13 @@
 import { useAuth } from '@/contexts'
 import S from './style.module.css'
 import { useTransition } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { NAVIGATION_PATH } from '@/configs/navigationPaths'
 
 export default function Login() {
   const { login } = useAuth()
   const [isLoading, startTransition] = useTransition()
+  const navigate = useNavigate()
 
   const handleLogin = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -18,6 +21,7 @@ export default function Login() {
     // 로그인 시도(요청/응답)
     startTransition(async () => {
       await login(email)
+      navigate({ pathname: NAVIGATION_PATH.base })
     })
   }
 

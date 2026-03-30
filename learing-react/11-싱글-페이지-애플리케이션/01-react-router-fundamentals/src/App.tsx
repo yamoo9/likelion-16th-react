@@ -36,6 +36,7 @@ import NotFound from './pages/NotFound'
 
 // 페이지 전환 시, 스크롤 위치를 페이지 상단으로 이동
 import ScrollToTop from './components/ScrollToTop'
+import ProtectedRoute from './components/ProtectedRoute'
 
 export default function App() {
   return (
@@ -55,7 +56,7 @@ export default function App() {
             {/* 다이내믹 세그먼트 라우트 */}
             <Route path={`${NAVIGATION_PATH.movies}/:movieId`} element={<MovieDetail />} />
             {/* 프로텍티드 라우트 */}
-            <Route path={NAVIGATION_PATH.mypage} element={<MyPage />} />
+            <Route path={NAVIGATION_PATH.mypage} element={<ProtectedRoute><MyPage /></ProtectedRoute>} />
             {/* 와일드 카드 */}
             <Route path="*" element={<NotFound />} />
           </Route>

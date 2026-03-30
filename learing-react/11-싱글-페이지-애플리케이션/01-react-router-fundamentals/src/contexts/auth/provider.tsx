@@ -6,15 +6,15 @@ export function AuthProvider(props: React.PropsWithChildren) {
   // 인증 상태 (State) ----------------------------------------------------------
 
   const [user, setUser] = useState<AuthContextValue['user']>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [initializing, setInitializing] = useState(true)
 
   // 앱 초기 구성 이펙트 -----------------------------------------------------------
 
   useEffect(() => {
     // 애플리케이션 초기화 (인증 상태 확인 후, 인증 컨텍스트의 user 값으로 설정)
     const initApp = () => {
-      // 로딩 상태 true로 변경
-      setIsLoading(true)
+
+      // 인증 사용자가 맞아? 확인 과정 (시간 소요...)
 
       try {
         // 사용자 브라우저 스토리지에 저장된 사용자 정보 가져오기
@@ -26,8 +26,8 @@ export function AuthProvider(props: React.PropsWithChildren) {
         // 잘못된 인증 정보 삭제
         localStorage.removeItem(USER_STORAGE_KEY)
       } finally {
-        // 로딩 상태 false로 변경
-        setIsLoading(false)
+        // 앱 준비 상태 끝으로 변경
+        setInitializing(false)
       }
     }
 
@@ -60,7 +60,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
 
   const authContextValue: AuthContextValue = {
     user,
-    isLoading,
+    initializing,
     login,
     logout,
   }

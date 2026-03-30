@@ -1,6 +1,6 @@
 export const NAVIGATION_PATH = {
   base: '/',
-  login: '/signin',
+  login: '/login',
   movies: '/movies',
   actors: '/actors',
   mypage: '/mypage',

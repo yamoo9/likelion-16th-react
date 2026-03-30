@@ -7,7 +7,7 @@ export interface User {
 export interface AuthContextValue {
   // state
   user: null | User
-  isLoading: boolean
+  initializing: boolean
   // actions
   login: (email: User['email']) => Promise<void>
   logout: () => void
