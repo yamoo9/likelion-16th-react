@@ -18,6 +18,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 */
 
+// 컨텍스트 프로바이더
+import { MoviesProvider } from './contexts'
+
 // 공용 레이아웃
 import CommonLayout from './layouts/CommonLayout'
 
@@ -30,22 +33,24 @@ import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* 레이아웃 라우트 */}
-        <Route path="/" element={<CommonLayout />}>
-          {/* 중첩된, 인덱스 라우트 */}
-          <Route index element={<Home />} />
-          {/* 경로(path)를 가지는 라우트 */}
-          <Route path="/login" element={<Login />} />
-          {/* 다이내믹 세그먼트 라우트 */}
-          <Route path="/movies/:movieId" element={<MovieDetail />} />
-          {/* 프로텍티드 라우트 */}
-          <Route path="/my" element={<MyPage />} />
-          {/* 와일드 카드 */}
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <MoviesProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* 레이아웃 라우트 */}
+          <Route path="/" element={<CommonLayout />}>
+            {/* 중첩된, 인덱스 라우트 */}
+            <Route index element={<Home />} />
+            {/* 경로(path)를 가지는 라우트 */}
+            <Route path="/login" element={<Login />} />
+            {/* 다이내믹 세그먼트 라우트 */}
+            <Route path="/movies/:movieId" element={<MovieDetail />} />
+            {/* 프로텍티드 라우트 */}
+            <Route path="/my" element={<MyPage />} />
+            {/* 와일드 카드 */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </MoviesProvider>
   )
 }

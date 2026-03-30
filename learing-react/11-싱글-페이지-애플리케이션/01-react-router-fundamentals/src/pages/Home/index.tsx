@@ -1,4 +1,4 @@
-// import MovieCardList from '../../components/MovieCardList'
+import MovieCardList from '@/components/MovieCardList'
 import S from './style.module.css'
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       </header>
 
       <section className={S.content}>
-        {/* <MovieCardList /> */}
+        <MovieCardList />
       </section>
     </div>
   )
