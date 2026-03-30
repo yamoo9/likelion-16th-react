@@ -1,4 +1,5 @@
-import MyLink from '../MyLink'
+import { Link } from 'react-router-dom'
+import NavLink from '../NavLink'
 import S from './style.module.css'
 
 export default function Navbar() {
@@ -7,19 +8,20 @@ export default function Navbar() {
   return (
     <nav className={S.navbar}>
       <div className={S.wrapper}>
-        <h1 className={S.logo} lang="en">🎬 Movie App</h1>
+        <h1 className={S.logo} lang="en">
+          <Link to="/" className={S.homeLink} aria-label="무비 앱 홈">
+            🎬 Movie App
+          </Link>
+        </h1>
         <ul className={S.navLinks}>
           <li>
-            <MyLink to="/">홈</MyLink>
-          </li>
-          <li>
-            <MyLink to="/actors">배우</MyLink>
+            <NavLink to="/actors">배우</NavLink>
           </li>
           <li>
             {!user ? (
-              <MyLink to="/login">로그인</MyLink>
+              <NavLink to="/login">로그인</NavLink>
             ) : (
-              <MyLink to="/mypage">마이 페이지</MyLink>
+              <NavLink to="/mypage">마이 페이지</NavLink>
             )}
           </li>
         </ul>
@@ -27,4 +29,3 @@ export default function Navbar() {
     </nav>
   )
 }
-

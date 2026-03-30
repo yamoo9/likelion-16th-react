@@ -28,6 +28,11 @@
   letter-spacing: -0.025em;
 }
 
+.homeLink {
+  color: #414040;
+  text-decoration: none;
+}
+
 .navLinks {
   display: flex;
   gap: 2rem;
