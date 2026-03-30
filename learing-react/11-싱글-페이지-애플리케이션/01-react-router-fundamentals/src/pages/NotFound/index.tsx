@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import S from './style.module.css'
+import AppTitle from '@/components/AppTitle'
 
 export default function NotFound() {
   // 프로그래밍 방식으로 내비게이션
@@ -10,6 +11,7 @@ export default function NotFound() {
 
   return (
     <section className={S.container}>
+      <AppTitle subTitle="페이지 없음" />
       <div className={S.content}>
         <h1 className={S.errorCode}>404</h1>
         <h2 className={S.title}>페이지를 찾을 수 없습니다</h2>
