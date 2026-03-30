@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-import { useEffect, useId } from 'react'
+import { useCallback, useEffect, useId } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 
 import { useDebounce, useInput } from '@/hooks'
 import SearchIcon from './SearchIcon'
@@ -21,7 +20,7 @@ export default function PokemonSearch({ onSearch }: PokemonSearchProps) {
     - 프로그래밍 방식으로 경로를 이동시키기 위한 navigate 함수를 가져오세요.
     - 참고: https://reactrouter.com/api/hooks/useNavigate
   */
-  const navigate = undefined
+  const navigate = useNavigate()
 
   /* 
     [쿼리 스트링 읽기]
@@ -29,24 +28,29 @@ export default function PokemonSearch({ onSearch }: PokemonSearchProps) {
     - 예: `/?q=피카츄` → searchParams.get('q')는 '피카츄'를 반환합니다.
     - 참고: https://reactrouter.com/api/hooks/useSearchParams
   */
-  const searchParams = undefined
+  const [searchParams] = useSearchParams()
 
   const searchId = useId()
-  
+
   /* 
     [URL 검색어 초기화]
     - URL에 'q' 파라미터가 있다면 그 값을 초기값으로 사용하고, 없다면 빈 문자열('')을 할당하세요.
   */
-  const initialQuery = ''
+  const initialQuery = searchParams.get('q') ?? ''
 
   const searchTermInput = useInput(initialQuery)
-  
+
   /* 
     [성능 최적화: Debounce]
     - 사용자가 입력을 멈춘 후 500ms가 지나야 실제 검색(URL 업데이트)이 실행됩니다.
     - 매 타이핑마다 페이지가 이동하거나 API를 호출하는 것을 방지합니다.
   */
   const [debouncedSearch] = useDebounce(searchTermInput.props.value, 500)
+
+  const navigateQuery = useCallback(
+    (query: string) => navigate(query ? `?q=${encodeURIComponent(query)}` : ''),
+    [navigate],
+  )
 
   /* 
     [URL 동기화 로직]
@@ -56,26 +60,25 @@ export default function PokemonSearch({ onSearch }: PokemonSearchProps) {
   */
   useEffect(() => {
     const query = debouncedSearch.trim()
-    console.log({ query })
 
     // navigate 함수 코드 작성
     // - query가 있으면 `?q=${encodeURIComponent(query)}`로 이동
     // - query가 없으면 빈 문자열('')로 이동
     // - 옵션: replace = true 설정하여 히스토리 중복 방지
-
-  }, [debouncedSearch])
+    navigateQuery(query)
+  }, [debouncedSearch, navigate, navigateQuery])
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault()
-    
+
     const searchTerm = searchTermInput.props.value
     const query = searchTerm.trim()
-    
+
     // navigate 함수 작성
     // - 엔터를 눌러 즉시 검색할 때도 URL을 업데이트합니다.
     // - navigate를 사용하여 위와 동일한 로직으로 URL을 업데이트하세요.
     // - 동일 코드가 반복된 경우, 별도 함수로 분리해 재사용하세요.
-
+    navigateQuery(query)
     onSearch(searchTerm)
   }
 

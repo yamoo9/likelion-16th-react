@@ -3,6 +3,7 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { ModalProvider } from '@/contexts/ModalContext'
 import { CollectionProvider } from '../CollectionContext'
+import { BrowserRouter } from 'react-router'
 
 /**
  * [전역 상태 관리의 통합 입구: AppProvider]
@@ -26,6 +27,7 @@ export default function AppProvider({ children }: React.PropsWithChildren) {
         
         // 라우터 상태 (URL 주소에 따라 화면을 전환)
         // ↓ 여기에 라우터 프로바이더를 추가합니다.
+        <BrowserRouter />,
         
         /* 
           모달 상태 

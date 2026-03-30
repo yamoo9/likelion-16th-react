@@ -16,7 +16,7 @@ export default defineConfig({
   
   /* 개발 서버 설정 */
   server: {
-    port: 3000,
+    port: 3002,
     open: false,
   },
   
