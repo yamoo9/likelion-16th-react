@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import S from './style.module.css'
 
 export default function NotFound() {
+  // 프로그래밍 방식으로 내비게이션
+  const navigate = useNavigate()
+
+  const handleGoHome = () => navigate('/') // 홈으로 탐색 기능
+  const handleGoBack = () => navigate(-1) // 뒤로가기 탐색 기능
+
   return (
     <section className={S.container}>
       <div className={S.content}>
@@ -11,19 +18,11 @@ export default function NotFound() {
           입력하신 주소가 정확한지 다시 한번 확인해 주세요.
         </p>
         <div className={S.actions}>
-          <button
-            type="button"
-            className={S.homeButton}
-            onClick={() => console.log('홈 페이지로 이동')}
-          >
-            홈으로 돌아가기
+          <button type="button" className={S.homeButton} onClick={handleGoHome}>
+            홈 페이지로 이동
           </button>
-          <button
-            type="button"
-            className={S.backButton}
-            onClick={() => console.log('이전 페이지로 이동')}
-          >
-            이전 페이지
+          <button type="button" className={S.backButton} onClick={handleGoBack}>
+            이전 페이지로 이동
           </button>
         </div>
       </div>
