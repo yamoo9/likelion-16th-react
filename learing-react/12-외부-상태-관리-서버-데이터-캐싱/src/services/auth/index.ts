@@ -103,7 +103,7 @@ export const authApi = {
    * - 클라이언트 측에서 인증 토큰을 즉시 삭제하여 로그아웃 상태로 만듭니다.
    */
   logout: async (): Promise<void> => {
-    await wait(600) // UX를 위한 지연
+    await wait(200) // UX를 위한 지연
     // [클린업]: 로컬 인증 정보 완전 삭제
     authApi.clearLocalAuthData()
   },

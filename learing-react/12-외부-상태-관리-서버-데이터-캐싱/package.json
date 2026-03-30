@@ -8,7 +8,7 @@
     "build": "tsc -b && bunx --bun vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "vanilla-spa": "vite --open ./vanilla-spa/index.html --port 3001"
+    "vanilla-spa": "vite --open ./vanilla-spa/index.html"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.95.2",

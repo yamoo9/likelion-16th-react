@@ -20,7 +20,7 @@ export default function Navbar() {
     if (isPending) return
 
     startTransition(async () => {
-      await wait(300) // 로그아웃 사용자 경험 테스트
+      await wait(200) // 로그아웃 사용자 경험 테스트
       await logout()
       navigate('/')
     })

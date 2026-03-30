@@ -13,13 +13,13 @@ export default defineConfig({
   css: {
     devSourcemap: true,
   },
-  
+
   /* 개발 서버 설정 */
   server: {
     port: 3002,
     open: false,
   },
-  
+
   /* 절대 경로 별칭(Alias) 설정 */
   resolve: {
     alias: {
