@@ -1,7 +1,6 @@
 import S from './style.module.css'
 
 export default function NotFound() {
-
   return (
     <section className={S.container}>
       <div className={S.content}>
