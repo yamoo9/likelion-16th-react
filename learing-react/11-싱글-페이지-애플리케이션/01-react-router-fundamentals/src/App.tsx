@@ -18,8 +18,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 */
 
+// 내비게이션 경로 (상수)
+import { NAVIGATION_PATH } from './configs/navigationPaths'
+
 // 컨텍스트 프로바이더
-import { MoviesProvider } from './contexts'
+import { AuthProvider, MoviesProvider } from './contexts'
 
 // 공용 레이아웃
 import CommonLayout from './layouts/CommonLayout'
@@ -36,25 +39,30 @@ import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
   return (
-    <MoviesProvider>
+    // 인증 프로바이더(공급자)
+    <AuthProvider>
+      {/* 영화 프로바이더(공급자) */}
+      <MoviesProvider>
+        {/* 라우터 프로바이더(공급자) */}
       <BrowserRouter>
         <Routes>
           {/* 레이아웃 라우트 */}
-          <Route path="/" element={<CommonLayout />}>
+          <Route path={NAVIGATION_PATH.base} element={<CommonLayout />}>
             {/* 중첩된, 인덱스 라우트 */}
             <Route index element={<Home />} />
             {/* 경로(path)를 가지는 라우트 */}
-            <Route path="/login" element={<Login />} />
+            <Route path={NAVIGATION_PATH.login} element={<Login />} />
             {/* 다이내믹 세그먼트 라우트 */}
-            <Route path="/movies/:movieId" element={<MovieDetail />} />
+            <Route path={`${NAVIGATION_PATH.movies}/:movieId`} element={<MovieDetail />} />
             {/* 프로텍티드 라우트 */}
-            <Route path="/my" element={<MyPage />} />
+            <Route path={NAVIGATION_PATH.mypage} element={<MyPage />} />
             {/* 와일드 카드 */}
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
         <ScrollToTop />
       </BrowserRouter>
-    </MoviesProvider>
+      </MoviesProvider>
+    </AuthProvider>
   )
 }

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+
+import { NAVIGATION_PATH } from '@/configs/navigationPaths'
 import type { Movie } from '@/db/movies'
 import S from './style.module.css'
 
@@ -10,7 +12,7 @@ export default function MovieCard({ movie }: Props) {
   const { id, title, year } = movie
 
   return (
-    <Link to={`/movies/${id}`} className={S.card}>
+    <Link to={`${NAVIGATION_PATH.movies}/${id}`} className={S.card}>
       <div className={S.poster}>🎬</div>
       <div className={S.info}>
         <h3>{title}</h3>

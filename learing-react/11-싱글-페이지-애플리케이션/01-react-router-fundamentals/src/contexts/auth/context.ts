@@ -1,23 +1,25 @@
 import { createContext, use } from 'react'
 
-interface User {
+export interface User {
   email: string
 }
 
 export interface AuthContextValue {
+  // state
   user: null | User
   isLoading: boolean
-  login: (email: string) => void
+  // actions
+  login: (email: User['email']) => Promise<void>
   logout: () => void
 }
 
 export const AuthContext = createContext<null | AuthContextValue>(null)
 
 export const useAuth = () => {
-  const contextValue = use(AuthContext)
-  
+  const contextValue = use(AuthContext) // React v19+ use() 함수
+
   if (!contextValue) {
-    throw new Error('useAuth는 AuthContext 내부에서만 사용 가능합니다.')
+    throw new Error('useAuth는 AuthProvider 내부에서만 사용 가능합니다.')
   }
 
   return contextValue
