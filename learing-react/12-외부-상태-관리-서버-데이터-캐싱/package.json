@@ -7,8 +7,7 @@
     "dev": "bunx --bun vite",
     "build": "tsc -b && bunx --bun vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "vanilla-spa": "vite --open ./vanilla-spa/index.html"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.95.2",
@@ -28,10 +27,12 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "esbuild": "^0.27.4",
     "eslint": "^10.1.0",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "rollup-plugin-visualizer": "^7.0.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.57.1",
     "vite": "^8.0.1"

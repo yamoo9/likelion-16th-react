@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState, useCallback } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -8,6 +8,7 @@ import { ErrorFallback, GlobalModal, LoadingState, Navbar, ProtectedRoute } from
 import S from './style.module.css'
 import '@/styles/main.css'
 
+// 레이지 로딩 컴포넌트 정의
 const HomePage = lazy(() => import('@/pages/HomePage'))
 const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const PokemonDetailPage = lazy(() => import('@/pages/PokemonDetailPage'))
@@ -16,47 +17,51 @@ const MyPage = lazy(() => import('@/pages/MyPage'))
 
 export default function App() {
   const { checkAuth } = useAuthActions()
-  const isLoading = useAuthLoading() // 인증 확인 로딩 상태
+  const isAuthLoading = useAuthLoading() 
   const [isAppReady, setIsAppReady] = useState(false)
 
-  useEffect(() => {
-    const initializeApp = async () => {
-      await checkAuth() // 인증 확인
-      setIsAppReady(true) // 앱 준비 완료
+  // 초기화 로직을 useCallback으로 감싸 불필요한 재생성 방지
+  const initializeApp = useCallback(async () => {
+    try {
+      await checkAuth()
+    } finally {
+      setIsAppReady(true)
     }
-
-    initializeApp()
   }, [checkAuth])
+
+  useEffect(() => {
+    initializeApp()
+  }, [initializeApp])
+
+  // 초기 앱 준비 상태(인증 확인 중) 처리
+  if (!isAppReady || isAuthLoading) {
+    return <LoadingState message="사용자 정보를 확인하고 있습니다..." />
+  }
 
   return (
     <QueryProvider>
       <BrowserRouter>
         <div className={S.container}>
-          {/* 내비게이션은 항상 렌더링 */}
           <Navbar />
           <main className={S.main}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              {isLoading || !isAppReady ? (
-                // 인증 확인 중 또는 Suspense 로딩 중일 때 로딩 화면 표시
-                <LoadingState message="페이지 로딩 중..." />
-              ) : (
-                <Suspense fallback={<LoadingState message="페이지 로딩 중..." />}>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/pokemon/:id" element={<PokemonDetailPage />} />
-                    <Route
-                      path="/my"
-                      element={
-                        <ProtectedRoute>
-                          <MyPage />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route path="*" element={<NotFoundPage />} />
-                  </Routes>
-                </Suspense>
-              )}
+              {/* Suspense를 Routes 바로 바깥에 배치하여 페이지 전환 시에만 로딩 표시 */}
+              <Suspense fallback={<LoadingState message="페이지를 불러오는 중입니다..." />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/pokemon/:id" element={<PokemonDetailPage />} />
+                  <Route
+                    path="/my"
+                    element={
+                      <ProtectedRoute>
+                        <MyPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
             </ErrorBoundary>
           </main>
         </div>
