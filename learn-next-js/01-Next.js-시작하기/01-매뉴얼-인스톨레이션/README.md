@@ -283,7 +283,12 @@ Next.js는 TypeScript를 기본적으로 지원합니다.
 
 ## ESLint 설정
 
-코드 품질을 유지하기 위해 ESLint를 설정합니다.  
+코드 품질을 유지하기 위해 ESLint를 설정합니다. 필요한 패키지를 설치하세요.
+
+```sh
+bun add eslint@9.39.4 eslint-config-next typescript-eslint -d
+```
+
 `eslint.config.mjs` 파일을 생성하고 다음 내용을 추가하세요.
 
 ```js
