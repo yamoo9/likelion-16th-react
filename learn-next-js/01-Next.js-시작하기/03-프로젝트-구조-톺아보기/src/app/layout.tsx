@@ -14,7 +14,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="ko-KR">
-      <body className={cn('overflow-y-scroll', notoSansKR.variable)}>
+      <body
+        className={cn(
+          'overflow-y-scroll',
+          'selection:bg-foreground selection:text-primary',
+          notoSansKR.variable,
+        )}
+      >
         {children}
       </body>
     </html>

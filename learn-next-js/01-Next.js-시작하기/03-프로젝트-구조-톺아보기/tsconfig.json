@@ -31,5 +31,5 @@
     ".next/dev/types/**/*.ts",                 // Next.js 개발 타입 선언 파일 포함
     "**/*.mts"                                 // .mts 파일 포함 (ESM 모듈용)
   ],
-  "exclude": ["node_modules"]                  // 제외할 디렉토리 (node_modules)
+  "exclude": ["node_modules", "dist", "out"]   // 제외할 디렉토리 (node_modules)
 }
