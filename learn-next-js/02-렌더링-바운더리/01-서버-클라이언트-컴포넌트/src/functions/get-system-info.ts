@@ -1,3 +1,6 @@
+import os from 'node:os'
+import process from 'node:process'
+
 export const getSystemInfo = () => [
   {
     label: 'OS',
@@ -5,15 +8,15 @@ export const getSystemInfo = () => [
   },
   { 
     label: 'CPU', 
-    value: '?? 코어' 
+    value: `${os.cpus().length} 코어`
   },
   { 
     label: 'Node.js', 
-    value: 'x.y.z' 
+    value: process.version 
   },
   {
     label: 'RAM',
-    value: '?? GB',
+    value: `${os.totalmem() / (1024 ** 3) } GB`,
   },
 ]
 

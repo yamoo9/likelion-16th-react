@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "cleanup": "rimraf -rf .next node_modules"
+    "cleanup": "rimraf -rf .next"
   },
   "dependencies": {
     "immer": "^11.1.4",
