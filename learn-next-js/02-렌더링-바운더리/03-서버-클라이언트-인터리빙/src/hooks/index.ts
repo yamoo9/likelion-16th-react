@@ -1,3 +1,4 @@
+export * from './useIsMounted'
 export * from './useFocusTrap'
 export * from './useDebounce'
 export * from './useThrottle'
