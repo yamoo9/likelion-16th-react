@@ -1,0 +1,1 @@
+export { default as ProductActions } from './ui/product-actions'
