@@ -1,5 +1,5 @@
 import { cn } from '@/utils'
-import { ServerComponent } from '@/_learn'
+import { ClientComponent, ServerComponent } from '@/_learn'
 
 // 서버 컴포넌트 (Server Component)
 // - 서버 컴포넌트
@@ -33,7 +33,7 @@ export default function MainPage() {
 
       <main>
         <ServerComponent />
-        
+        <ClientComponent />
       </main>
     </div>
   )
