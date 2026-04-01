@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   description: '보다 나은 웹 경험을 위한 Next.js 프레임워크 사용 방법을 학습합니다.',
 }
 
+// 서버 컴포넌트 (Server Component)
 export default function RootLayout({ children }: React.PropsWithChildren) {
+
   return (
     <html lang="ko-KR">
       <body className={cn('overflow-y-scroll', notoSansKR.variable)}>

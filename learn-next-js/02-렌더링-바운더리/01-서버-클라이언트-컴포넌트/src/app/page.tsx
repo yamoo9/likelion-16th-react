@@ -1,6 +1,11 @@
 import { cn } from '@/utils'
+import ProjectName from '@/components/project-name'
 
-export default function Page() {
+// 서버 컴포넌트 (Server Component)
+export default function MainPage() {
+
+  console.log('메인 페이지 컴포넌트')
+
   return (
     <div
       className={cn(
@@ -25,8 +30,10 @@ export default function Page() {
           </span>
         </h1>
       </header>
+
       <main>
-        
+        {/* 클라이언트 컴포넌트 */}
+        <ProjectName />
       </main>
     </div>
   )
