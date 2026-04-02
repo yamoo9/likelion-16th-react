@@ -16,8 +16,9 @@ const product = {
   reviews: 124,
 }
 
+// 비동기(async) 컴포넌트 !== 클라이언트 컴포넌트
 export default async function Product() {
-  await wait(400)
+  await wait(800) // 비동기(지연) 처리 시뮬레이션
 
   return (
     <article

@@ -1,6 +1,6 @@
-
 import { cn } from '@/utils'
-import { ClientComponent, InterleavingDemo, ServerComponent } from '@/_learn'
+import { /* ClientComponent, ServerComponent, */ InterleavingDemo } from '@/_learn'
+import SubjectTitle from '@/components/subject-title'
 // import Cart from '@/components/cart' // 서버 컴포넌트
 // import Modal from '@/components/modal' // 클라이언트 컴포넌트
 
@@ -16,23 +16,10 @@ export default function Page() {
         'bg-background min-h-screen',
       )}
     >
-      <header hidden>
-        <h1
-          className={cn(
-            'text-foreground text-center text-4xl font-extralight',
-            'selection:bg-foreground selection:text-background',
-          )}
-        >
-          인터리빙
-          <br />
-          <span
-            lang="en"
-            className="inline-block -translate-y-2.5 text-xl text-slate-500"
-          >
-            Interleaving
-          </span>
-        </h1>
-      </header>
+      <SubjectTitle title={{
+        ko: '인터리빙',
+        en: 'Interleaving'
+      }} />
 
       <main className="flex flex-col gap-5 overflow-hidden transform-3d">
 
@@ -44,10 +31,10 @@ export default function Page() {
           {/* <Cart /> */}
         {/* </Modal> */}
 
-        <ClientComponent hidden>
+        {/* <ClientComponent> */}
           {/* <slot></slot> <- props.children */}
-          <ServerComponent />
-        </ClientComponent>
+          {/* <ServerComponent /> */}
+        {/* </ClientComponent> */}
       </main>
     </div>
   )

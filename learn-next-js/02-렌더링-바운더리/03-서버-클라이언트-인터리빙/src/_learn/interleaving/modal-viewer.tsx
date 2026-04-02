@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { cn } from '@/utils'
 import Modal from './modal'
-import Product from './product'
 
 export default function ModalViewer({ children }: React.PropsWithChildren) {
   const [isView, setIsView] = useState(false)
@@ -30,7 +29,7 @@ export default function ModalViewer({ children }: React.PropsWithChildren) {
         Modal은 클라이언트 컴포넌트이지만, 그 자식인 서버에서 렌더링된 결과물을 그대로 주입받습니다.
       */}
       <Modal isOpen={isView} onClose={() => setIsView(false)}>
-        <Product />
+        {children}
       </Modal>
     </>
   )

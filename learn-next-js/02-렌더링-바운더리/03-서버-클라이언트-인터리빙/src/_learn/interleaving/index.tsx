@@ -1,5 +1,6 @@
 import { cn } from '@/utils'
 import ModalViewer from './modal-viewer'
+import Product from './product'
 
 export default function InterleavingDemo() {
   return (
@@ -30,7 +31,9 @@ export default function InterleavingDemo() {
             렌더링하는 최적화 구조를 말합니다.
           </p>
         </section>
-        <ModalViewer />
+        <ModalViewer>
+          <Product />
+        </ModalViewer>
       </div>
     </div>
   )
