@@ -1,12 +1,8 @@
 'use client'
 
-import {
-  QueryClient,
-  QueryClientProvider,
-  environmentManager,
-} from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useState } from 'react'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { QueryClient, QueryClientProvider, environmentManager } from '@tanstack/react-query'
 
 /**
  * @function makeQueryClient
@@ -86,7 +82,7 @@ export function QueryProvider({
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {hideDevtools || <ReactQueryDevtools />}
+      {hideDevtools || <ReactQueryDevtools initialIsOpen />}
     </QueryClientProvider>
   )
 }

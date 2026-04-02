@@ -2,9 +2,7 @@ import { cn } from '@/utils'
 import { UserList } from './user-list'
 
 export default async function Users() {
-
-  console.log('API_URL', process.env.API_URL)
-
+  
   return (
     <section className="mx-auto max-w-md space-y-8 p-8">
       <header className="space-y-4">
@@ -17,8 +15,9 @@ export default async function Users() {
         >
           팀 매니저
         </h2>
-        <p className="text-slate-500 text-sm leading-relaxed">
-          서버에서 미리 가져온 데이터(Prefetched Data)를 React Query에서 관리하도록 구성해봅니다.
+        <p className="text-sm leading-relaxed text-slate-500">
+          서버에서 미리 가져온 데이터(Prefetched Data)를 React Query에서
+          관리하도록 구성해봅니다.
         </p>
       </header>
 

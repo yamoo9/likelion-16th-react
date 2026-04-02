@@ -5,7 +5,7 @@ export default function MainPage() {
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center gap-5',
+        'flex flex-col items-center justify-start gap-5',
         'bg-background min-h-screen',
       )}
     >
