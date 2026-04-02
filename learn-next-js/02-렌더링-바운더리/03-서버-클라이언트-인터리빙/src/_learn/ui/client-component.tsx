@@ -1,15 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { type ComponentProps, useState } from 'react'
 import { MousePointerClick, Layers } from 'lucide-react'
 import { cn } from '@/utils'
 
-interface Props {
-  className?: string
-  children?: React.ReactNode
-}
-
-export default function ClientComponent({ className, children }: Props) {
+export default function ClientComponent({
+  className,
+  children,
+  ...restProps
+}: ComponentProps<'section'>) {
   const [count, setCount] = useState(0)
   const [isActive, setIsActive] = useState(false)
 
@@ -33,6 +32,7 @@ export default function ClientComponent({ className, children }: Props) {
           : 'border-dashed border-slate-300 bg-white shadow-sm',
         className,
       )}
+      {...restProps}
     >
       <div className="mb-6 flex items-center justify-between">
         <header className="flex items-center gap-2">
