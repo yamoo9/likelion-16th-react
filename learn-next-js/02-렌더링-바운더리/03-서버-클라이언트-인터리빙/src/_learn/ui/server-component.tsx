@@ -43,6 +43,7 @@ export default async function ServerComponent({ className }: Props) {
       
       <div className="mt-5">
         {/* 클라이언트 컴포넌트를 삽입해보세요. */}
+
       </div>
     </section>
   )

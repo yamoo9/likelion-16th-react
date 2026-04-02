@@ -4,9 +4,12 @@ import { useState } from 'react'
 import { MousePointerClick, Layers } from 'lucide-react'
 import { cn } from '@/utils'
 
-type Props = { className?: string }
+interface Props {
+  className?: string
+  children?: React.ReactNode
+}
 
-export default function ClientComponent({ className }: Props) {
+export default function ClientComponent({ className, children }: Props) {
   const [count, setCount] = useState(0)
   const [isActive, setIsActive] = useState(false)
 
@@ -34,7 +37,9 @@ export default function ClientComponent({ className }: Props) {
       <div className="mb-6 flex items-center justify-between">
         <header className="flex items-center gap-2">
           <Layers className="h-5 w-5 text-emerald-600" />
-          <h2 className="text-lg font-bold text-emerald-600">클라이언트 래퍼</h2>
+          <h2 className="text-lg font-bold text-emerald-600">
+            클라이언트 래퍼
+          </h2>
         </header>
         <span
           className={cn(
@@ -49,9 +54,11 @@ export default function ClientComponent({ className }: Props) {
       </div>
 
       <div className="mb-8 space-y-4">
-        <p className="text-sm text-slate-600 leading-relaxed">
-          이 컴포넌트는 <strong>&ldquo;use client&rdquo;</strong>를 사용합니다.<br />
-          내부 상태가 변경되어도 <code>children</code>으로 전달된 서버 컴포넌트는 다시 페칭되지 않습니다.
+        <p className="text-sm leading-relaxed text-slate-600">
+          이 컴포넌트는 <strong>&ldquo;use client&rdquo;</strong>를 사용합니다.
+          <br />
+          내부 상태가 변경되어도 <code>children</code>으로 전달된 서버
+          컴포넌트는 다시 페칭되지 않습니다.
         </p>
 
         <div className="flex gap-3">
@@ -99,9 +106,13 @@ export default function ClientComponent({ className }: Props) {
           </abbr>
           )
         </div>
-        
+
         <div className="mt-5">
-          {/* 서버 컴포넌트를 삽입해보세요. */}
+          {/* 서버 컴포넌트를 삽입하면 에러가 발생 */}
+
+          {/* 서버에서 렌더링된 결과가 클라이언트 환경에서 문제없이 작동할 수 있도록 구멍(slot) 생성 */}
+          {/* 클라이언트 컴포넌트 내부에 서버 컴포넌트를 에러 없이 렌더링하는 방법 - 인터리빙 */}
+          {children}
         </div>
       </div>
     </section>
