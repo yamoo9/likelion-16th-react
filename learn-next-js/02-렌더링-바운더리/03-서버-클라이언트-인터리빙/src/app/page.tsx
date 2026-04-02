@@ -1,4 +1,4 @@
-import { ClientComponent } from '@/_learn'
+import { ClientComponent, ServerComponent } from '@/_learn'
 import { cn } from '@/utils'
 
 export default function Page() {
@@ -32,7 +32,10 @@ export default function Page() {
       </header>
 
       <main className="flex flex-col gap-5">
-        <ClientComponent />
+        <ClientComponent>
+          {/* <slot></slot> <- props.children */}
+          <ServerComponent />
+        </ClientComponent>
       </main>
     </div>
   )
