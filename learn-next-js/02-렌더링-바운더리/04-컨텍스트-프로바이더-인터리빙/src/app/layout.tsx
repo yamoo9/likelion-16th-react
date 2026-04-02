@@ -2,9 +2,9 @@
 import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 
-import { ToastProvider } from '@/contexts/toast-context'
-import { cn } from '@/utils'
 import '@/styles/globals.css'
+import { cn } from '@/utils'
+import { MyToastProvider } from '@/contexts/my-toast-context'
 
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
 
@@ -23,9 +23,10 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           'selection:bg-foreground selection:text-background',
         )}
       >
-        <ToastProvider>
+        <MyToastProvider>
           {children}
-        </ToastProvider>
+        </MyToastProvider>
+        
       </body>
     </html>
   )

@@ -1,13 +1,10 @@
 'use client'
 
-import { useToast } from '@/contexts/toast-context'
 import { cn } from '@/utils'
-import { AlertTriangle, ShoppingBag } from 'lucide-react'
+import { AlertTriangle, LucideCheckSquare2, LucideXSquare, ShoppingBag } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export default function ProductActions({children}: React.PropsWithChildren) {
-
-  const { toast } = useToast()
-  
 
   const handlePutInCart = () => {
     // toast 함수 호출
@@ -15,10 +12,17 @@ export default function ProductActions({children}: React.PropsWithChildren) {
     // - 선택하신 상품이 장바구니에 성공적으로 담겼습니다.
     // - success
     // console.log('장바구니 담기')
-    toast(
+    toast.success(
       '장바구니 담기 완료',
-      '선택한 상품이 장바구니에 성공적으로 담겼습니다',
-      'success',
+      {
+        icon: <LucideCheckSquare2 />,
+        position: 'bottom-center',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      }
     )
   }
 
@@ -28,10 +32,17 @@ export default function ProductActions({children}: React.PropsWithChildren) {
     // - 네트워크 연결 상태를 확인한 후 다시 시도해주세요.
     // - error
     // console.log('결제하기')
-    toast(
-      '결제 오류',
-      '네트워크 연결 상태를 확인한 후 다시 시도해주세요',
-      'error',
+    toast.error(
+      '결제 오류: 네트워크 연결 상태를 확인한 후 다시 시도해주세요',
+      {
+        icon: <LucideXSquare />,
+        position: 'top-right',
+        style: {
+          borderRadius: '10px',
+          background: '#c33',
+          color: '#fff',
+        },
+      }
     )
   }
 
