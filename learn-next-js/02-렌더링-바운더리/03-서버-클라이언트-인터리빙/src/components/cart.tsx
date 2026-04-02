@@ -54,18 +54,36 @@ const sneakers = [
 export type CartItem = (typeof sneakers)[number]
 
 export default async function Cart() {
-  // 지연 시뮬레이션 (클라이언트 컴포넌트 동기 처리 <- 서버 컴포넌트 비동기 (사전에 렌더링된 결과))
   await wait(300)
 
   return (
-    <ul className="flex flex-col gap-2 bg-white p-6 text-slate-800 rounded-xl">
-      {sneakers.map((item) => (
-        <li key={item.id}>
-          <h3>{item.name}</h3>
-          <p>{item.price.toLocaleString()}원</p>
-          <img src={item.imageUrl} alt="" className='h-30' />
-        </li>
-      ))}
-    </ul>
+    <div className="max-w-md mx-auto p-4">
+      <h2 className="text-xl font-bold mb-4 px-2 text-slate-900">장바구니 ({sneakers.length})</h2>
+      <ul className="flex flex-col gap-3 bg-slate-50 p-4 text-slate-800 rounded-2xl shadow-inner">
+        {sneakers.map((item) => (
+          <li 
+            key={item.id} 
+            className="flex items-center gap-4 bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-slate-100"
+          >
+            <div className="w-20 h-20 bg-slate-100 rounded-lg overflow-hidden shrink-0">
+              <img 
+                src={item.imageUrl} 
+                alt={item.name} 
+                className="w-full h-full object-cover mix-blend-multiply" 
+              />
+            </div>
+
+            <div className="grow">
+              <h3 className="font-semibold text-slate-900 leading-tight mb-1">
+                {item.name}
+              </h3>
+              <p className="text-blue-600 font-bold">
+                {item.price.toLocaleString()}원
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
