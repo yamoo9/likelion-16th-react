@@ -35,6 +35,7 @@ export default function Page() {
       </header>
 
       <main className="flex flex-col gap-5">
+        
         {/* 클라이언트 컴포넌트 (동기 처리, 이벤트 핸들링, 상태 관리 등) */}
         <Modal>
           {/* 서버 컴포넌트 (비동기 처리, 사전 렌더링, 서버 데이터 가져오기 등) */}

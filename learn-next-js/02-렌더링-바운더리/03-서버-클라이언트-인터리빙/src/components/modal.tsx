@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Activity, useState } from 'react'
 import { LucidePlay, LucideX } from 'lucide-react'
 import { cn } from '@/utils'
 
@@ -36,9 +36,46 @@ export default function Modal({ children }: Props) {
       >
         <LucidePlay />
       </button>
+
+      {/* Vue.js v-show 디렉티브(지시어) (DOM에 있음 감춰줬을 뿐) */}
+      <Activity mode={isShow ? 'visible' : 'hidden'}>
+        <div
+          data-dim="액티비티"
+          className={cn(
+            'fixed inset-0 z-50 flex items-center justify-center',
+            'bg-slate-900/40 backdrop-blur-md transition-opacity',
+          )}
+        >
+          <div
+            role="modal"
+            aria-modal="true"
+            className={cn(
+              'relative',
+              'max-h-100 min-h-70 max-w-1/2 min-w-120',
+              'bg-white text-slate-800',
+              'rounded-xl p-10 shadow-2xl',
+            )}
+          >
+            <div className='w-full h-80 overflow-y-auto my-5'>{children}</div>
+            <button
+              type="button"
+              aria-label="닫기"
+              onClick={handleClose}
+              className={cn(
+                'absolute top-4 right-4 rounded-full p-1',
+                'text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600',
+              )}
+            >
+              <LucideX />
+            </button>
+          </div>
+        </div>
+      </Activity>
+
+      {/* Vue.js v-if 디렉티브(지시어) (DOM에 없음, 실질적인 조건부 렌더링) */}
       {isShow && (
         <div
-          data-dim
+          data-dim="조건부 렌더링"
           className={cn(
             'fixed inset-0 z-50 flex items-center justify-center',
             'bg-slate-900/40 backdrop-blur-md transition-opacity',
