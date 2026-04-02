@@ -1,12 +1,13 @@
 'use client'
 
-import { ShoppingBag, AlertTriangle } from 'lucide-react'
-import { useNoti } from '../contexts/noti-context'
+import { useToast } from '@/contexts/toast-context'
 import { cn } from '@/utils'
+import { AlertTriangle, ShoppingBag } from 'lucide-react'
 
 export default function ProductActions({children}: React.PropsWithChildren) {
-  // 노티 컨텍스트 값 가져오기
-  const { noti } = useNoti()
+
+  const { toast } = useToast()
+  
 
   const handlePutInCart = () => {
     // toast 함수 호출
@@ -14,10 +15,10 @@ export default function ProductActions({children}: React.PropsWithChildren) {
     // - 선택하신 상품이 장바구니에 성공적으로 담겼습니다.
     // - success
     // console.log('장바구니 담기')
-    noti(
+    toast(
       '장바구니 담기 완료',
       '선택한 상품이 장바구니에 성공적으로 담겼습니다',
-      'info',
+      'success',
     )
   }
 
@@ -26,11 +27,11 @@ export default function ProductActions({children}: React.PropsWithChildren) {
     // - 결제 오류
     // - 네트워크 연결 상태를 확인한 후 다시 시도해주세요.
     // - error
-    console.log('결제하기')
-    noti(
+    // console.log('결제하기')
+    toast(
       '결제 오류',
       '네트워크 연결 상태를 확인한 후 다시 시도해주세요',
-      'warn',
+      'error',
     )
   }
 

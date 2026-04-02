@@ -1,5 +1,4 @@
 import { ProductActions } from '@/_learn'
-import Demo from '@/_learn/ui/demo'
 import { cn } from '@/utils'
 
 export default function MainPage() {
@@ -29,9 +28,7 @@ export default function MainPage() {
       </header>
 
       <main>
-        <ProductActions>
-          <Demo />
-        </ProductActions>
+        <ProductActions />
       </main>
     </div>
   )

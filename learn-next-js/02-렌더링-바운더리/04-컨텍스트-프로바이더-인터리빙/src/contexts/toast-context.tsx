@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, use, useCallback, useState } from 'react'
 import { X, CheckCircle2, AlertCircle, Info } from 'lucide-react'
 import { cn } from '@/utils'
