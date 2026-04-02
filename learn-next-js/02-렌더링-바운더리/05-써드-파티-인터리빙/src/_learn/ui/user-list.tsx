@@ -4,18 +4,24 @@ import { ArrowRight, Mail, MapPinHouse, User } from 'lucide-react'
 
 import { cn } from '@/utils'
 import UserListSkeleton from './user-list-skeleton'
-import { ResponseUserData } from '../api/users'
+import { useQuery } from '@tanstack/react-query'
+import { getUsers } from '../api/users'
 
 export function UserList() {
-  const isPending = true
-  const data = {} as ResponseUserData
+
+  const { isPending, data, refetch } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsers,
+  })
 
   if (isPending) {
     return <UserListSkeleton />
   }
 
   return (
-    <ul className="grid gap-4" aria-label="사용자 목록">
+    <>
+      <button type="button" className='border px-2 py-0.5 rounded-xl' onClick={() => refetch()}>refetch</button>
+      <ul className="grid gap-4" aria-label="사용자 목록">
       {data?.users?.map((user) => (
         <li key={user.id}>
           <a
@@ -71,5 +77,6 @@ export function UserList() {
         </li>
       ))}
     </ul>
+    </>
   )
 }

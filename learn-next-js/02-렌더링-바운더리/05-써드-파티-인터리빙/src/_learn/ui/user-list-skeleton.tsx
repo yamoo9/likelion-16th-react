@@ -1,6 +1,6 @@
 export default function UserListSkeleton() {
   return (
-    <div role="status" className="grid w-full gap-4">
+    <div role="status" aria-label="팀원(사용자) 목록 로딩 중..." className="grid w-full gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
         <div
           key={i}

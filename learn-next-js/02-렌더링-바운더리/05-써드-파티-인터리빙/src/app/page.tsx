@@ -1,6 +1,7 @@
+import { Users } from '@/_learn'
 import { cn } from '@/utils'
 
-export default function Page() {
+export default function MainPage() {
   return (
     <div
       className={cn(
@@ -8,7 +9,7 @@ export default function Page() {
         'bg-background min-h-screen',
       )}
     >
-      <header>
+      <header hidden>
         <h1
           className={cn(
             'text-foreground text-center text-4xl font-extralight',
@@ -27,7 +28,7 @@ export default function Page() {
       </header>
 
       <main>
-        
+        <Users />
       </main>
     </div>
   )
