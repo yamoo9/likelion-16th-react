@@ -1,6 +1,8 @@
+import { ProductActions } from '@/_learn'
+import Demo from '@/_learn/ui/demo'
 import { cn } from '@/utils'
 
-export default function Page() {
+export default function MainPage() {
   return (
     <div
       className={cn(
@@ -25,8 +27,11 @@ export default function Page() {
           </span>
         </h1>
       </header>
+
       <main>
-        
+        <ProductActions>
+          <Demo />
+        </ProductActions>
       </main>
     </div>
   )

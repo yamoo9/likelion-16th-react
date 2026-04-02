@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 import { cn } from '@/utils'
 import '@/styles/globals.css'
+import { NotiProvider } from '@/_learn/contexts/noti-context'
 
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
 
@@ -21,7 +22,10 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           'selection:bg-foreground selection:text-background',
         )}
       >
-        {children} 
+        {/* 클라이언트 컴포넌트인 프로바이더가 감쌌는데 (인터리빙) 결과는? 서버 컴포넌트 유지, 클라이언트 컴포넌트와 마찬가지로 삽입 가능 */}
+        <NotiProvider>
+          {children}
+        </NotiProvider>
       </body>
     </html>
   )
