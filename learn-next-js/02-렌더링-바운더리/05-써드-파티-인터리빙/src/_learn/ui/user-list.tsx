@@ -6,15 +6,20 @@ import { ArrowRight, Mail, MapPinHouse, User } from 'lucide-react'
 import { cn } from '@/utils'
 import { getUsers } from '../api/users'
 import UserListSkeleton from './user-list-skeleton'
+import UserListError from './user-list-error'
 
 export function UserList() {
-  const { isPending, data } = useQuery({
+  const { isPending, data, isError, error, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers,
   })
 
   if (isPending) {
     return <UserListSkeleton />
+  }
+
+  if (isError) {
+    return <UserListError message={error.message} reset={refetch} />
   }
 
   return (

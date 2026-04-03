@@ -27,9 +27,9 @@ export default function MainPage() {
         </h1>
       </header>
 
-      <main>
+      <div>
         <Users />
-      </main>
+      </div>
     </div>
   )
 }
