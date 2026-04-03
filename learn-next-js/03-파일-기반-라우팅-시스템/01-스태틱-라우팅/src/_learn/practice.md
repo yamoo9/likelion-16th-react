@@ -8,7 +8,6 @@ Next.js의 App Router를 사용하여 "나만의 포켓몬 도감" 서비스 구
 아래 구조에 따라 파일을 생성하세요. 각 폴더는 포켓몬의 분류와 특정 카테고리를 담당합니다.
 
 ```sh
-/*
   app/
   ├── layout.tsx             # [전체 공통] 서비스 로고(PokeLog), 메인 메뉴 (Home, Pokemon, Types)
   ├── page.tsx               # [/] 홈 - "포켓로그에 오신 것을 환영합니다! 모험을 시작하세요."
@@ -29,5 +28,4 @@ Next.js의 App Router를 사용하여 "나만의 포켓몬 도감" 서비스 구
   │
   └── my-collection/         # [/my-collection] 나의 포켓몬 박스
       └── page.tsx           # - "내가 잡은 포켓몬 목록이 비어 있습니다."
-*/
 ```
