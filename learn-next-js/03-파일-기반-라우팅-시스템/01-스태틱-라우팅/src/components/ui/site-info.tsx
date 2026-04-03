@@ -10,6 +10,7 @@ export default function SiteInfo() {
   return (
     <footer
       className={cn(
+        'relative',
         'mt-20 w-full border-t px-6 py-8 transition-colors duration-300',
         'border-gray-100 bg-white',
         'dark:border-zinc-800 dark:bg-zinc-950',
