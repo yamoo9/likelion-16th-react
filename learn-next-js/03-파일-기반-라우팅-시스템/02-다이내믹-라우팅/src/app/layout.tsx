@@ -22,6 +22,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <body
         className={cn(
           notoSansKR.variable,
+          'flex flex-col',
           'min-h-screen overflow-y-scroll',
           'bg-background text-foreground antialiased',
           'selection:bg-foreground selection:text-background',
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       >
         <QueryProvider hideDevtools>
           <Navbar />
-          <main className={cn('container mx-auto px-6')}>
+          <main className={cn('container mx-auto px-6 grow')}>
             {children}
           </main>
           <SiteInfo />
