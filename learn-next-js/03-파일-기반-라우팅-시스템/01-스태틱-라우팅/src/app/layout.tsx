@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 
@@ -6,6 +5,8 @@ import { QueryProvider } from '@/contexts/query-context'
 import { cn } from '@/utils'
 
 import '@/styles/globals.css'
+import Navbar from '@/components/ui/navbar'
+import SiteInfo from '@/components/ui/site-info'
 
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
 
@@ -57,43 +58,11 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         )}
       >
         <QueryProvider hideDevtools>
-          <header className="bg-slate-50 p-5">
-            <nav aria-label="메인 내비게이션" className="flex flex-row gap-5">
-              {/* 내비게이션 바 (로고, 링크, 검색 바 등) */}
-              <Link href="/">
-                <img src="/next-js.svg" alt="Next.js" className="size-7" />
-              </Link>
-              <ul className="flex flex-row gap-5">
-                <li>
-                  <Link href="/books">북 리스트</Link>
-                </li>
-                <li>
-                  <Link href="/books/best">베스트셀러</Link>
-                </li>
-                <li>
-                  <Link href="/categories">카테고리</Link>
-                </li>
-                <li>
-                  <Link href="/categories/novel">소설</Link>
-                </li>
-                <li>
-                  <Link href="/profile">프로필</Link>
-                </li>
-                <li>
-                  <Link href="/profile/settings">설정</Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
+          <Navbar />
 
           <main className={cn('container mx-auto grow')}>{children}</main>
 
-          <footer className="flex justify-center bg-slate-100 p-7">
-            {/* 저작권 등 사이트 정보 */}
-            <small lang="en" className="text-sm font-medium">
-              &copy; {new Date().getFullYear()} Copylight All Reserved.
-            </small>
-          </footer>
+          <SiteInfo />
         </QueryProvider>
       </body>
     </html>
