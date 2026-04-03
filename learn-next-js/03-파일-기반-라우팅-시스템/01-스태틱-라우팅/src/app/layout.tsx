@@ -59,9 +59,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       >
         <QueryProvider hideDevtools>
           <Navbar />
-
           <main className={cn('container mx-auto grow')}>{children}</main>
-
           <SiteInfo />
         </QueryProvider>
       </body>

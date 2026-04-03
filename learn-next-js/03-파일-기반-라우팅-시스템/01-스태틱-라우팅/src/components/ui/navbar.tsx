@@ -6,7 +6,6 @@ import NavList from './nav-list'
 
 
 export default function Navbar() {
-  
 
   return (
     <nav
