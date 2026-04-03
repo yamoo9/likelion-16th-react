@@ -6,6 +6,7 @@ import Navbar from '@/components/ui/navbar'
 import SiteInfo from '@/components/ui/site-info'
 
 import '@/styles/globals.css'
+import { QueryProvider } from './contexts/query-context'
 
 
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
