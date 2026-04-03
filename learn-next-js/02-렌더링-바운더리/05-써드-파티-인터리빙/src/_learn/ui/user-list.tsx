@@ -5,14 +5,14 @@ import { ArrowRight, Mail, MapPinHouse, User } from 'lucide-react'
 
 import { cn } from '@/utils'
 import { getUsers } from '../api/users'
-import { getApiKey } from '@/functions/get-api-key'
+// import { getApiKey } from '@/functions/get-api-key'
 import UserListSkeleton from './user-list-skeleton'
 import UserListError from './user-list-error'
 
 export function UserList() {
 
   // 클라이언트 컴포넌트에서 노출되면 안되는 정보에 접근 시도
-  console.log(getApiKey())
+  // console.log(getApiKey())
 
   // 앱이 초기화될 때 처음 생성된 QueryClient 객체(싱글톤) 사용
 

@@ -4,13 +4,13 @@ import { cn } from '@/utils'
 import { UserList } from './user-list'
 import { getUsers } from '../api/users'
 import { getQueryClient } from '@/functions/query-client'
-import { getStorage } from '@/functions/storage'
+// import { getStorage } from '@/functions/storage'
 
 export default async function Users() {
 
   // 서버에 존재하지 않는 객체에 접근하는 클라이언트 전용 함수 실행
-  const clientStorageData = getStorage('@client-only')
-  console.log(clientStorageData)
+  // const clientStorageData = getStorage('@client-only')
+  // console.log(clientStorageData)
 
   // 서버 컴포넌트
   // QueryClient를 사용(요청)할 때마다 생성
