@@ -1,14 +1,15 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
 import { cn } from '@/utils'
 import { UserList } from './user-list'
 import { getUsers } from '../api/users'
+import { getQueryClient } from '@/functions/query-client'
 
 export default async function Users() {
 
   // 서버 컴포넌트
   // QueryClient를 사용(요청)할 때마다 생성
-  const queryClient = new QueryClient()
+  const queryClient = getQueryClient()
 
   // 생성된 queryClient 객체를 사용해 API 서버에서 프리페칭(prefetch)
   await queryClient.prefetchQuery({
