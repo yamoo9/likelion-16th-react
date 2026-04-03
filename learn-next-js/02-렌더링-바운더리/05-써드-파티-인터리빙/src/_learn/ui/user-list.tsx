@@ -9,6 +9,9 @@ import UserListSkeleton from './user-list-skeleton'
 import UserListError from './user-list-error'
 
 export function UserList() {
+
+  // 앱이 초기화될 때 처음 생성된 QueryClient 객체(싱글톤) 사용
+
   const { isPending, data, isError, error, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers,

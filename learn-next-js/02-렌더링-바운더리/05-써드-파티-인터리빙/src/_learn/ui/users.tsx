@@ -1,4 +1,4 @@
-import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
 import { cn } from '@/utils'
 import { UserList } from './user-list'
@@ -17,7 +17,7 @@ export default async function Users() {
   })
 
   // 클라이언트 측 queryClient에 보낼 프리페칭해 캐싱된 데이터를 압축
-  // const sharedState = dehydrate()
+  const dehydratedState = dehydrate(queryClient)
   
   return (
     <section className="mx-auto max-w-md space-y-8 p-8">
@@ -43,7 +43,9 @@ export default async function Users() {
           'shadow-[0_8px_30px_rgb(0,0,0,0.04)]',
         )}
       >
-        <UserList />
+        <HydrationBoundary state={dehydratedState}>
+          <UserList />
+        </HydrationBoundary>
       </div>
     </section>
   )
