@@ -12,7 +12,7 @@ export default function SubjectTitle({ title }: Props) {
     <div
       className={cn(
         'flex flex-col items-center justify-center gap-5',
-        'bg-background min-h-screen',
+        'bg-background',
       )}
     >
       <header>
