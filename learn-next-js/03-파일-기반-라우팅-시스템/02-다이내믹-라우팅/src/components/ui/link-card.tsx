@@ -27,7 +27,7 @@ export default function LinkCard({ href, title, description, icon: Icon }: Props
               <span>{title}</span>
             </div>
 
-            <p className="text-muted-foreground text-sm transition-colors group-hover:text-primary/90">
+            <p className="text-muted-foreground text-sm transition-colors group-hover:text-primary/90 pr-10">
               {description}
             </p>
           </div>
