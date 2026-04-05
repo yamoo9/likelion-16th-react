@@ -54,7 +54,7 @@ export default function Navbar() {
           className="flex items-center gap-1 sm:gap-2"
         >
           {navItems.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = pathname.includes(item.href)
             return (
               <li key={item.href}>
                 <Link
