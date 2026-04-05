@@ -7,7 +7,7 @@ export default function MainPage() {
         
         {/* 학습 문서(Docs) 카드 */}
         <LinkCard
-          href="/docs/%EA%B8%B0%EC%B4%88"
+          href={`/docs/${encodeURIComponent('기초')}`}
           title="학습 문서"
           description={
             <>
