@@ -45,7 +45,8 @@ export default function BooksPage() {
             <Link
               key={book.isbn}
               // href={`/books/${book.isbn}`}
-              href={`/books/${book.title}`}
+              // href={`/books/${book.title}`}
+              href={`/books/${book.pubdate}/${book.title}`}
               className={cn(
                 'px-2 pt-1 pb-1.5',
                 'text-foreground/80 hover:text-foreground font-medium',
