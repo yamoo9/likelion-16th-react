@@ -1,14 +1,9 @@
 import { notFound } from 'next/navigation'
-import { Book, books } from '../../_resources/data'
+import { books } from '../../_resources/data'
 
-interface Props {
-  params: Promise<{
-    title: Book['title']
-    pubdate: Book['pubdate']
-  }>
-}
-
-export default async function BookDetailPage({ params }: Props) {
+export default async function BookDetailPage({
+  params,
+}: PageProps<'/books/[pubdate]/[title]'>) {
   const { pubdate, title } = await params
   const decodedTitle = decodeURIComponent(title)
 

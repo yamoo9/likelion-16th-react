@@ -1,9 +1,10 @@
 import { cn } from "@/utils"
 import Link from "next/link"
+import type { OrderBy, SortKey } from "../data"
 
 interface Props {
-  sortKey: 'title' | 'pubdate' | 'isbn'
-  orderBy: 'asc' | 'desc'
+  sortKey: SortKey
+  orderBy: OrderBy
 }
 
 /* 이름순, 출판일순, ISBN순 정렬(오름차순,내림차순) 기능 구현 */

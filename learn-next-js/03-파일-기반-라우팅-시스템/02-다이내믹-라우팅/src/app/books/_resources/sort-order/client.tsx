@@ -24,7 +24,6 @@ function SortOrder() {
           const searchParams = new URLSearchParams(window.location.search)
           const sortKey = searchParams.get('sortKey')
           const orderBy = searchParams.get('orderBy')
-          console.log(sortKey, orderBy)
           if (sortKey === 'pubdate' && orderBy === 'asc') return
           router.push(`?sortKey=pubdate&orderBy=asc`)
         }}

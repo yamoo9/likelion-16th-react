@@ -10,6 +10,10 @@ export interface Book {
   description: string
 }
 
+export type BookKeys = keyof Book
+export type SortKey = 'title' | 'pubdate' | 'isbn'
+export type OrderBy = 'asc' | 'desc'
+
 export const books: Book[] = [
   {
     title: '제철 행복 (가장 알맞은 시절에 건네는 스물네 번의 다정한 안부)',

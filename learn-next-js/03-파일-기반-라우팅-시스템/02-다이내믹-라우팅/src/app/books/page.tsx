@@ -6,17 +6,9 @@ import PageSectionTitle from '@/components/ui/page-section-title'
 
 import { cn } from '@/utils'
 import { books } from './_resources/data'
+import type { BookKeys, OrderBy, SortKey } from './_resources/data'
 import SortOrderClient from './_resources/sort-order/client'
 import SortOrderServer from './_resources/sort-order/server'
-
-interface Props {
-  searchParams: Promise<{
-    sortKey: 'title' | 'pubdate' | 'isbn'
-    orderBy: 'asc' | 'desc'
-    page: number
-    size: number
-  }>
-}
 
 /**
  * [실습] 동적 세그먼트(Dynamic Segment) 및 쿼리 스트링 활용
@@ -36,12 +28,7 @@ interface Props {
  * - 클라이언트 측: 드롭다운이나 버튼 클릭 시 URL을 변경하여 서버 다시 읽기 유도
  * - UI: 페이지네이션 정보(TotalCount, TotalPages, HasNextPage) 계산 및 표시
  */
-export default async function BooksPage({ searchParams }: Props) {
-  // const orderBy = (await searchParams).orderBy ?? 'desc' // 내림차순
-  // const sortKey = (await searchParams).sortKey ?? 'pubdate' // 출간일
-  // const page = (await searchParams).page ?? 1 // 1 페이지
-  // const size = (await searchParams).size ?? 6 // 한 화면에 6개씩 표시
-
+export default async function BooksPage({ searchParams }: PageProps<'/books'>) {
   const {
     orderBy = 'desc',
     sortKey = 'pubdate',
@@ -52,11 +39,15 @@ export default async function BooksPage({ searchParams }: Props) {
   // books ?sortKey=title&orderBy=asc&page=3&size=2
   console.log({ orderBy, sortKey, page, size })
 
+  // 페이지네이션 정보 가져오기
+  const pagination = getPagination(books, page as string, size as string)
+
+  // ---------------------------------------------------------------------------
   // 정렬된 도서 목록
   // 도서A[정렬키] -로케일 비교 (localeCompare)- 도서B[정렬키]
-  const filteredBooks = books.toSorted((a, b) => {
-    const aField = String(a[sortKey] ?? '')
-    const bField = String(b[sortKey] ?? '')
+  const filteredBooks = pagination.data.toSorted((a, b) => {
+    const aField = String(a[sortKey as BookKeys] ?? '')
+    const bField = String(b[sortKey as BookKeys] ?? '')
     const comparison = aField.localeCompare(bField) // 1, 0, -1
     return orderBy === 'asc' ? comparison : -comparison
   })
@@ -72,7 +63,10 @@ export default async function BooksPage({ searchParams }: Props) {
       <SortOrderClient />
 
       {/* 서버 컴포넌트를 사용해 정렬 기능 적용 */}
-      <SortOrderServer sortKey={sortKey} orderBy={orderBy} />
+      <SortOrderServer
+        sortKey={sortKey as SortKey}
+        orderBy={orderBy as OrderBy}
+      />
 
       {/* books 리스트 렌더링 */}
       <nav
@@ -103,6 +97,27 @@ export default async function BooksPage({ searchParams }: Props) {
         })}
       </nav>
 
+      <div className="rounded-xl border p-2 flex gap-3">
+        <Link
+          className="inline-flex justify-center items-center bg-foreground text-background size-6 rounded-full p-1"
+          href="?page=1&size=2"
+        >
+          1
+        </Link>
+        <Link
+          className="inline-flex justify-center items-center bg-foreground text-background size-6 rounded-full p-1"
+          href="?page=2&size=2"
+        >
+          2
+        </Link>
+        <Link
+          className="inline-flex justify-center items-center bg-foreground text-background size-6 rounded-full p-1"
+          href="?page=3&size=2"
+        >
+          3
+        </Link>
+      </div>
+
       <LinkCard
         href="/books/best"
         title="베스트셀러"
@@ -111,4 +126,39 @@ export default async function BooksPage({ searchParams }: Props) {
       />
     </div>
   )
+}
+
+// 페이지네이션 정보를 반환하는 함수 (로직 재사용)
+function getPagination<T>(
+  list: T[],
+  page: number | string = 1,
+  size: number | string = 10,
+) {
+  // 방어적 프로그래밍
+  const safePage = Math.max(1, Number(page))
+  const safeSize = Math.max(1, Number(size))
+
+  // 데이터의 총 개수
+  const totalCount = list.length
+
+  // 화면에 표시할 데이터
+  const startIndex = (safePage - 1) * safeSize
+  const data = list.slice(startIndex, startIndex + safeSize)
+
+  // 총 페이지 수
+  const totalPages = Math.ceil(totalCount / safeSize)
+
+  // 페이지네이션 (Pagination)
+  // - 화면에 표시할만큼 잘린 데이터 (data) ✅
+  // - 현재 페이지 (currentPage) ✅
+  // - 총 개수 (totalCount)  ✅
+  // - 총 페이지 수 (totalPages) ✅
+  // - 다음 페이지 제공 유무 (hasNextPage) ✅
+  return {
+    data,
+    currentPage: safePage,
+    totalCount,
+    totalPages,
+    hasNextPage: safePage < totalPages,
+  }
 }

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: '현대적인 웹 경험을 위한 Next.js 프레임워크 학습 플랫폼',
 }
 
-export default function RootLayout({ children }: React.PropsWithChildren) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="ko-KR">
       <body
