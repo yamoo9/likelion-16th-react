@@ -7,6 +7,15 @@ import Link from 'next/link'
 import { books } from './_resources/data'
 import { cn } from '@/utils'
 
+interface Props {
+  searchParams: Promise<{
+    sortKey: 'title' | 'pubdate' | 'isbn'
+    orderBy: 'asc' | 'desc'
+    page: number
+    size: number
+  }>
+}
+
 /**
  * [실습] 동적 세그먼트(Dynamic Segment) 및 쿼리 스트링 활용
  *
@@ -25,7 +34,33 @@ import { cn } from '@/utils'
  * - 클라이언트 측: 드롭다운이나 버튼 클릭 시 URL을 변경하여 서버 다시 읽기 유도
  * - UI: 페이지네이션 정보(TotalCount, TotalPages, HasNextPage) 계산 및 표시
  */
-export default function BooksPage() {
+export default async function BooksPage({ searchParams }: Props) {
+
+  // const orderBy = (await searchParams).orderBy ?? 'desc' // 내림차순
+  // const sortKey = (await searchParams).sortKey ?? 'pubdate' // 출간일
+  // const page = (await searchParams).page ?? 1 // 1 페이지
+  // const size = (await searchParams).size ?? 6 // 한 화면에 6개씩 표시
+
+  const {
+    orderBy = 'desc',
+    sortKey = 'pubdate',
+    page = 1,
+    size = 6,
+  } = await searchParams
+
+  // books ?sortKey=title&orderBy=asc&page=3&size=2
+  console.log({ orderBy, sortKey, page, size })
+
+  // 도서A[정렬키] -로케일 비교 (localeCompare)- 도서B[정렬키]
+
+  // 정렬된 도서 목록
+  const filteredBooks = books.toSorted((a, b) => {
+    const aField = String(a[sortKey] ?? '')
+    const bField = String(b[sortKey] ?? '')
+    const comparison = aField.localeCompare(bField) // 1, 0, -1
+    return orderBy === 'asc' ? comparison : -comparison
+  })
+
   return (
     <div className="mx-auto space-y-8">
       <PageSectionTitle
@@ -38,7 +73,7 @@ export default function BooksPage() {
         aria-label="도서 목록"
         className="flex flex-col gap-2 rounded-xl border p-5"
       >
-        {books.map((book) => {
+        {filteredBooks.map((book) => {
           return (
             // Hard Navigation : <a> (외부 링크)
             // Soft Navigation : <Link> (내부 링크)
@@ -53,6 +88,10 @@ export default function BooksPage() {
               )}
             >
               {book.title}
+              <div>
+                <time className='text-rose-500'>{book.pubdate}</time> /{' '}
+                <span className='text-indigo-500'>{book.isbn}</span>
+              </div>
             </Link>
           )
         })}
