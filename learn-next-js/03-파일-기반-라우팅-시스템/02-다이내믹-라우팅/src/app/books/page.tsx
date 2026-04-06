@@ -1,11 +1,13 @@
+import Link from 'next/link'
 import { LucideTrophy } from 'lucide-react'
 
 import LinkCard from '@/components/ui/link-card'
 import PageSectionTitle from '@/components/ui/page-section-title'
 
-import Link from 'next/link'
-import { books } from './_resources/data'
 import { cn } from '@/utils'
+import { books } from './_resources/data'
+import SortOrderClient from './_resources/sort-order/client'
+import SortOrderServer from './_resources/sort-order/server'
 
 interface Props {
   searchParams: Promise<{
@@ -50,9 +52,8 @@ export default async function BooksPage({ searchParams }: Props) {
   // books ?sortKey=title&orderBy=asc&page=3&size=2
   console.log({ orderBy, sortKey, page, size })
 
-  // 도서A[정렬키] -로케일 비교 (localeCompare)- 도서B[정렬키]
-
   // 정렬된 도서 목록
+  // 도서A[정렬키] -로케일 비교 (localeCompare)- 도서B[정렬키]
   const filteredBooks = books.toSorted((a, b) => {
     const aField = String(a[sortKey] ?? '')
     const bField = String(b[sortKey] ?? '')
@@ -67,30 +68,11 @@ export default async function BooksPage({ searchParams }: Props) {
         description="현재 큐레이션 된 도서 목록입니다. 당신의 인생 책을 찾아보세요."
       />
 
-      {/* 이름순, 출판일순, ISBN순 정렬(오름차순,내림차순) 기능 구현 */}
-      <div className="flex gap-5 rounded-xl border border-slate-400 p-5">
-        {/* 링크? (서버 측 제어) 버튼? (클라이언트 측 제어) */}
-        {/* 서버 컴포넌트는 사용자와 상호작용할 수 없다. */}
-        {/* 서버 컴포넌트는 Link 컴포넌트를 통해 소프트 내비게이션이 가능 (전체가 아닌, 부분만 교체) */}
-        <Link
-          className={cn(
-            'text-foreground/70 hover:text-foreground',
-            sortKey.includes('title') && orderBy.includes('asc') && 'font-black text-blue-600'
-          )}
-          href="?sortKey=title&orderBy=asc"
-        >
-          이름순 정렬 (오름차순)
-        </Link>
-        <Link
-          className={cn(
-            'text-foreground/70 hover:text-foreground',
-            sortKey.includes('title') && orderBy.includes('desc') && 'font-black text-blue-600'
-          )}
-          href="?sortKey=title&orderBy=desc"
-        >
-          이름순 정렬 (내림차순)
-        </Link>
-      </div>
+      {/* 클라이언트 컴포넌트를 사용해 정렬 기능 적용 */}
+      <SortOrderClient />
+
+      {/* 서버 컴포넌트를 사용해 정렬 기능 적용 */}
+      <SortOrderServer sortKey={sortKey} orderBy={orderBy} />
 
       {/* books 리스트 렌더링 */}
       <nav
