@@ -1,0 +1,41 @@
+# 의존성 패키지 (설치된 라이브러리)
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# 테스트 결과물
+/coverage
+
+# Next.js 빌드 및 출력물
+/.next/
+/out/
+
+# 프로덕션 빌드 결과물
+/build
+
+# 기타 시스템 및 설정 파일
+.DS_Store
+*.pem
+
+# 디버그 로그 파일 (에러 기록)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# 환경 변수 파일 (보안을 위해 보통 제외하며, 필요시 선택적으로 포함)
+.env*
+!.env.example
+
+# Vercel 배포 관련 설정
+.vercel
+
+# TypeScript 컴파일 정보 및 자동 생성 파일
+*.tsbuildinfo
+next-env.d.ts
+/src/generated/prisma
