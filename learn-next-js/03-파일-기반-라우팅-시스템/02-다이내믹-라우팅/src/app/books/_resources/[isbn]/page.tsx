@@ -17,7 +17,7 @@
  */
 
 import { notFound } from 'next/navigation'
-import { type Book, books } from '../_resources/data'
+import { type Book, books } from '../data'
 
 interface Props {
   params: Promise<{ isbn: Book['isbn'] }>
