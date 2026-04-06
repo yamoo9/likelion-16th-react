@@ -4,7 +4,7 @@ import PageSectionTitle from '@/components/ui/page-section-title'
 
 export default function CategoriesPage() {
   return (
-    <div className="mx-auto max-w-5xl space-y-8 py-12">
+    <div className="space-y-8 py-1">
       <PageSectionTitle
         title="북 카테고리"
         description="관심있는 분야를 발견하고 새로운 영감을 발견하세요."

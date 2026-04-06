@@ -4,7 +4,7 @@ import { LucideSettings2 } from 'lucide-react'
 
 export default function BooksPage() {
   return (
-    <div className="mx-auto max-w-5xl space-y-8 py-12">
+    <div className="space-y-8 py-1">
       <PageSectionTitle
         title="프로필"
         description="당신의 취향이 머문 기록들을 한곳에서 확인하세요."

@@ -1,5 +1,7 @@
-import { cn } from '@/utils'
-
+/**
+ * [타입 정의] SubjectTitleProps
+ * @param title - 국문(ko)과 영문(en) 제목을 포함하는 객체
+ */
 interface Props {
   title: {
     ko: string
@@ -7,18 +9,15 @@ interface Props {
   }
 }
 
+/**
+ * [UI 컴포넌트] SubjectTitle
+ * 페이지의 중앙에 위치하여 국문과 영문 제목을 표시합니다.
+ */
 export default function SubjectTitle({ title }: Props) {
   return (
-    <div
-      className={cn(
-        'flex flex-col items-center justify-center gap-5',
-        'bg-background min-h-screen',
-      )}
-    >
+    <div className="bg-background flex flex-col items-center justify-center gap-5">
       <header>
-        <h2
-          className={cn('text-foreground text-center text-4xl font-extralight')}
-        >
+        <h2 className="text-foreground text-center text-4xl font-extralight">
           {title.ko}
           <br />
           <span
