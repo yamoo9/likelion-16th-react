@@ -98,24 +98,27 @@ export default async function BooksPage({ searchParams }: PageProps<'/books'>) {
       </nav>
 
       <div className="rounded-xl border p-2 flex gap-3">
-        <Link
-          className="inline-flex justify-center items-center bg-foreground text-background size-6 rounded-full p-1"
-          href="?page=1&size=2"
-        >
-          1
-        </Link>
-        <Link
-          className="inline-flex justify-center items-center bg-foreground text-background size-6 rounded-full p-1"
-          href="?page=2&size=2"
-        >
-          2
-        </Link>
-        <Link
-          className="inline-flex justify-center items-center bg-foreground text-background size-6 rounded-full p-1"
-          href="?page=3&size=2"
-        >
-          3
-        </Link>
+        {Array.from({ length: pagination.totalPages }).map((_, index) => {
+          const pageIndex = index + 1
+          const isActive = pageIndex === Number(page)
+          
+          return (
+            <Link
+              key={index}
+              href={`?page=${pageIndex}&size=${size}`}
+              scroll={false}
+              className={
+                cn(
+                  'inline-flex justify-center items-center', 
+                  'bg-background text-foreground size-6 border rounded-full p-1',
+                  isActive && 'bg-foreground text-background font-semibold'
+                )
+              }
+            >
+              {pageIndex}
+            </Link>
+          )
+        })}
       </div>
 
       <LinkCard
