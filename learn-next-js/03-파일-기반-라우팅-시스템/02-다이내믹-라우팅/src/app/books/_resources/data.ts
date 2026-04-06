@@ -1,4 +1,16 @@
-export const books = [
+export interface Book {
+  title: string
+  link: string
+  image: string
+  author: string
+  discount: string
+  publisher: string
+  pubdate: string
+  isbn: string
+  description: string
+}
+
+export const books: Book[] = [
   {
     title: '제철 행복 (가장 알맞은 시절에 건네는 스물네 번의 다정한 안부)',
     link: 'https://search.shopping.naver.com/book/catalog/47263699649',
