@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+/* 
+  [전역 변수 설정] 
+  애플리케이션의 기본 색상 및 폰트 변수를 정의합니다. 
+*/
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primay: #0070F3;
+}
+
+/* 
+  [Tailwind v4 테마 확장] 
+  Tailwind 클래스에서 사용할 수 있도록 변수를 매핑합니다. 
+*/
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primay);
+
+  --font-noto: var(--font-noto), ui-sans-serif, system-ui, Arial, Helvetica, sans-serif;
+}
+
+/* 
+  [다크 모드 설정] 
+  시스템 설정이 다크 모드일 때 변수 값을 변경합니다. 
+*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primay: #f30059;
+  }
+}
+
+/* 
+  [기본 스타일 적용] 
+  모든 페이지의 기본 배경, 글자색, 폰트를 설정합니다. 
+*/
+body {
+  background: var(--background);
+  color: var(--foreground);
+
+  font-family: var(--font-noto);
+}
