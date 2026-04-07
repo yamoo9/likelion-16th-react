@@ -1,3 +1,5 @@
+import { PokemonList } from '@/components/ui/pokemon-list'
+import { Pokemon } from '@/types/pokemon'
 import { LucideServer } from 'lucide-react'
 
 /**
@@ -8,14 +10,18 @@ import { LucideServer } from 'lucide-react'
  * - SEO 최적화 : 데이터가 포함된 완성된 HTML이 브라우저에 도달하여 검색 엔진 노출에 유리합니다.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const pokemonApiUrl = `${process.env.MOCK_API_URL}/pokemon`
 
-export default function ServerSidePage() {
+export default async function ServerSidePage() {
   
   // 서버 컴포넌트는 async/await를 사용하여 컴포넌트 수준에서 직접 데이터를 호출합니다.
+  const response = await fetch(pokemonApiUrl)
+
   // 에러 핸들링: 서버에서 응답 상태를 확인하고 실패 시 에러를 던집니다. 
+  if (!response.ok) throw new Error('데이터 가져오기에 실패했습니다.')
+  
   // JSON 파싱: 서버 환경에서 데이터를 객체 형태로 변환합니다.
+  const data = await response.json() as Pokemon[] /* 타입 단언 */
 
   return (
     <section className="m-6 space-y-6 md:mx-0">
@@ -32,8 +38,8 @@ export default function ServerSidePage() {
       </header>
 
       {/* 데이터 렌더링 : 서버에서 이미 준비된 데이터를 PokemonList 컴포넌트에 전달합니다. */}
-      <p className='text-sm text-slate-500'>서버 측에서 데이터를 불러오는 코드를 작성하세요.</p>
-      
+      {/* <p className='text-sm text-slate-500'>서버 측에서 데이터를 불러오는 코드를 작성하세요.</p> */}
+      <PokemonList data={data} />
     </section>
   )
 }
