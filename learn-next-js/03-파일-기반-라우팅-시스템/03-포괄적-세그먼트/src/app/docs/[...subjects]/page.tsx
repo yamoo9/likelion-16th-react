@@ -1,7 +1,8 @@
 import Link from 'next/link'
+import { Fragment } from 'react'
 import { LucideChevronRight, LucideHome } from 'lucide-react'
+
 import { cn } from '@/utils'
-import { Fragment } from 'react/jsx-runtime'
 
 export default async function FundamentalPage({
   params,
@@ -30,13 +31,23 @@ export default async function FundamentalPage({
           <LucideHome className="size-4" /> 학습 문서 홈
         </Link>
         {decodedSubjects.map((subject, index) => {
-
+          const isLast = index === decodedSubjects.length - 1
           const href = `/docs/${subjects.slice(0, index + 1).join('/')}`
 
           return (
             <Fragment key={index}>
               <LucideChevronRight className="size-4 shrink-0 text-slate-400" />
-              <Link href={href}>{subject.replace(/-/g, ' ')}</Link>
+              <Link
+                href={href}
+                className={cn(
+                  'rounded-full border px-4 py-1 transition-all',
+                  isLast
+                    ? 'border-blue-600 bg-blue-600 text-white shadow-md'
+                    : 'border-transparent hover:bg-blue-50 hover:text-blue-500',
+                )}
+              >
+                {subject.replace(/-/g, ' ')}
+              </Link>
             </Fragment>
           )
         })}
