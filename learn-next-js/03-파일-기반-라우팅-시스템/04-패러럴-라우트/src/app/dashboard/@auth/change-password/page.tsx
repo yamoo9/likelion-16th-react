@@ -1,0 +1,7 @@
+export default function ChangePasswordPage() {
+  return (
+    <form>
+      <h2>패스워드 변경</h2>
+    </form>
+  )
+}
