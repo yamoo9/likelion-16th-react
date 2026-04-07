@@ -1,10 +1,13 @@
 import { cn } from '@/utils'
-import Statistics from './statistics'
-import Chart from './chart'
 
-export default function DashboardLayout({
-  children,
-}: LayoutProps<'/dashboard'>) {
+export default function DashboardLayout({ children, chart, statistics }: LayoutProps<'/dashboard'>) {
+
+  // 레이아웃 컴포넌트의 Props
+  // props.chart      // React.ReactComponent
+  // props.statistics // React.ReactComponent
+  // props.children   // React.ReactComponent
+  // props.params
+
   return (
     <div className="flex flex-col items-start gap-4 border-4 border-stone-100 p-5">
       <strong
@@ -18,10 +21,10 @@ export default function DashboardLayout({
 
       {/* 2 컬럼 레이아웃 박스 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 self-stretch">
-        {/* 방문자 수 통계 */}
-        <Statistics />
-        {/* 그래프 차트 */}
-        <Chart />
+        {/* 방문자 수 통계 페이지 */}
+        {statistics}
+        {/* 그래프 차트 페이지 */}
+        {chart}
       </div>
 
       {/* 대시보드 페이지 */}
