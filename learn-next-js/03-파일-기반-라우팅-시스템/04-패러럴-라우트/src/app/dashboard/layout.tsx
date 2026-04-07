@@ -1,10 +1,10 @@
 import { cn } from '@/utils'
 
 export default function DashboardLayout({
-  children,
+  children, // dashboard/login/page.tsx (null)
+  auth,     // dashboard/@auth/login/page.tsx (로그인 화면)
   chart,
   statistics,
-  auth,
 }: LayoutProps<'/dashboard'>) {
   // 레이아웃 컴포넌트의 Props
   // props.chart      // React.ReactComponent
