@@ -4,7 +4,7 @@ export default function Footer() {
       lang="en"
       className="border-t border-slate-100 py-8 text-center text-xs text-slate-400"
     >
-      © {new Date().getFullYear()} EUID. Built with Next.js 16.
+      © {new Date().getFullYear()} EUID. Copyright all Reserved.
     </footer>
   )
 }

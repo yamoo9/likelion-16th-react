@@ -14,9 +14,8 @@ export default function BookLinkList({ books }: { books: BookSummary[] }) {
       {books.map((book) => (
         <li key={book.isbn} className="group">
           <Link
-            prefetch={false}
             // 제목에 특수문자가 있을 경우를 대비해 URL 인코딩을 적용합니다.
-            href={`/books/${encodeURIComponent(book.title)}`}
+            href={`/books/${book.isbn}/${encodeURIComponent(book.title)}`}
             className={cn(
               // [레이아웃 & 기본 스타일]
               'block h-full rounded-3xl border p-6 transition-all duration-300',

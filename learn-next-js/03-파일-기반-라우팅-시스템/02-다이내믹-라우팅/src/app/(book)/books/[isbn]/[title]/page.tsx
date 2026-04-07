@@ -11,10 +11,12 @@ import { cn } from '@/utils'
  */
 export default async function BookDetailPage({
   params,
-}: PageProps<'/books/[title]'>) {
+}: PageProps<'/books/[isbn]/[title]'>) {
   // URL 파라미터에서 제목을 가져와 디코딩합니다.
-  const { title } = await params
+  const { isbn, title } = await params
   const book = await getBookByTitle(decodeURIComponent(title))
+
+  console.log({isbn})
 
   // 도서 정보가 없으면 404 페이지로 이동합니다.
   if (!book) {
