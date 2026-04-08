@@ -2,6 +2,7 @@ import { LucideServer } from 'lucide-react'
 
 // Prisma Client 인스턴스 가져오기
 import { prisma } from '@/lib/prisma'
+import PostGrid, { UserData } from './post-grid'
 
 
 // React 서버 컴포넌트(RSC)
@@ -16,7 +17,7 @@ export default async function OrmAndDBPage() {
         posts: true
       }
     }
-  )
+  ) as UserData[]
 
   return (
     <section className="m-6 space-y-6 md:mx-0">
@@ -39,7 +40,7 @@ export default async function OrmAndDBPage() {
         </p>
       </header>
 
-      <pre>{JSON.stringify(allUsers, null, 2)}</pre>
+      <PostGrid data={allUsers} />
 
     </section>
   )
