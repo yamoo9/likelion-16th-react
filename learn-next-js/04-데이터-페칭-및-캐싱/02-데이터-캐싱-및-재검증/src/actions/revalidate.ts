@@ -24,6 +24,7 @@ export async function revalidatePokemonTag() {
  * 해당 페이지의 모든 fetch 요청이 다음 접속 시 새로 수행됩니다.
  */
 export async function revalidatePokemonPath() {
+  // /time-based-revalidation 경로를 재검증(기존 데이터 무효화 후, 새로운 데이터로 만든 결과 캐싱)
   revalidatePath('/time-based-revalidation')
   
   console.log('[/time-based-revalidation] 경로의 모든 캐시가 무효화되었습니다.')

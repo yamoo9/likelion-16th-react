@@ -1,7 +1,7 @@
-import { LucideHash } from "lucide-react"
+import { LucideHash } from 'lucide-react'
 
-import { Pokemon } from "@/types/pokemon"
-import { cn } from "@/utils"
+import { Pokemon } from '@/types/pokemon'
+import { cn } from '@/utils'
 
 export function PokemonList({ data }: { data: Pokemon[] }) {
   if (!data || data.length === 0) {

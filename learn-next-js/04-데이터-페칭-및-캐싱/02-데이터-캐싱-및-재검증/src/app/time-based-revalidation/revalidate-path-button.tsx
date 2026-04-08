@@ -15,7 +15,8 @@ export function RevalidatePathButton() {
     startTransition(async () => {
       try {
         await wait(600)
-        await revalidatePokemonPath()
+        const { success } =  await revalidatePokemonPath()
+        console.log(success)
         console.log('Next.js 16 캐시가 성공적으로 무효화되었습니다.')
       } catch (error) {
         console.error('재검증 실패:', error)

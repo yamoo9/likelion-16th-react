@@ -3,14 +3,11 @@ import { LucideServer } from 'lucide-react'
 // Prisma Client 인스턴스 가져오기
 import { prisma } from '@/lib/prisma'
 import PostGrid, { UserData } from './post-grid'
+import { unstable_cache } from 'next/cache'
 
 
-// React 서버 컴포넌트(RSC)
-// - 비동기 함수로 설정
-export default async function OrmAndDBPage() {
-
-  // DB 또는 ORM을 통해 직접 데이터 페칭(가져오기)
-  const allUsers = await prisma.user.findMany(
+const getCachedAllUsers = unstable_cache(async () => {
+  return await prisma.user.findMany(
     {
       // 관계된 데이터 포함
       include: {
@@ -18,6 +15,17 @@ export default async function OrmAndDBPage() {
       }
     }
   ) as UserData[]
+}, ['allUsers'], {
+  revalidate: 3600 // 1시간 동안 기억하고, 다시 재검증
+})
+
+
+// React 서버 컴포넌트(RSC)
+// - 비동기 함수로 설정
+export default async function OrmAndDBPage() {
+
+  // DB 또는 ORM을 통해 직접 데이터 페칭(가져오기)
+  const allUsers = await getCachedAllUsers()
 
   return (
     <section className="m-6 space-y-6 md:mx-0">

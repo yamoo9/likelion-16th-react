@@ -18,7 +18,7 @@ import { cn } from '@/utils'
  * 주문형(On-demand) 재검증 (Tag 기반)
  * - 특정 태그를 부여하고 필요할 때만 갱신
  * - fetch(url, { next: { tags: ['pokemon-list'] } })
- * - 갱신 시: revalidateTag('pokemon-list')
+ * - 갱신 시: revalidateTag('pokemon-list', 'default')
  * - 참고: https://nextjs.org/docs/app/guides/caching-without-cache-components#on-demand-revalidation
  * 
  * 경로 기반 재검증 (Path 기반)
