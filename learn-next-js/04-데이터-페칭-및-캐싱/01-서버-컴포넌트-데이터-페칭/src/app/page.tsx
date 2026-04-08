@@ -1,4 +1,4 @@
-import { LucideDatabase, LucideMousePointer2, LucideServer } from 'lucide-react'
+import { LucideDatabase, LucideHourglass, LucideMousePointer2, LucideServer } from 'lucide-react'
 
 import LinkCard from '@/components/ui/link-card'
 import { cn } from '@/utils'
@@ -49,6 +49,14 @@ export default function MainPage() {
           actionLabel="서버 측 데이터 페칭 (ORM 사용)"
           description={''}
           icon={LucideDatabase}
+        />
+        <LinkCard
+          color="amber"
+          href="/server-side-with-use"
+          title="서버 → 클라이언트 Promise 전달"
+          actionLabel="스트리밍(Streaming) 하기"
+          description={''}
+          icon={LucideHourglass}
         />
       </section>
     </div>

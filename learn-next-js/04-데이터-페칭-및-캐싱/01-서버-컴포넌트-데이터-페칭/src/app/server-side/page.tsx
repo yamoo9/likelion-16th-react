@@ -1,6 +1,6 @@
+import { LucideServer } from 'lucide-react'
 import { PokemonList } from '@/components/ui/pokemon-list'
 import { Pokemon } from '@/types/pokemon'
-import { LucideServer } from 'lucide-react'
 
 /**
  * [서버 컴포넌트 데이터 페칭]
