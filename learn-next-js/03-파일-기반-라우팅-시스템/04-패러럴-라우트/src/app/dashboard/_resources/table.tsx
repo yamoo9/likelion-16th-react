@@ -58,8 +58,8 @@ export function Table() {
             >
               {'/dashboard/login'}
             </th>
-            <td className="border border-gray-300 px-4 py-4 text-gray-500">
-              {'login/page.tsx (null)'}
+            <td className="border border-gray-300 px-4 py-4">
+              {'login/page.tsx'}
             </td>
             <td className="border border-gray-300 px-4 py-4">
               {'@auth/login/page.tsx'}

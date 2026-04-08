@@ -12,7 +12,7 @@ import { Table } from './_resources/table'
  * 하지만 Next.js의 이런 복잡한 구조를 통해 얻을 수 있는 강점은?
  * 
  * 1. 소프트 내비게이션 (모달/슬라이드 오버 구현 최적화)
- *    - 대시보드에서 차트를 보다 '로그인' 링크를 누른 경우
+ *    - 대시보드에서 차트를 보다가, '로그인 폼' 링크를 누른 경우
  *      - 일반 방식: 페이지 전체가 로그인으로 전환 (기존 차트/통계 화면 소멸)
  *      - 병렬 라우트 방식: URL은 /login으로 변경되지만, 기존 차트/통계 슬롯은 유지된 채 
  *                      특정 슬롯(@auth)만 로그인 폼으로 교체 (사용자 경험 향상)
@@ -36,9 +36,9 @@ import { Table } from './_resources/table'
 
 export default function DashboardLayout({
   children,    // {children} 화면에 배치
-  auth,        // {statistics} 화면에 배치
+  statistics,  // {statistics} 화면에 배치
   chart,       // {chart} 화면에 배치
-  statistics,  // {auth} 화면에 배치
+  auth,        // {auth} 화면에 배치
 }: LayoutProps<'/dashboard'>) {
   return (
     <div className="flex flex-col items-start gap-4 border-4 border-stone-100 p-5">
@@ -53,18 +53,17 @@ export default function DashboardLayout({
         대시보드 레이아웃
       </strong>
 
-      {/* 2 컬럼 레이아웃 박스 */}
       <div className="grid grid-cols-1 gap-4 self-stretch md:grid-cols-2">
-        {/* 방문자 수 통계 페이지 */}
+        {/* 통계 페이지 */}
         {statistics}
-        {/* 그래프 차트 페이지 */}
+        {/* 차트 페이지 */}
         {chart}
       </div>
 
       <div className="grid grid-cols-1 gap-4 self-stretch md:grid-cols-2">
         {/* 대시보드 페이지 */}
         {children}
-        {/* auth 컴포넌트를 대시보드 내부에 포함시킴 */}
+        {/* 인증 페이지 */}
         {auth}
       </div>
 
