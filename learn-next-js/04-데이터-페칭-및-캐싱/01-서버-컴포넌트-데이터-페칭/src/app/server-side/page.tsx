@@ -10,8 +10,11 @@ import { LucideServer } from 'lucide-react'
  * - SEO 최적화 : 데이터가 포함된 완성된 HTML이 브라우저에 도달하여 검색 엔진 노출에 유리합니다.
  */
 
+
+// 외부 API에 직접 접근
 const pokemonApiUrl = `${process.env.MOCK_API_URL}/pokemon`
 
+// 비동기 함수로서 서버 컴포넌트 몸체(body)가 데이터 페칭 영역 활용
 export default async function ServerSidePage() {
   
   // 서버 컴포넌트는 async/await를 사용하여 컴포넌트 수준에서 직접 데이터를 호출합니다.

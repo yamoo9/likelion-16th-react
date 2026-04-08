@@ -1,4 +1,4 @@
-import { LucideMousePointer2, LucideServer } from 'lucide-react'
+import { LucideDatabase, LucideMousePointer2, LucideServer } from 'lucide-react'
 
 import LinkCard from '@/components/ui/link-card'
 import { cn } from '@/utils'
@@ -36,11 +36,19 @@ export default function MainPage() {
         />
         <LinkCard
           color="emerald"
-          href="/client-side"
+          href="/server-side"
           title="서버 사이드 (SSR)"
           actionLabel="서버 측 데이터 페칭"
           description={''}
           icon={LucideServer}
+        />
+        <LinkCard
+          color="rose"
+          href="/orm-database"
+          title="ORM (SSR)"
+          actionLabel="서버 측 데이터 페칭 (ORM 사용)"
+          description={''}
+          icon={LucideDatabase}
         />
       </section>
     </div>
