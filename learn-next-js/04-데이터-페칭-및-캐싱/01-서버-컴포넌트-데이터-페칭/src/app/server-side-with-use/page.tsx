@@ -18,7 +18,7 @@ export default function ServerSideWithUsePage() {
       <header className="border-b border-b-slate-200 pb-4">
         <h1 className="flex items-center gap-2 text-2xl font-bold text-slate-800">
           <span className="h-8 w-1 rounded-full bg-blue-500" />
-          서버 사이드 데이터 페칭
+          데이터 스트리밍하기 (서버 → 클라이언트)
         </h1>
         <p className="mt-2 flex items-center gap-3 text-sm text-slate-500">
           <LucideServer className="size-4" />
