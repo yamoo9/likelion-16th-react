@@ -67,7 +67,7 @@ export function Navbar() {
                 isServerAction ? 'text-emerald-600' : 'text-slate-400',
               )}
             />
-            <span>서버 스트리밍</span>
+            <span>서버 사이드</span>
           </Link>
         </div>
       </div>

@@ -1,8 +1,10 @@
-import { LucideArrowRight, LucideSend } from 'lucide-react'
+import { LucideSend, LucideArrowRight } from 'lucide-react'
 import { cn } from '@/utils'
 
-
-export default function ServerSidePage() {
+export default async function ServerSidePage() {
+  
+  // 에러 제어를 위한 변수
+  const error = null 
 
   return (
     <div className="flex grow items-center justify-center">
@@ -35,19 +37,41 @@ export default function ServerSidePage() {
             서버 사이드
           </h1>
           <p className="mb-8 leading-relaxed text-slate-500">
-            서버 컴포넌트에서 직접 액션을 호출합니다. 브라우저의 JS 없이도
-            작동하는 전통적인 방식입니다.
+            서버 컴포넌트에서 직접 액션을 호출합니다.
+            <span className="block">
+              브라우저의 JS 없이도 작동하는 방식입니다.
+            </span>
           </p>
+
+          {/* 에러 메시지 표시 영역 */}
+          {error && (
+            <div
+              role="alert"
+              className="animate-in fade-in slide-in-from-top-2 mb-3 rounded-2xl border border-red-100 bg-red-50 p-4"
+            >
+              <p className="text-xs leading-snug font-medium text-red-600">
+                {error}
+              </p>
+            </div>
+          )}
         </div>
 
-        <form className="relative z-10 space-y-4">
+        <form
+          // 서버 액션을 연결하세요.
+          // ...
+          className="relative z-10 space-y-4"
+        >
           <input
             name="title"
             required
             placeholder="아이템 이름 입력..."
+            aria-invalid={!!error}
             className={cn(
               'w-full rounded-2xl border border-slate-200 bg-slate-50/50 p-4',
               'transition-all outline-none focus:ring-2 focus:ring-emerald-500',
+              error
+                ? 'border-red-200 bg-red-50/50 focus:ring-2 focus:ring-red-500/20'
+                : 'border-slate-200 focus:ring-2 focus:ring-emerald-500',
             )}
           />
           <button
@@ -57,7 +81,7 @@ export default function ServerSidePage() {
               'group mt-2 flex cursor-pointer items-center gap-2 font-bold text-emerald-600',
             )}
           >
-            서버 측 데이터 페칭{' '}
+            <span>{error ? '다시 시도하기' : '서버 측 데이터 전송'}</span>{' '}
             <LucideArrowRight className="h-4 w-4 transition-transform duration-400 group-hover:translate-x-1" />
           </button>
         </form>
