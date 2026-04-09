@@ -6,7 +6,7 @@ import { cn } from '@/utils'
 /**
  * [Next.js 16 렌더링 전략 및 재검증]
  * 
- * 정적 렌더링 (Static Rendering) — 기본
+ * 정적 렌더링 (Static Rendering) — 기본 (default)
  * - 특징: 빌드 시점에 딱 한 번 생성
  * - 장점: 속도가 가장 빠름 (CDN 캐싱)
  * - 용도: 변하지 않는 소개 페이지, 블로그 포스트 등

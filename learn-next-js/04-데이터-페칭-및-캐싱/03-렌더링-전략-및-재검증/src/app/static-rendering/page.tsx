@@ -1,21 +1,20 @@
 // Next.js의 Route Segment Config (파일 최상단에 추가)
 // 이 설정을 통해 페이지를 빌드 시점에 정적 HTML로 생성하도록 강제합니다.
 
+export const dynamic = 'force-static' // 현재 페이지 강제로 정적 렌더링
+
 // --------------------------------------------------------------------------------------------
 
 import { LucideInfo, LucideGlobe } from 'lucide-react'
 
 import { PokemonList } from '@/components/ui/pokemon-list'
-import { Pokemon } from '@/types/pokemon'
+import { getCachedPokemons } from '../dynamic-rendering/pokemons'
 
 export default async function StaticRenderingPage() {
   
   // fetch에 별도 옵션이 없어도 위 dynamic 설정이 우선순위를 가집니다.
   // 명시적으로 cache: 'force-cache'를 추가하여 정적 캐싱을 확실히 할 수 있습니다.
-  const response = await fetch(`${process.env.MOCK_API_URL}/pokemon`)
-
-  if (!response.ok) throw new Error('데이터를 불러오는데 실패했습니다.')
-  const pokemons = (await response.json()) as Pokemon[]
+  const pokemons = await getCachedPokemons()
 
   return (
     <section className="m-6 space-y-6 lg:mx-0">
