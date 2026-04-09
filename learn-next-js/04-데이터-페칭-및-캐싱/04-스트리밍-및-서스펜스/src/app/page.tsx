@@ -1,6 +1,6 @@
-import { LucideMousePointer2, LucideZap } from 'lucide-react'
 import LinkCard from '@/components/ui/link-card'
 import { cn } from '@/utils'
+import { LucideMousePointer2, LucideMousePointerClick, LucideZap } from 'lucide-react'
 
 /**
  * [Next.js 데이터 페칭 전략]
@@ -41,6 +41,15 @@ export default function MainPage() {
           icon={LucideMousePointer2}
         />
 
+        <LinkCard
+          color="rose"
+          href="/partial-rendering"
+          title="클라이언트 사이드 PR"
+          actionLabel="클라이언트 측 부분 렌더링"
+          description="클라이언트 측 데이터 페칭 방식으로 부분 렌더링 : 로딩, 에러 UI 제공"
+          icon={LucideMousePointerClick}
+        />
+
         {/* 
           스트리밍 & 서스펜스 
           - 특징: 서버 컴포넌트에서 Promise를 생성하고, Suspense로 감싸 부분적 로딩 구현
@@ -48,6 +57,15 @@ export default function MainPage() {
         */}
         <LinkCard
           color="emerald"
+          href="/server-side"
+          title="서버 사이드 (SSR)"
+          actionLabel="서버 측 데이터 페칭 (스트리밍)"
+          description="서버에서 준비되는 데이터부터 즉시 화면에 그려주는 Next.js의 최신 렌더링 방식입니다."
+          icon={LucideZap}
+        />
+
+        <LinkCard
+          color="amber"
           href="/server-streaming"
           title="서버 스트리밍 (Streaming)"
           actionLabel="서버 측 데이터 페칭 (스트리밍)"

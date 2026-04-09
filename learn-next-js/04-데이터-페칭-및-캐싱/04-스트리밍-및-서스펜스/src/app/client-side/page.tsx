@@ -27,7 +27,7 @@ export default function ClientComponentPage() {
         </p>
       </header>
 
-      {/* 상태에 따른 조건부 렌더링 */}
+      {/* 상태에 따른 조건부 렌더링 : 부분 렌더링 (스트리밍) */}
       <div className="min-h-100">
         {isLoading ? (
           <PokemonSkeleton count={6} />
