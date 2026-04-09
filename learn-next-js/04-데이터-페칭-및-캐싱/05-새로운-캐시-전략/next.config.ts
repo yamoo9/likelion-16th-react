@@ -8,10 +8,11 @@ const isProduction = process.env.NODE_ENV === 'production'
 const nextConfig: NextConfig = {
   /**
    * Next.js 새로운 캐시 시스템 활성화
-   * - 'use cache' 지시어 사용 가능
+   * - 'use cache' 지시어 사용 가능 (선언적)
    * - cacheLife()를 통한 정교한 수명 제어 가능
    * - cacheTag()를 통한 태그 기반 무효화 가능
    */
+  cacheComponents: true,
 
   /**
    * React 엄격 모드 (Strict Mode) 활성화
