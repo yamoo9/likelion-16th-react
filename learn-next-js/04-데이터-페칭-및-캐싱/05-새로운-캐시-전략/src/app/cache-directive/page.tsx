@@ -6,7 +6,9 @@ import {
 } from 'lucide-react'
 
 import { cn, wait } from '@/utils'
-
+import { Suspense } from 'react'
+import { Spinner } from '@/components/ui/spinner'
+import { cacheLife } from 'next/cache'
 
 export default function CacheDirectivePage() {
   return (
@@ -15,7 +17,7 @@ export default function CacheDirectivePage() {
         <div className="flex items-center gap-2 text-blue-600">
           <LucideZap className="h-7 w-7" />
           <h1 className="text-3xl font-black tracking-tight">
-            'use cache' 지시어
+            'use cache' 디렉티브
           </h1>
         </div>
         <p className="text-muted-foreground text-lg">
@@ -24,8 +26,14 @@ export default function CacheDirectivePage() {
       </header>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <DynamicDataCard />
-        <CachedDataCard />
+        {/* Dynamic */}
+        <Suspense fallback={<Spinner />}>
+          <DynamicDataCard />
+        </Suspense>
+        {/* Dynamic */}
+        <Suspense fallback={<Spinner />}>
+          <CachedDataCard />
+        </Suspense>
       </div>
 
       <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-6">
@@ -59,6 +67,10 @@ async function getDynamicData() {
 
 // 캐싱이 적용된 함수
 async function getCachedData() {
+  'use cache'
+  // 캐시 라이프 (시간 기반 캐싱/재검증)
+  cacheLife('minutes') // 1분
+
   await wait(300)
 
   return {
@@ -71,7 +83,7 @@ async function getCachedData() {
 
 // 일반 데이터 카드 컴포넌트
 async function DynamicDataCard() {
-  const data = await getDynamicData()
+  const data = await getDynamicData() // 동적 데이터 가져오기 (캐시 안 됨)
 
   return (
     <div
@@ -99,7 +111,7 @@ async function DynamicDataCard() {
 
 // 캐시된 데이터 카드 컴포넌트
 async function CachedDataCard() {
-  const data = await getCachedData()
+  const data = await getCachedData() // (캐시된) 동적 데이터 가져오기
 
   return (
     <div
@@ -120,7 +132,7 @@ async function CachedDataCard() {
           {data.time}
         </p>
       </div>
-      <div className="mt-4 text-xs text-blue-400/60">
+      <div className="mt-4 text-xs text-blue-600/90">
         ID: {data.id} (고정됨)
       </div>
     </div>

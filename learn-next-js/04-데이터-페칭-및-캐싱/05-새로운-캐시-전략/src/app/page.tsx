@@ -3,10 +3,10 @@ import LinkCard from '@/components/ui/link-card'
 import { cn } from '@/utils'
 
 /**
- * [Next.js 15/16 새로운 캐시 전략]
+ * [Next.js 16 새로운 캐시 전략]
  * 
  * 'use cache' 지시어 (cache-directive)
- * - 함수나 파일 상단에 선언하여 해당 로직의 결과값을 캐싱합니다.
+ * - 함수나 컴포넌트 파일 상단에 선언하여 해당 로직의 결과값을 캐싱합니다.
  * - 기존의 복잡한 fetch 옵션이나 unstable_cache를 대체하는 직관적인 방식입니다.
  * 
  * 정교한 캐시 제어 (cache-control)
