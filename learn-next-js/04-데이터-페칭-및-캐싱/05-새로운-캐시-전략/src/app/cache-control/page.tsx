@@ -9,7 +9,7 @@ import {
 import { cn } from '@/utils'
 import { Suspense } from 'react'
 import { Spinner } from '@/components/ui/spinner'
-import { cacheLife, cacheTag } from 'next/cache'
+import { cacheLife, cacheTag, updateTag } from 'next/cache'
 
 export default function CacheControlPage() {
   return (
@@ -40,7 +40,24 @@ export default function CacheControlPage() {
 
       {/* Static */}
       <div className="flex justify-center pt-4">
-        <form action="/cache-control">
+        {/* 
+          1. 전통적인 웹 방식 : JavaScript 없던 시절 (서버 경계)
+
+            <form action="server-program-url">
+              ...
+              <button type="submit">전송</button>
+            </form>  
+
+
+          2. AJAX 방식 : JavaScript 사용되는 현재 시점 (상태 제어가 가능한 클라이언트 경계)
+            'use client'
+
+            <form onSubmit={(e) => e.preventDefault()}>
+              <button type="submit">전송</button>
+            </form>
+        */}
+        {/* server action */}
+        <form action={updateProfileCache}>
           <button
             type="submit"
             className={cn(
@@ -78,6 +95,17 @@ export default function CacheControlPage() {
   )
 }
 
+/* [서버 액션] ------------------------------------------------------------------ */
+
+const updateProfileCache = async () => {
+  'use server' // 이 코드는 "서버에서 실행되는 함수야" 선언
+
+  // 태그 이름을 가진 캐시 업데이트 로직
+  // revalidateTag('user-profile', 'default') ❌
+  updateTag('user-profile')
+
+}
+
 /* [데이터 로직] ----------------------------------------------------------------- */
 
 // [시간 기반 캐싱]
@@ -85,7 +113,7 @@ export default function CacheControlPage() {
 // - 수명이 짧은 캐시 (예: 실시간 시세 등)
 async function getShortLivedData() {
   'use cache'
-  cacheLife('seconds') // revalidatePath()
+  cacheLife('seconds')
 
   return new Date().toLocaleTimeString()
 }
@@ -95,7 +123,7 @@ async function getShortLivedData() {
 // - 태그가 지정된 캐시 (예: 사용자 프로필 등)
 async function getTaggedData() {
   'use cache'
-  cacheTag('user-profile') // revalidateTag()
+  cacheTag('user-profile')
 
   return {
     time: new Date().toLocaleTimeString(),
