@@ -3,7 +3,7 @@ import { LucidePlus } from 'lucide-react'
 
 interface Props {
   ref: React.RefObject<HTMLFormElement | null>
-  action: (formData: FormData) => Promise<void>
+  action: (formData: FormData) => void
 }
 
 export function TodoCreateForm({ ref, action }: Props) {

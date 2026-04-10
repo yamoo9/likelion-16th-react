@@ -1,11 +1,11 @@
 'use client'
 
-import type { Todo } from '@/actions/todo-actions'
+import { startTransition, useOptimistic, useRef } from 'react'
+import { createTodoAction, toggleTodoAction, type Todo } from '@/actions/todo-actions'
 import { TodoCreateForm } from './todo-create-form'
 import { TodoList } from './todo-list'
-import { useOptimistic } from 'react'
 
-type OptimisticTodo = Todo & { sending?: boolean }
+export type OptimisticTodo = Todo & { sending?: boolean }
 
 type OptimisticAction =
   | { type: '@todos/add'; payload: { title: Todo['title'] } }
@@ -54,15 +54,37 @@ function optimisticTodosReducer(
 
 export default function TodoController({ initialTodos }: { initialTodos: Todo[] }) {
 
+  const formRef = useRef<HTMLFormElement>(null)
+
   const [optimisticTodos, distachOptimistic] = useOptimistic(
     initialTodos as OptimisticTodo[],
     optimisticTodosReducer,
   )
 
+  // 할 일 추가 이벤트 핸들러
+  const handleAddTodo = (formData: FormData) => {
+    const title = formData.get('title')?.toString().trim()
+    if (!title) return
+
+    startTransition(async () => {
+      distachOptimistic({ type: '@todos/add', payload: { title } })
+      formRef.current?.reset()
+      await createTodoAction(formData)
+    })
+  }
+
+  // 할 일 토글 이벤트 핸들러
+  const handleToggleTodo = (id: Todo['id']) => {
+    startTransition(async () => {
+      distachOptimistic({ type: '@todos/toggle', payload: { id: id } })
+      await toggleTodoAction(id)
+    })
+  }
+
   return (
     <div className="space-y-6">
-      <TodoCreateForm />
-      <TodoList data={optimisticTodos} />
+      <TodoCreateForm ref={formRef} action={handleAddTodo} />
+      <TodoList data={optimisticTodos} onToggle={handleToggleTodo} />
     </div>
   )
 }

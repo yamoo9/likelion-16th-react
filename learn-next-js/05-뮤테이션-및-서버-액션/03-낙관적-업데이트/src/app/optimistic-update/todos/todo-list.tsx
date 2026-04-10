@@ -1,9 +1,18 @@
-import { LucideCheckCircle2, LucideCircle, LucideLoader2 } from "lucide-react"
+import { LucideCheckCircle2, LucideCircle, LucideLoader2 } from 'lucide-react'
 
-import { Todo } from "@/actions/todo-actions"
-import { cn } from "@/utils"
+import { type Todo } from '@/actions/todo-actions'
+import { type OptimisticTodo } from './todo-controller'
+import { cn } from '@/utils'
 
-export function TodoList({ data }: { data: Todo[] }) {
+interface Props {
+  data: OptimisticTodo[]
+  onToggle: (id: Todo['id']) => void
+}
+
+export function TodoList({
+  data,
+  onToggle,
+}: Props) {
   return (
     <ul className="space-y-3">
       {data.map((todo) => (
@@ -14,12 +23,14 @@ export function TodoList({ data }: { data: Todo[] }) {
             // 조건부 스타일 처리
             // - 서버 통신 중일 때의 스타일
             // - 완료된 상태의 스타일
+            todo.sending ? 'opacity-95' : 'opacity-100'
           )}
         >
           <div className="flex items-center gap-3">
             {/* 할 일 토글 버튼 */}
             <button
               type="button"
+              onClick={() => onToggle(todo.id)}
               className="group relative flex items-center gap-3 outline-none"
             >
               <div className="relative flex items-center justify-center">
@@ -52,7 +63,7 @@ export function TodoList({ data }: { data: Todo[] }) {
 
           {/* 서버와 동기화 중일 때만 보여주는 인디케이터 */}
           <div
-            hidden
+            hidden={!todo.sending}
             className={cn(
               'flex items-center gap-2 text-[10px] font-bold tracking-tighter uppercase',
               'animate-pulse text-blue-500',
