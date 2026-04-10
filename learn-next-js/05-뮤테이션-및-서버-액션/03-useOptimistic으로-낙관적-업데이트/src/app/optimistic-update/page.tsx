@@ -29,10 +29,10 @@ export default async function OptimisticUpdatePage() {
           <section className="flex flex-col space-y-4">
             <div className="flex items-center gap-2 px-2 text-slate-500">
               <LucideInfo className="size-4" />
-              <span className="text-sm font-medium uppercase tracking-wider">일반 업데이트</span>
+              <span className="text-sm font-medium uppercase tracking-wider">일반적 업데이트</span>
             </div>
             <div className="h-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
-              <h3 className="mb-6 text-xl font-bold text-slate-800">기존 방식 업데이트</h3>
+              <h3 className="mb-6 text-xl font-bold text-slate-800">일반 방식 업데이트</h3>
               <div className="rounded-xl bg-slate-50 p-4">
                 <TodoController initialTodos={initialTodos} />
               </div>

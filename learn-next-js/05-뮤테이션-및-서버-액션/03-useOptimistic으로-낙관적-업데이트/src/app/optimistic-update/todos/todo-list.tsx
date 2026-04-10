@@ -1,7 +1,7 @@
 import { LucideCheckCircle2, LucideCircle, LucideLoader2 } from 'lucide-react'
 
 import { type Todo } from '@/actions/todo-actions'
-import { type OptimisticTodo } from './todo-controller'
+import { type OptimisticTodo } from './todo-controller-optimistic'
 import { cn } from '@/utils'
 
 interface Props {
@@ -30,7 +30,10 @@ export function TodoList({
             {/* 할 일 토글 버튼 */}
             <button
               type="button"
-              onClick={() => onToggle(todo.id)}
+              onClick={() => {
+                if (todo.sending) return
+                onToggle(todo.id)
+              }}
               className="group relative flex items-center gap-3 outline-none"
             >
               <div className="relative flex items-center justify-center">
