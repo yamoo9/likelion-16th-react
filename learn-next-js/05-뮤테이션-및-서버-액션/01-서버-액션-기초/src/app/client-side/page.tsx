@@ -14,33 +14,45 @@ import { useInput } from '@/hooks'
 import { cn } from '@/utils'
 
 export default function ClientSidePage() {
-  
-// 폼 상태를 클라이언트 측 메모리에 관리해보세요.
-const [isPending, startTransition] = useTransition() // 서버 액션 요청 (로딩 상태 관리, 렌더링)
-const [message, setMessage] = useState('') // 서버에서 성공 응답이 왔을 때 상태 업데이트 -> UI 반영 (성공 메시지)
-const [error, setError] = useState<undefined|string>(undefined) // 서버에서 실패 응답이 왔을 때 상태 업데이트 -> UI 반영 (에러 메시지)
+  // 폼 상태를 클라이언트 측 메모리에 관리해보세요.
+  const [isPending, startTransition] = useTransition() // 서버 액션 요청 (로딩 상태 관리, 렌더링)
+  const [message, setMessage] = useState('') // 서버에서 성공 응답이 왔을 때 상태 업데이트 -> UI 반영 (성공 메시지)
+  const [error, setError] = useState<undefined | string>(undefined) // 서버에서 실패 응답이 왔을 때 상태 업데이트 -> UI 반영 (에러 메시지)
 
-const itemInput = useInput('')
-const isNotInput = itemInput.props.value.trim().length === 0
+  const itemInput = useInput('')
+  const isNotInput = itemInput.props.value.trim().length === 0
 
-// 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
-// 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
-const handleAction = (formData: FormData) => {
+  // 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
+  // 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
+  const handleAction = (formData: FormData) => {
+    if (isPending || isNotInput) return // 방어적 프로그래밍
 
-  // 서버 함수는 startTransition 함수 안에서 실행하세요!
-  startTransition(async () => {
-    // 서버 함수에 formData 전달해 실행 후, 반환된 결과 받기
-    const result = await createItemAction(formData)
-    
-    if (result.success) {
-      // 서버의 응답 결과가 성공했을 때
-      setMessage(result.message ?? '요청이 성공적으로 수행되었습니다.')
-    } else {
-      // 서버의 응답 결과가 실패했을 때
-      setError(result.error ?? '알 수 없는 에러가 발생했습니다.')
-    }
-  })
-}
+    // 서버 함수는 startTransition 함수 안에서 실행하세요!
+    startTransition(async () => {
+      // 서버 함수에 formData 전달해 실행 후, 반환된 결과 받기
+      const result = await createItemAction(formData)
+
+      if (result.success) {
+        // 서버의 응답 결과가 성공했을 때
+        setMessage(result.message ?? '요청이 성공적으로 수행되었습니다.')
+      } else {
+        // 서버의 응답 결과가 실패했을 때
+        setError(result.error ?? '알 수 없는 에러가 발생했습니다.')
+      }
+    })
+  }
+
+  // 입력 폼 초기화 함수
+  const handleReset = () => {
+    // 방법 1. 브라우저 API를 사용해 페이지를 새로고침(하드 내비게이션)
+    // window.location.reload()
+
+    // 방법 2. 리액트의 방식으로 컴포넌트 초기화
+    setError(undefined)
+    setMessage('')
+    itemInput.methods.reset()
+    setTimeout(() => itemInput.methods.focus(), 50) // 0.05초 뒤에 초점 이동
+  }
 
   return (
     <div className="flex grow items-center justify-center p-4">
@@ -118,12 +130,11 @@ const handleAction = (formData: FormData) => {
 
               <button
                 type="submit"
-                // formAction={handleAction}
                 aria-disabled={isPending || isNotInput}
                 className={cn(
                   'flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all',
                   'bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.98]',
-                  'aria-disabled:cursor-not-allowed aria-disabled:scale-100 aria-disabled:bg-slate-200 disabled:text-slate-400',
+                  'disabled:text-slate-400 aria-disabled:scale-100 aria-disabled:cursor-not-allowed aria-disabled:bg-slate-200',
                 )}
               >
                 {isPending ? (
@@ -158,6 +169,7 @@ const handleAction = (formData: FormData) => {
                 )}
                 // 폼 초기화 로직을 실행하는 핸들러를 연결해보세요.
                 // ...
+                onClick={handleReset}
               >
                 새로운 아이템 추가
               </button>

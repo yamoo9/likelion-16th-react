@@ -11,7 +11,7 @@ export async function createItemAction(formData: FormData) {
   try {
 
     // 지연 시뮬레이션
-    await wait(800)
+    await wait(1500)
 
     // 아이템의 글자 길이가 2글자 이상인지 확인
     if (!title || title.length < 2) {
@@ -30,7 +30,7 @@ export async function createItemAction(formData: FormData) {
     }
 
     // 서버 에러 시뮬레이션
-    if (Math.random() > 0.7) {
+    if (Math.random() > 0.8) {
       throw new Error('데이터베이스 연결에 실패했습니다.')
     }
 
