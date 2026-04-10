@@ -1,9 +1,16 @@
 'use server'
 
 import { wait } from "@/utils"
+import { redirect } from "next/navigation"
+
+export interface FormState {
+  success: boolean
+  message?: string
+  error?: string
+}
 
 // 비동기 서버 함수(또는 액션)
-export async function createItemAction(formData: FormData) {
+export async function createItemAction(formData: FormData): Promise<FormState> {
 
   // 사용자 입력 데이터 추출
   const title = formData.get('title')?.toString().trim()
@@ -47,4 +54,13 @@ export async function createItemAction(formData: FormData) {
     message: `${title} 아이템이 성공적으로 생성되었습니다.`
   }
 
+}
+
+// 비동기 서버 액션 (점진적 향상 테스트용)
+export async function progressiveEnhancementAction(formData: FormData) {
+  console.log(Object.fromEntries(formData.entries()))
+
+  redirect('/')
+
+  // return undefined
 }

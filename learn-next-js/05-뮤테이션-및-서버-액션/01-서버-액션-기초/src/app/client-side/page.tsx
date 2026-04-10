@@ -9,7 +9,11 @@ import {
 } from 'lucide-react'
 import { useState, useTransition } from 'react'
 
-import { createItemAction } from '@/server-actions/create-item-action'
+import {
+  createItemAction,
+  // progressiveEnhancementAction
+} from '@/server-actions/create-item-action' // 서버 함수
+
 import { useInput } from '@/hooks'
 import { cn } from '@/utils'
 
@@ -24,7 +28,7 @@ export default function ClientSidePage() {
 
   // 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
   // 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
-  const handleAction = (formData: FormData) => {
+  const handleClientAction = (formData: FormData) => {
     if (isPending || isNotInput) return // 방어적 프로그래밍
 
     // 서버 함수는 startTransition 함수 안에서 실행하세요!
@@ -85,7 +89,7 @@ export default function ClientSidePage() {
             클라이언트 사이드
           </h1>
 
-          <p className="mb-6 text-sm leading-relaxed text-slate-500">
+          <p className="text-md mb-6 leading-relaxed text-slate-500">
             클라이언트 컴포넌트에서 상태를 직접 관리합니다.
             <span className="mt-1 block font-medium text-slate-400">
               #useTransition #useState
@@ -94,8 +98,13 @@ export default function ClientSidePage() {
 
           {!message ? (
             <form
-              // 서버 액션을 연결해보세요.
-              action={handleAction}
+              // 실제 서버에서 실행되는 액션(함수)
+              // form 요소의 action에 연결된 서버 액션 함수는 반환 값이 없어야 한다.
+              // 점진적 향상 (Progressive EnhancementAction) 테스트
+              // action={progressiveEnhancementAction}
+
+              // 클라이언트 핸들러 (내부에서 서버 액션 실행)
+              action={handleClientAction}
               className="relative z-10 space-y-4"
               noValidate
             >
