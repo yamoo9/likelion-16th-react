@@ -38,9 +38,9 @@ import { cn } from '@/utils'
 
 
 export default function ClientSidePage() {
-  const [message, setMessage] = useState('')
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
+  const [message, setMessage] = useState('')
 
   const itemInput = useInput('')
   const isNotInput = itemInput.props.value.trim().length === 0
