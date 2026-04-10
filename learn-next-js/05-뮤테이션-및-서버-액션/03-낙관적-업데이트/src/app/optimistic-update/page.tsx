@@ -1,7 +1,7 @@
 import { LucideZap } from 'lucide-react'
 
 import { cn } from '@/utils'
-import { Todo } from '@/actions/todo-actions'
+import { getTodos } from '@/actions/todo-actions'
 
 import TodoController from './todos/todo-controller'
 
@@ -25,10 +25,10 @@ import TodoController from './todos/todo-controller'
  *  - 좋아요 버튼, 할 일 목록 추가/삭제, 메시지 전송 등 즉각적인 피드백이 중요한 UI
  */
 
-export default function OptimisticUpdatePage() {
+export default async function OptimisticUpdatePage() {
   
   // 서버의 데이터베이스에서 할 일 목록을 가져옵니다.
-  const initialTodos = [] as Todo[]
+  const initialTodos = await getTodos()
 
   return (
     <div className="grow flex items-center justify-center p-6">
@@ -37,7 +37,7 @@ export default function OptimisticUpdatePage() {
         'shadow-[0_20px_50px_rgba(0,0,0,0.05)]'
       )}>
         <header className="mb-10">
-          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
+          <div className="mb-6 flex size-14 items-center justify-center rounded-2xl bg-blue-50">
             <LucideZap className="size-7 text-blue-600 fill-blue-600/10" />
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-blue-600">

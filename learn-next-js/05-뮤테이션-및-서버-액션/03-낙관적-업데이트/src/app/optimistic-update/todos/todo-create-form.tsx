@@ -1,9 +1,14 @@
-import { cn } from "@/utils"
-import { LucidePlus } from "lucide-react"
+import { cn } from '@/utils'
+import { LucidePlus } from 'lucide-react'
 
-export function TodoCreateForm() {
+interface Props {
+  ref: React.RefObject<HTMLFormElement | null>
+  action: (formData: FormData) => Promise<void>
+}
+
+export function TodoCreateForm({ ref, action }: Props) {
   return (
-    <form className="flex flex-col gap-3">
+    <form ref={ref} action={action} className="flex flex-col gap-3">
       <div className="relative">
         <input
           name="title"
