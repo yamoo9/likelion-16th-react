@@ -1,5 +1,8 @@
+'use client'
+
 import type { FormState } from '@/actions/create-item-action'
 import { cn } from '@/utils'
+import Link from 'next/link'
 
 interface Props {
   state: FormState
@@ -7,6 +10,12 @@ interface Props {
 }
 
 export function SuccessScreen({ state, onReset }: Props) {
+
+  const handleRestore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    onReset()
+  }
+
   return (
     <div
       aria-live="polite"
@@ -17,16 +26,16 @@ export function SuccessScreen({ state, onReset }: Props) {
           {state.message}
         </p>
       </div>
-      <button
-        type="button"
-        onClick={onReset}
+      <Link
+        href="/client-side"
+        onClick={handleRestore}
         className={cn(
           'flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all',
           'bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.98]',
         )}
       >
         새로운 아이템 추가
-      </button>
+      </Link>
     </div>
   )
 }

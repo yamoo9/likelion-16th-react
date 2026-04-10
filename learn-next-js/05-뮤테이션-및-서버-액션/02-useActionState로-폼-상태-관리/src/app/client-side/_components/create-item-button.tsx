@@ -1,4 +1,7 @@
+'use client'
+
 import { LucideArrowRight, LucideLoader2 } from 'lucide-react'
+import { startTransition, useEffect, useState } from 'react'
 import { cn } from '@/utils'
 
 interface Props {
@@ -7,10 +10,19 @@ interface Props {
 }
 
 export function CreateItemButton({ isPending, isNotInput }: Props) {
+
+  const [isDisabled, setIsDisabled] = useState(false)
+
+  useEffect(() => {
+    startTransition(() => {
+      setIsDisabled(isPending || isNotInput)
+    })
+  }, [isNotInput, isPending])
+
   return (
     <button
       type="submit"
-      aria-disabled={isPending || isNotInput}
+      aria-disabled={isDisabled}
       className={cn(
         'flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all',
         'bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.98]',
