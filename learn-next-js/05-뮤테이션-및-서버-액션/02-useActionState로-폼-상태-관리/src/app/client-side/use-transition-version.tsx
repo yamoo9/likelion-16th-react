@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useTransition } from 'react'
 import {
   LucideArrowRight,
   LucideLoader2,
@@ -7,53 +8,66 @@ import {
   LucideAlertCircle,
   LucideCheckCircle2,
 } from 'lucide-react'
-import { useActionState } from 'react'
 
-import { createItemAction } from '@/actions/create-item-action' // 서버 액션
+import { createItemAction } from '@/actions'
 import { useInput } from '@/hooks'
 import { cn } from '@/utils'
 
+
 /**
  * [Next.js 폼 상태 관리: useActionState (이전 이름: useFormState)]
- *
+ * 
  * useActionState란?
  * - 서버 액션의 실행 결과(성공, 에러 메시지 등)를 클라이언트 상태로 관리하는 React 훅입니다.
  * - 폼 제출 시 서버와 클라이언트 간의 상태 동기화를 간결하게 처리합니다.
- * - 참고: https://react.dev/reference/react/useActionState
+ * - 참고: https://react.dev/reference/react/useActionState 
  *        (현재 한글 번역 문서는 하이드레이션 오류 발생 가능성이 있으니 영문 문서 권장)
- *
+ * 
  * 왜 사용하는가?
  * - 기존의 useState + useEffect 조합 없이도 서버의 응답을 UI에 즉각 반영할 수 있기 때문입니다.
- *
+ * 
  * 주요 특징 및 장점
  * - 자동 상태 업데이트: 액션이 반환하는 값을 자동으로 상태(state)에 반영합니다.
  * - Pending 상태 제공: 현재 액션이 실행 중인지 여부(isPending)를 불리언 값으로 제공합니다.
  * - 점진적 향상 지원: JS가 로드되기 전에도 기본 폼 제출이 작동하며, 로드 후에는 풍부한 UI 경험을 제공합니다.
- *
+ * 
  * 사용 방법
  * - [상태, 액션함수, 대기상태] = useActionState(서버액션, 초기상태)
  * - 폼의 <form action={액션함수}>에 연결하여 사용합니다.
  */
 
-// 초기 폼 상태
-const INITIAL_FORM_STATE = {
-  success: false,
-  message: '',
-  error: '',
-}
 
 export default function ClientSidePage() {
-  // useActionState 훅이 일괄적으로 관리할 상태 (서버에서 보내주는 데이터)
-
-  const [state, dispatchAction, isPending] = useActionState(
-    createItemAction,   // 서버 액션 (리듀서 액션 함수)
-    INITIAL_FORM_STATE, // 폼 초기 상태
-  )
+  const [message, setMessage] = useState('')
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | null>(null)
 
   const itemInput = useInput('')
   const isNotInput = itemInput.props.value.trim().length === 0
 
+  const handleSubmit = async (formData: FormData) => {
+    if (isPending || isNotInput) return
+
+    setError(null)
+    setMessage('')
+
+    startTransition(async () => {
+      const result = await createItemAction(formData)
+
+      if (result.success) {
+        setMessage(result.message ?? '')
+        // 성공 시 입력창 초기화
+        itemInput.methods.reset()
+      } else {
+        // 서버에서 보낸 error 메시지 사용
+        setError(result.error ?? '알 수 없는 에러가 발생했습니다.')
+      }
+    })
+  }
+
   const handleReset = () => {
+    setError(null)
+    setMessage('')
     const { reset, focus } = itemInput.methods
     reset()
     setTimeout(focus, 50)
@@ -74,16 +88,12 @@ export default function ClientSidePage() {
             role="presentation"
             className={cn(
               'mb-8 flex h-16 w-16 items-center justify-center rounded-2xl transition-colors duration-500',
-              state.message
-                ? 'bg-green-50'
-                : state.error
-                  ? 'bg-red-50'
-                  : 'bg-blue-50',
+              message ? 'bg-green-50' : error ? 'bg-red-50' : 'bg-blue-50',
             )}
           >
-            {state.message ? (
+            {message ? (
               <LucideCheckCircle2 className="h-7 w-7 text-green-500" />
-            ) : state.error ? (
+            ) : error ? (
               <LucideAlertCircle className="h-7 w-7 animate-pulse text-red-500" />
             ) : (
               <LucideSparkles className="h-7 w-7 text-blue-500" />
@@ -101,9 +111,9 @@ export default function ClientSidePage() {
             </span>
           </p>
 
-          {!state.message ? (
+          {!message ? (
             <form
-              action={dispatchAction} // POST 요청 (Next.js 서버)
+              action={handleSubmit}
               className="relative z-10 space-y-4"
               noValidate
             >
@@ -112,13 +122,13 @@ export default function ClientSidePage() {
                   name="title"
                   required
                   aria-disabled={isPending}
-                  aria-invalid={!!state.error}
+                  aria-invalid={!!error}
                   {...itemInput.props}
                   placeholder="아이템 이름 입력..."
                   className={cn(
                     'w-full rounded-2xl border bg-slate-50/50 p-4 transition-all outline-none',
                     'placeholder:text-slate-400',
-                    state.error
+                    error
                       ? 'border-red-200 bg-red-50/30 focus:ring-2 focus:ring-red-500/20'
                       : 'border-slate-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20',
                     'aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
@@ -126,11 +136,11 @@ export default function ClientSidePage() {
                 />
 
                 {/* 에러 메시지 UI */}
-                {state.error && (
+                {error && (
                   <div className="animate-in fade-in slide-in-from-top-1 flex items-center gap-1.5 px-1 text-red-500">
                     <LucideAlertCircle className="h-4 w-4" />
                     <p role="alert" className="text-[13px] font-medium">
-                      {state.error}
+                      {error}
                     </p>
                   </div>
                 )}
@@ -138,11 +148,11 @@ export default function ClientSidePage() {
 
               <button
                 type="submit"
-                aria-disabled={isPending || isNotInput}
+                disabled={isPending || isNotInput}
                 className={cn(
                   'flex w-full items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all',
                   'bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.98]',
-                  'aria-disabled:scale-100 aria-disabled:cursor-not-allowed aria-disabled:bg-slate-200 disabled:text-slate-400',
+                  'disabled:scale-100 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400',
                 )}
               >
                 {isPending ? (
@@ -166,7 +176,7 @@ export default function ClientSidePage() {
             >
               <div className="rounded-2xl border border-green-100 bg-green-50/50 p-4">
                 <p className="text-base leading-relaxed font-medium text-green-700">
-                  {state.message}
+                  {message}
                 </p>
               </div>
               <button
