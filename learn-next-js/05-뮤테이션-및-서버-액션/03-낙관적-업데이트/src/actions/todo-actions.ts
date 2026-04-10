@@ -70,21 +70,20 @@ export async function createTodoAction(formData: FormData) {
   }
 }
 
-
 export async function toggleTodoAction(todoId: Todo['id']) {
   try {
     await wait(800)
 
     const todos = await getTodos()
-    const todo = todos.find(todo => todo.id === todoId)
+    const todo = todos.find((todo) => todo.id === todoId)
 
-    if (!todo) throw new Error(`"${todoId}"와 일치하는 할 일이 없습니다.`)
-    
+    if (!todo) return null
+
     todo.done = !todo.done
     await setTodos(todos)
     revalidatePath('/optimistic-update')
     return todo
-  } catch(error) {
+  } catch (error) {
     console.error('할 일 토글 실패:', error)
     throw isErrorObject(error) ? error : new Error(String(error))
   }

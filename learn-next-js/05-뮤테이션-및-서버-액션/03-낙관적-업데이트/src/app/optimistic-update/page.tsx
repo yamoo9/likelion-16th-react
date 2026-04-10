@@ -1,56 +1,62 @@
-import { LucideZap } from 'lucide-react'
-
-import { cn } from '@/utils'
+import { LucideZap, LucideInfo } from 'lucide-react'
 import { getTodos } from '@/actions/todo-actions'
-
 import TodoController from './todos/todo-controller'
-
-/**
- * [낙관적 업데이트 (Optimistic Updates)]
- * 
- * 개념
- *   - 서버의 응답을 기다리지 않고, UI를 '성공할 것이라 가정(Optimistic)'하고 즉시 업데이트하는 기술입니다.
- *   - 사용자에게 네트워크 지연(Latency)이 없는 듯한 초고속 경험을 제공합니다.
- * 
- * useOptimistic (React 19+)
- *   - 서버 액션 호출과 동시에 임시 상태(Optimistic State)를 생성합니다.
- *   - 서버 작업이 완료되면 실제 서버 데이터(Source of Truth)로 자동 교체됩니다.
- *   - 서버 작업 실패 시, 별도의 복구 로직 없이도 이전 상태로 자동 롤백(Rollback)됩니다.
- * 
- * 구현 조건
- *   - 반드시 클라이언트 컴포넌트('use client')에서 사용해야 합니다.
- *   - 서버 컴포넌트로부터 초기 데이터를 props로 전달받아 시작하는 패턴이 권장됩니다.
- * 
- * 주요 활용 사례
- *  - 좋아요 버튼, 할 일 목록 추가/삭제, 메시지 전송 등 즉각적인 피드백이 중요한 UI
- */
+import TodoControllerOptimistic from './todos/todo-controller-optimistic'
 
 export default async function OptimisticUpdatePage() {
-  
-  // 서버의 데이터베이스에서 할 일 목록을 가져옵니다.
   const initialTodos = await getTodos()
 
   return (
-    <div className="grow flex items-center justify-center p-6">
-      <div className={cn(
-        'w-full max-w-lg rounded-[40px] border border-blue-100 bg-white p-10',
-        'shadow-[0_20px_50px_rgba(0,0,0,0.05)]'
-      )}>
-        <header className="mb-10">
-          <div className="mb-6 flex size-14 items-center justify-center rounded-2xl bg-blue-50">
-            <LucideZap className="size-7 text-blue-600 fill-blue-600/10" />
+    <div className="min-h-screen p-6 lg:p-12">
+      <div className="mx-auto max-w-6xl">
+
+        <header className="mb-12">
+          <div className="mb-6 flex size-16 items-center justify-center rounded-2xl bg-blue-600 shadow-lg shadow-blue-200">
+            <LucideZap className="size-8 fill-white/20 text-white" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-blue-600">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
             낙관적인 UI 업데이트
           </h1>
-          <p className="mt-2 text-slate-500 leading-relaxed">
-            서버 응답을 기다리지 않고 UI를 즉시 업데이트합니다. 
-            네트워크 지연이 있어도 사용자는 즉각적인 반응을 느낄 수 있습니다.
+          <p className="mt-4 text-lg leading-relaxed text-slate-600 max-w-2xl">
+            사용자의 액션에 즉각 반응하여 체감 속도를 극대화합니다. 
+            서버 응답을 기다리는 지루함을 없애고 부드러운 사용자 경험을 제공해 보세요.
           </p>
         </header>
 
-        {/* 클라이언트 컴포넌트에 할 일 목록을 전달합니다. */}
-        <TodoController initialTodos={initialTodos} />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          
+          {/* 일반 업데이트 */}
+          <section className="flex flex-col space-y-4">
+            <div className="flex items-center gap-2 px-2 text-slate-500">
+              <LucideInfo className="size-4" />
+              <span className="text-sm font-medium uppercase tracking-wider">일반 업데이트</span>
+            </div>
+            <div className="h-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
+              <h3 className="mb-6 text-xl font-bold text-slate-800">기존 방식 업데이트</h3>
+              <div className="rounded-xl bg-slate-50 p-4">
+                <TodoController initialTodos={initialTodos} />
+              </div>
+            </div>
+          </section>
+
+          {/* 낙관적 업데이트 */}
+          <section className="flex flex-col space-y-4">
+            <div className="flex items-center gap-2 px-2 text-blue-600">
+              <LucideZap className="size-4 fill-blue-600" />
+              <span className="text-sm font-bold uppercase tracking-wider">낙관적 업데이트</span>
+            </div>
+            <div className="h-full rounded-3xl border-2 border-blue-100 bg-white p-8 shadow-xl shadow-blue-900/5 transition-all hover:border-blue-200">
+              <h3 className="mb-6 text-xl font-bold text-slate-800 underline decoration-blue-200 decoration-4 underline-offset-8">
+                낙관적인 방식 업데이트
+              </h3>
+              <div className="rounded-xl bg-blue-50/30 p-4">
+                <TodoControllerOptimistic initialTodos={initialTodos} />
+              </div>
+            </div>
+          </section>
+
+        </div>
+
       </div>
     </div>
   )

@@ -1,49 +1,33 @@
 'use client'
 
-import { startTransition, useOptimistic, useRef } from 'react'
-import { createTodoAction, toggleTodoAction, type Todo } from '@/actions/todo-actions'
+import {
+  createTodoAction,
+  toggleTodoAction,
+  type Todo,
+} from '@/actions/todo-actions'
+import { startTransition, useReducer, useRef } from 'react'
 import { TodoCreateForm } from './todo-create-form'
 import { TodoList } from './todo-list'
 
-export type OptimisticTodo = Todo & { sending?: boolean }
+type TodoAction =
+  | { type: '@todo/add'; payload: { title: Todo['title'] } }
+  | { type: '@todo/toggle'; payload: { todoId: Todo['id'] } }
 
-type OptimisticAction =
-  | { type: '@todos/add'; payload: { title: Todo['title'] } }
-  | { type: '@todos/toggle'; payload: { id: Todo['id'] } }
-
-// 낙관적인 상태 관리 리듀서 함수
-function optimisticTodosReducer(
-  todos: OptimisticTodo[],
-  action: OptimisticAction,
-) {
+function todosReducer(todos: Todo[], action: TodoAction): Todo[] {
   switch (action.type) {
-
-    // 할 일 추가 로직
-    case '@todos/add': {
-      const newTodo: OptimisticTodo = {
-        id: Date.now(),
-        title: action.payload.title,
-        done: false,
-        sending: true,
-      }
-
-      const nextTodos = [newTodo, ...todos]
-      return nextTodos
+    case '@todo/add': {
+      return [
+        { id: Date.now(), title: action.payload.title, done: false },
+        ...todos,
+      ]
     }
 
-    // 할 일 토글 로직
-    case '@todos/toggle': {
-      const nextTodos = todos.map((todo) => {
-        if (todo.id !== action.payload.id) return todo
-        const nextTodo = {
-          ...todo,
-          done: !todo.done,
-          sending: true,
-        }
-        return nextTodo
-      })
-
-      return nextTodos
+    case '@todo/toggle': {
+      return todos.map((todo) =>
+        todo.id !== action.payload.todoId
+          ? todo
+          : { ...todo, done: !todo.done },
+      )
     }
 
     default: {
@@ -52,14 +36,15 @@ function optimisticTodosReducer(
   }
 }
 
-export default function TodoController({ initialTodos }: { initialTodos: Todo[] }) {
+export default function TodoController({
+  initialTodos,
+}: {
+  initialTodos: Todo[]
+}) {
 
   const formRef = useRef<HTMLFormElement>(null)
 
-  const [optimisticTodos, distachOptimistic] = useOptimistic(
-    initialTodos as OptimisticTodo[],
-    optimisticTodosReducer,
-  )
+  const [todos, dispatch] = useReducer(todosReducer, initialTodos)
 
   // 할 일 추가 이벤트 핸들러
   const handleAddTodo = (formData: FormData) => {
@@ -67,7 +52,7 @@ export default function TodoController({ initialTodos }: { initialTodos: Todo[] 
     if (!title) return
 
     startTransition(async () => {
-      distachOptimistic({ type: '@todos/add', payload: { title } })
+      dispatch({ type: '@todo/add', payload: { title } })
       formRef.current?.reset()
       await createTodoAction(formData)
     })
@@ -76,7 +61,7 @@ export default function TodoController({ initialTodos }: { initialTodos: Todo[] 
   // 할 일 토글 이벤트 핸들러
   const handleToggleTodo = (id: Todo['id']) => {
     startTransition(async () => {
-      distachOptimistic({ type: '@todos/toggle', payload: { id: id } })
+      dispatch({ type: '@todo/toggle', payload: { todoId: id } })
       await toggleTodoAction(id)
     })
   }
@@ -84,7 +69,7 @@ export default function TodoController({ initialTodos }: { initialTodos: Todo[] 
   return (
     <div className="space-y-6">
       <TodoCreateForm ref={formRef} action={handleAddTodo} />
-      <TodoList data={optimisticTodos} onToggle={handleToggleTodo} />
+      <TodoList data={todos} onToggle={handleToggleTodo} />
     </div>
   )
 }
