@@ -1,7 +1,12 @@
 import MemoForm from './memo-form'
 import MemoList from './memo-list'
 
-export default async function MemoCRUDPage() {
+export default function MemoCRUDPage() {
+
+  /**
+   * readMemosAction 서버 액션을 정의합니다.
+   * readMemosAction 액션를 실행한 Promise를 MemoList 컴포넌트에 전달합니다.
+   */
   
   return (
     <section className="mx-auto w-9/10 max-w-3xl px-6 py-12 antialiased lg:w-3/5">

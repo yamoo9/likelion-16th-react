@@ -5,6 +5,7 @@ import {
   LucideShieldCheck,
   LucideXCircle
 } from 'lucide-react'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { supabaseConfig } from '@/lib/supabase/config'
@@ -16,7 +17,8 @@ export default async function SetupCheckPage() {
   let errorMessage = ''
 
   try {
-    const supabase = await createClient()
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
     const { error } = await supabase.auth.getSession()
     if (error) throw error
     isConnected = true

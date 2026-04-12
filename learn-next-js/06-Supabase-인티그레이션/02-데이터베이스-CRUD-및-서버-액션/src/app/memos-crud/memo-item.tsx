@@ -27,11 +27,19 @@ export default function MemoItem({ memo }: Props) {
   const [title, setTitle] = useState(memo?.title)
   const [content, setContent] = useState(memo?.content)
 
+  /**
+   * updateMemoAction 서버 액션을 정의합니다.
+   * 서버 액션을 사용해 수정한 후, 화면을 즉시 업데이트합니다.
+   */
   const updateMemo = async () => {
     console.log('메모 수정 기능')
     setIsEditing(false) // 에디트 모드 OFF
   }
 
+  /**
+   * deleteMemoAction 서버 액션을 정의합니다.
+   * 서버 액션을 사용해 수정한 후, 화면을 즉시 업데이트합니다.
+   */
   const deleteMemo = () => {
     console.log('메모 삭제 기능')
   }
