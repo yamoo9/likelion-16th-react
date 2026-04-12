@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
 
 const DATABASE_NAME = 'memos'
 
@@ -21,7 +22,8 @@ export async function createMemoAction(formData: FormData) {
   const title = formData.get('title')?.toString()
   const content = formData.get('content')?.toString()
 
-  const supabase = await createClient()
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
   
   // RLS 보안 정책이 설정되지 않은 경우 
   // Next.js 서버에서 직접 누구인지 확인해야 합니다.
@@ -50,7 +52,8 @@ export async function createMemoAction(formData: FormData) {
  */
 export async function readMemosAction() {
   
-  const supabase = await createClient()
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
 
   const { data, error } = await supabase
   .from(DATABASE_NAME)
@@ -71,7 +74,8 @@ export async function readMemosAction() {
  */
 export async function updateMemoAction(id: number, title?: string, content?: string) {
 
-  const supabase = await createClient()
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
 
   // RLS 보안 정책이 설정되지 않은 경우 
   // Next.js 서버에서 직접 누구인지 확인해야 합니다.
@@ -98,7 +102,8 @@ export async function updateMemoAction(id: number, title?: string, content?: str
  */
 export async function deleteMemoAction(id: number) {
   
-  const supabase = await createClient()
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
   
   // RLS 보안 정책이 설정되지 않은 경우 
   // Next.js 서버에서 직접 누구인지 확인해야 합니다.

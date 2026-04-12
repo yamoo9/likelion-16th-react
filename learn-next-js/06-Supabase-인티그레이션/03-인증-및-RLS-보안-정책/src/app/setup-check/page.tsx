@@ -121,7 +121,7 @@ function CheckConnectSupabase({
             </span>
           </li>
           <li className="flex items-center justify-between border-b border-slate-50 pb-2.5 text-sm font-semibold">
-            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span>
+            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>
             <span className={cn(
               "flex items-center",
               supabaseConfig.key ? "text-emerald-600" : "text-rose-500"
