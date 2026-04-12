@@ -15,7 +15,7 @@ export default function SupabaseSetupPage() {
           [환경 설정]
           - Supabase 계정 및 프로젝트 생성
           - `.env.*` 파일에 url, key 추가
-          - Supabase URL/KEY 설정 및 createClient 유틸리티 작성
+          - Supabase URL/KEY 설정 및 createClient (서버/클라이언트 측) 유틸리티 작성
         */}
         <LinkCard
           href="/setup-check"

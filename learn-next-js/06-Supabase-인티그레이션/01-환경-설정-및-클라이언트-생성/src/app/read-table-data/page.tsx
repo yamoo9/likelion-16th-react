@@ -20,6 +20,7 @@ interface Memo {
 }
 
 export default async function ReadTableDataPage() {
+ 
   // Supabase 데이터베이스 memos 테이블에서 데이터 조회
   const supabase = null
   const data = [] as Memo[]

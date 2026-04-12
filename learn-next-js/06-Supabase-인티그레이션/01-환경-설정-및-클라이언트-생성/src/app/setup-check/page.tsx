@@ -7,32 +7,24 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-import { cn, isErrorObject } from '@/utils'
+import { cn } from '@/utils'
 
 export default async function SetupCheckPage() {
-  let isConnected = false
-  let errorMessage = ''
 
-  try {
-    const error = new Error('Supabase 연결을 위한 구성이 필요합니다.')
-    if (error) throw error
-    isConnected = true
-  } catch (error) {
-    if (isErrorObject(error)) {
-      isConnected = false
-      errorMessage = error.message || 'Supabase 연결에 실패했습니다.'
-    } else {
-      isConnected = false
-      errorMessage = error ? String(error) : '알 수 없는 에러가 발생했습니다.'
-    }
-  }
+  const isConnected = false
+  const errorMessage = ''
+
+  /**
+   * Supabase 구성(cofnig) 설정 값을 가져옵니다.
+   * Supabase 연결을 확인하여 isConnected 값을 업데이트합니다.
+   * 연결에 오류가 발생한 경우, 오류 메시지를 errorMessage에 설정합니다.
+   */
 
   return (
     <section className={cn(
       "w-80/100 max-w-3xl px-6 py-12 antialiased",
       "mx-auto"
     )}>
-      {/* 상단 네비게이션 & 헤더 (read-table-data와 동일한 규격) */}
       <header className="mb-10">
         <Link 
           href="/read-table-data" 
@@ -90,7 +82,6 @@ function CheckConnectSupabase({
         isConnected ? "border-emerald-400" : "border-rose-600"
       )}
     >
-      {/* 장식용 배경 요소 */}
       <div className={cn(
         "absolute -top-10 -right-10 size-32 rounded-full opacity-70",
         isConnected ? "bg-emerald-50/50" : "bg-rose-50/50"
@@ -109,7 +100,8 @@ function CheckConnectSupabase({
             "Supabase 클라이언트가 정상적으로 작동하고 있습니다. 이제 데이터를 다룰 준비가 되었습니다."
           ) : (
             <>
-              아래 환경 변수가 <code className="rounded bg-rose-50 px-1.5 py-0.5 font-mono text-xs text-rose-700">.env</code> 또는 <code className="rounded bg-rose-50 px-1.5 py-0.5 font-mono text-xs text-rose-700">.env.local</code>에 설정되어 있는지 확인하세요.
+              아래 환경 변수가 <code className="rounded bg-rose-50 px-1.5 py-0.5 font-mono text-xs text-rose-700">.env</code> 
+              또는 <code className="rounded bg-rose-50 px-1.5 py-0.5 font-mono text-xs text-rose-700">.env.local</code>에 설정되어 있는지 확인하세요.
             </>
           )}
         </p>
@@ -126,7 +118,7 @@ function CheckConnectSupabase({
             </span>
           </li>
           <li className="flex items-center justify-between border-b border-slate-50 pb-2.5 text-sm font-semibold">
-            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span>
+            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>
             <span className={cn(
               "flex items-center",
               supabaseConfig?.key ? "text-emerald-600" : "text-rose-500"

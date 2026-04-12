@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
-import { Noto_Sans_KR, Geist } from 'next/font/google'
+import { Noto_Sans_KR } from 'next/font/google'
 
 import { cn } from '@/utils'
 import { Navbar } from '@/components/ui/navbar'
 import Footer from '@/components/ui/footer'
 import '@/styles/globals.css'
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -20,20 +18,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
-    <html lang="ko-KR" className={cn("font-sans", geist.variable)}>
+    <html lang="ko-KR" className={cn('font-sans', notoSansKR.variable)}>
       <body
         className={cn(
-          notoSansKR.variable,
           'min-h-screen overflow-y-scroll',
           'flex flex-col bg-white font-sans text-slate-900 antialiased',
         )}
       >
         <Navbar />
-        <main
-          className={cn(
-            'mx-auto flex w-full max-w-5xl grow flex-col',
-          )}
-        >
+        <main className={cn('mx-auto flex w-full max-w-5xl grow flex-col')}>
           {children}
         </main>
         <Footer />
