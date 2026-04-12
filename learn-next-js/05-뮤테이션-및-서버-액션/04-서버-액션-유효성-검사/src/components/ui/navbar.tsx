@@ -1,8 +1,8 @@
 'use client'
 
-import { LucideShieldCheck } from 'lucide-react'
-import Link from 'next/link'
+import { LucideShieldCheck, LucideShieldHalf } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 import { cn } from '@/utils'
 
@@ -10,6 +10,7 @@ export function Navbar() {
   const pathname = usePathname()
 
   // 활성화 여부 확인 (하위 경로 포함)
+  const isZodGuide = pathname.startsWith('/zod-guide')
   const isValidateActive = pathname.startsWith('/validate-server-action')
 
   return (
@@ -32,6 +33,23 @@ export function Navbar() {
 
         <div className="flex items-center gap-3 text-sm font-bold">
           <Link
+            href="/zod-guide"
+            className={cn(
+              'flex items-center gap-1.5 rounded-full border px-4 py-2 transition-all duration-200',
+              isZodGuide
+                ? 'border-blue-100 bg-blue-50 text-blue-600 shadow-sm'
+                : 'border-transparent text-slate-500 hover:bg-blue-50/50 hover:text-blue-600',
+            )}
+          >
+            <LucideShieldHalf
+              className={cn(
+                'size-4',
+                isZodGuide ? 'text-blue-600' : 'text-slate-400',
+              )}
+            />
+            <span>Zod 가이드</span>
+          </Link>
+          <Link
             href="/validate-server-action"
             className={cn(
               'flex items-center gap-1.5 rounded-full border px-4 py-2 transition-all duration-200',
@@ -42,7 +60,7 @@ export function Navbar() {
           >
             <LucideShieldCheck
               className={cn(
-                'h-4 w-4',
+                'size-4',
                 isValidateActive ? 'text-blue-600' : 'text-slate-400',
               )}
             />

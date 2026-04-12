@@ -24,7 +24,7 @@ export default function PostForm() {
   return (
     <div
       className={cn(
-        'w-full max-w-md rounded-[40px] bg-white p-8',
+        'w-full max-w-lg rounded-[40px] bg-white p-8',
         'border border-blue-100 shadow-[0_20px_50px_rgba(0,100,255,0.05)]',
       )}
     >

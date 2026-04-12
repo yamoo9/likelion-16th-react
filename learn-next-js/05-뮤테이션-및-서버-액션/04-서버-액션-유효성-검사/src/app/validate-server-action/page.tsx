@@ -4,7 +4,7 @@ import { cn } from '@/utils'
 import PostForm from './post-form/post-form'
 
 /**
- * [03-서버-액션-유효성-검사 (Server Action Validation)]
+ * [서버-액션-유효성-검사 (Server Action Validation)]
  * 
  * 개념
  *   - 클라이언트에서 넘어온 데이터를 서버 액션 내부에서 Zod 스키마를 통해 검증합니다.
