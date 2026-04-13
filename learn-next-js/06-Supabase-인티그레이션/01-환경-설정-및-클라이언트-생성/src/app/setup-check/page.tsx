@@ -6,19 +6,31 @@ import {
   LucideXCircle
 } from 'lucide-react'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 
-import { cn } from '@/utils'
+import { supabaseConfig } from '@/lib/supabase/config'
+import { createClient } from '@/lib/supabase/server'
+import { cn, isErrorObject } from '@/utils'
 
 export default async function SetupCheckPage() {
 
-  const isConnected = false
-  const errorMessage = ''
+  let isConnected = false
+  let errorMessage = ''
 
   /**
-   * Supabase 구성(cofnig) 설정 값을 가져옵니다.
+   * Supabase 구성(config) 설정 값을 가져옵니다.
    * Supabase 연결을 확인하여 isConnected 값을 업데이트합니다.
    * 연결에 오류가 발생한 경우, 오류 메시지를 errorMessage에 설정합니다.
    */
+
+  // 서버 측 Supabase 클라이언트 생성
+  try {
+    const cookieStore = await cookies()
+    const supabase = createClient(cookieStore)
+    isConnected = !!supabase
+  } catch(error) {
+    errorMessage = isErrorObject(error) ? error.message : 'Supabase 연동에 실패했습니다.'
+  }
 
   return (
     <section className={cn(
@@ -60,6 +72,7 @@ export default async function SetupCheckPage() {
         <CheckConnectSupabase
           isConnected={isConnected}
           errorMessage={errorMessage}
+          supabaseConfig={supabaseConfig}
         />
       </div>
     </section>
@@ -118,7 +131,7 @@ function CheckConnectSupabase({
             </span>
           </li>
           <li className="flex items-center justify-between border-b border-slate-50 pb-2.5 text-sm font-semibold">
-            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>
+            <span className="text-slate-600">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</span>
             <span className={cn(
               "flex items-center",
               supabaseConfig?.key ? "text-emerald-600" : "text-rose-500"
