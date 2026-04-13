@@ -5,10 +5,8 @@ import { useActionState } from 'react'
 import { cn } from '@/utils'
 import { createPostAction, type FormState } from '@/actions/post-actions'
 import { CreaetPostButton } from './create-post-button'
-import { ValidateStatus } from './validate-status'
 import { PostTextarea } from './post-textarea'
 import { PostInput } from './post-input'
-
 
 /**
  * [초기 상태 정의]
@@ -17,22 +15,13 @@ import { PostInput } from './post-input'
 
 const initialFormState: FormState = {
   success: false,
-  message: '',
-  errors: ''
 }
 
 export default function PostForm() {
+  const [state, formAction] = useActionState(createPostAction, initialFormState)
 
-  /**
-   * [useActionState 훅 사용]
-   * 첫 번째 인자: 실행할 서버 액션 함수 (createPostAction)
-   * 두 번째 인자: 폼의 초기 상태값 (initialState)
-   * 반환값: [현재 상태(state), 실행할 액션 함수(formAction)]
-   */
-
-  // const [상태, 폼액션함수, 팬딩(로딩)상태] = useActionState(서버액션함수, 상태초기값)
-
-  const [ state, formAction ] = useActionState(createPostAction, initialFormState)
+  const titleError = state.errors?.title?.errors
+  const contentError = state.errors?.content?.errors
 
   return (
     <div
@@ -41,30 +30,44 @@ export default function PostForm() {
         'border border-blue-100 shadow-[0_20px_50px_rgba(0,100,255,0.05)]',
       )}
     >
-      {/* 
-          form 태그의 action 속성에 useActionState에서 받은 formAction을 연결합니다. 
-          제출 시 자동으로 서버 액션이 호출되며 state가 업데이트됩니다.
-      */}
-      <form action={formAction} className="space-y-6">
+      <form action={formAction} className="flex flex-col gap-6">
+        <div>
+          <PostInput
+            label="제목"
+            name="title"
+            placeholder="3~20자 사이로 입력해주세요"
+            aria-invalid={titleError ? 'true' : 'false'}
+          />
+          {titleError && (
+            <span role="alert" className="font-medium text-red-600">
+              {titleError.at(0)}
+            </span>
+          )}
+        </div>
 
-        <PostInput
-          label="제목"
-          name="title"
-          placeholder="3~20자 사이로 입력해주세요"
-        />
-
-        <PostTextarea 
-          label="내용"
-          name="content"
-          placeholder="상세 내용을 입력해주세요. (최대 100자 입력 가능)"
-        />
+        <div>
+          <PostTextarea
+            label="내용"
+            name="content"
+            placeholder="상세 내용을 입력해주세요. (최대 100자 입력 가능)"
+            aria-invalid={contentError ? 'true' : 'false'}
+          />
+          {contentError && (
+            <span role="alert" className="font-medium text-red-600">
+              {contentError.at(0)}
+            </span>
+          )}
+        </div>
 
         {/* 폼 상태를 전달해 서버의 응답을 화면에 표시합니다. */}
-        <ValidateStatus state={state} />
+        {/* <ValidateStatus state={state} /> */}
+
+        {state?.message && (
+          <p className='text-emerald-700 font-bold'>{state.message}</p>
+        )}
 
         {/* 폼 전송 상태를 컴포넌트 내부에서 처리해보세요. */}
         <CreaetPostButton />
-
       </form>
     </div>
   )

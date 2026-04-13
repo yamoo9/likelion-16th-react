@@ -9,7 +9,7 @@ export function PostTextarea({
   const textareaId = useId()
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col gap-2 mb-2">
       <label
         htmlFor={textareaId}
         className="ml-1 text-sm font-bold tracking-wider text-slate-500 uppercase"
