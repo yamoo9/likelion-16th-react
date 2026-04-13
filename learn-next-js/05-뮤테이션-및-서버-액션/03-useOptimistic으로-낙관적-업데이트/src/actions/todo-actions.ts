@@ -46,7 +46,7 @@ interface TodoResponseResult {
   payload: Todo | string | null
 }
 
-const PROBABILITY_OF_FAILURE = 0.35 // 요청 실패 확률
+const PROBABILITY_OF_FAILURE = 0.25 // 요청 실패 확률
 
 export async function createTodoAction(formData: FormData): Promise<TodoResponseResult> {
   try {

@@ -6,7 +6,7 @@ import { LucideZap } from 'lucide-react'
 
 export default function MainPage() {
   return (
-    <div className="w-full py-12">
+    <div className="w-full py-12 px-6 lg:mx-0">
       <section
         className={cn(
           'grid grid-cols-1 gap-8 md:grid-cols-2',
@@ -16,7 +16,7 @@ export default function MainPage() {
         <LinkCard
           icon={LucideZap}
           href="/optimistic-update"
-          title="낙관적인 UI 업데이트"
+          title="옵티미스틱 업데이트"
           actionLabel="useOptimistic 훅 활용"
           description={
             <>

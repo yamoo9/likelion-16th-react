@@ -75,7 +75,7 @@ export default function TodoController({ initialTodos }: Props) {
     let timeoutId: ReturnType<typeof setTimeout>
 
     if (error.trim().length > 0) {
-      timeoutId = setTimeout(() => setError(''), 3000)
+      timeoutId = setTimeout(() => setError(''), 1000)
     }
 
     return () => {
