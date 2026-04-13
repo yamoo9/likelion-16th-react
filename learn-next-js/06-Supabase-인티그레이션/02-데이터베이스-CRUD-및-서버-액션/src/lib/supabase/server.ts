@@ -16,7 +16,7 @@ import { supabaseConfig } from './config'
  * - Next.js의 `cookies` API를 사용하여 사용자의 인증 상태(세션)를 유지합니다.
  * - 서버 측에서 DB에 직접 접근하거나 인증 상태를 확인할 때 사용합니다.
  */
-export async function createClient(cookieStore: Awaited<ReturnType<typeof cookies>>) {
+export function createClient(cookieStore: Awaited<ReturnType<typeof cookies>>) {
   return createServerClient(supabaseConfig.url, supabaseConfig.key, {
     cookies: {
       // 모든 쿠키를 가져와서 Supabase 클라이언트에 전달 (인증 유지용)

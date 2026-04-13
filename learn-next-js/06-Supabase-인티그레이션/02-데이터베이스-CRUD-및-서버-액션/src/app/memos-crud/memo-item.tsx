@@ -11,15 +11,10 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/utils'
+import { Memo } from '@/actions/memo-actions'
 
 interface Props {
-  /* 임시 데이터 -> 타입 설정 필요 */
-  memo?: {
-    id: number
-    title: string
-    content: string
-    created_at: string
-  }
+  memo?: Memo
 }
 
 export default function MemoItem({ memo }: Props) {
