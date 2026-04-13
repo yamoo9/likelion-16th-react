@@ -1,6 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
 const DB_NAME = 'memolist'
@@ -11,6 +12,28 @@ export type Memo = {
   updated_at: string
   title: string
   content: string
+}
+
+export type MemoInsert = Pick<Memo, 'title' | 'content'>
+
+// [CREATE]
+export const createMemoAction = async (formData: FormData) => {
+  const title = formData.get('title')?.toString().trim()
+  const content = formData.get('content')?.toString().trim()
+
+  if (!title || !content) {
+    throw new Error('메모 제목 또는 내용을 입력해야 합니다.')
+  }
+
+  const newMemo: MemoInsert = { title, content }
+
+  const cookieStore = await cookies()
+  const supabase = createClient(cookieStore)
+  const { error } = await supabase.from(DB_NAME).insert([newMemo])
+
+  if (error) throw new Error(`${DB_NAME} 데이터베이스에 메모 생성 실패:`, error)
+
+  revalidatePath('/memos-crud')
 }
 
 // [READ]
@@ -31,9 +54,6 @@ export const readMemoAction = async (): Promise<Memo[]> => {
 
   return data
 }
-
-// [CREATE]
-export const createMemoAction = async () => {}
 
 // [UPDATE]
 export const updateMemoAction = async () => {}

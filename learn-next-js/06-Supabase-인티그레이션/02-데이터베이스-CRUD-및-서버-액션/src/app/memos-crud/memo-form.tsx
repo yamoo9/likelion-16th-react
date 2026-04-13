@@ -1,3 +1,5 @@
+import { createMemoAction } from "@/actions/memo-actions"
+
 export default function MemoForm() {
 
   /**
@@ -8,7 +10,7 @@ export default function MemoForm() {
    */
 
   return (
-    <form className="flex flex-col gap-3">
+    <form action={createMemoAction} className="flex flex-col gap-3">
       <input
         type="text"
         name="title"
@@ -27,7 +29,7 @@ export default function MemoForm() {
       />
       <button
         type="submit"
-        className="rounded-xl bg-slate-900 py-2.5 font-bold text-white"
+        className="cursor-pointer rounded-xl bg-slate-900 py-2.5 font-bold text-white"
       >
         메모 저장
       </button>
