@@ -4,7 +4,7 @@ import { createServerClient } from '@supabase/ssr'
 import { supabaseConfig } from './config'
 
 // 서버용 Supabase Client 객체 생성 함수
-export const createClient = async (cookieStore: Awaited<ReturnType<typeof cookies>>) => {
+export const createClient = (cookieStore: Awaited<ReturnType<typeof cookies>>) => {
 
   return createServerClient(supabaseConfig.url, supabaseConfig.key, {
     cookies: {
