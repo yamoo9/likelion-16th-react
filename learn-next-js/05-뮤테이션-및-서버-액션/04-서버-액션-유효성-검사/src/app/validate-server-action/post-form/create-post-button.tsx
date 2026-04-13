@@ -1,11 +1,12 @@
 import { Loader2, LucideMousePointerClick } from 'lucide-react'
+import { useFormStatus } from 'react-dom'
+
 import { cn } from '@/utils'
 
 export function CreaetPostButton() {
-
   // 현재 폼의 제출 상태를 가져옵니다.
   // (true: 서버 통신 중, false: 대기 중)
-  const pending = false
+  const { pending } = useFormStatus()
 
   return (
     <button
