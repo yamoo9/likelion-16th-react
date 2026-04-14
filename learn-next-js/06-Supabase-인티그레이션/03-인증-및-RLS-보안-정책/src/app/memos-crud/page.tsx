@@ -7,7 +7,7 @@ import MemoList from './memo-list'
 
 export default async function MemoCRUDPage() {
   
-  const memolistPromise = readMemoAction()
+  const memolistPromise = readMemoAction(3)
 
   return (
     <section className="mx-auto w-9/10 max-w-3xl px-6 py-12 antialiased lg:w-3/5">

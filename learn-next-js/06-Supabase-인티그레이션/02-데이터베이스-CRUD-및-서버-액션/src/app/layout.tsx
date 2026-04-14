@@ -34,7 +34,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           {children}
         </main>
         <Footer />
-        <Toaster />
+        <Toaster position="top-right" />
       </body>
     </html>
   )
