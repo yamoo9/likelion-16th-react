@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner'
 import type { Metadata } from 'next'
 import { Noto_Sans_KR, Geist } from 'next/font/google'
 
@@ -6,7 +7,7 @@ import { Navbar } from '@/components/ui/navbar'
 import Footer from '@/components/ui/footer'
 import '@/styles/globals.css'
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
-    <html lang="ko-KR" className={cn("font-sans", geist.variable)}>
+    <html lang="ko-KR" className={cn('font-sans', geist.variable)}>
       <body
         className={cn(
           notoSansKR.variable,
@@ -29,14 +30,11 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         )}
       >
         <Navbar />
-        <main
-          className={cn(
-            'mx-auto flex w-full max-w-5xl grow flex-col',
-          )}
-        >
+        <main className={cn('mx-auto flex w-full max-w-5xl grow flex-col')}>
           {children}
         </main>
         <Footer />
+        <Toaster />
       </body>
     </html>
   )

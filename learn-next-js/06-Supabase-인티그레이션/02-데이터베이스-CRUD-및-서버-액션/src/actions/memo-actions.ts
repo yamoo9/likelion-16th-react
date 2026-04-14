@@ -1,10 +1,10 @@
 'use server'
 
+import z from 'zod'
 import { revalidatePath } from 'next/cache'
 
 import { getErrorMessage } from '@/utils'
 import { createSupabase } from '@/lib/supabase/helpers'
-import z from 'zod'
 
 /* DB 테이블 이름 및 갱신할 페이지 경로 정의 ------------------------------------------- */
 
@@ -68,14 +68,13 @@ export const createMemoAction = async (
   // 사용자가 입력한 폼 데이터 값 추출
   const title = formData.get('title')?.toString().trim()
   const content = formData.get('content')?.toString().trim()
-  
+
   // 서버 측 유효성 검사: 예측 가능한 에러 (사용자 실수)
   // Zod를 사용한 입력 값 검증(Safe Parse -> Validation)
   const result = MemoSchema.safeParse({ title, content })
 
   // Supabase 데이터베이스에 연결할 필요없이 바로 실패 응답 결과 반환
   if (!result.success) {
-    
     // 각 필드마다 에러를 표시하고자 할 경우 (클라이언트 화면용)
     // const treeifyError = z.treeifyError(result.error)
     // console.log(treeifyError)
@@ -161,14 +160,16 @@ export const readMemoAction = async (
 }
 
 // [UPDATE] 기존 메모의 내용을 수정합니다.
-export const updateMemoAction = async (memoId: Memo['id'], updateMemo: MemoUpdate) => {
+export const updateMemoAction = async (
+  memoId: Memo['id'],
+  updateMemo: MemoUpdate,
+): Promise<ActionResponse<Memo>> => {
   // 서버 측 유효성 검사: 예측 가능한 에러 (사용자 실수)
   // Zod를 사용한 입력 값 검증(Safe Parse -> Validation)
   const result = MemoSchema.safeParse(updateMemo)
 
   // Supabase 데이터베이스에 연결할 필요없이 바로 실패 응답 결과 반환
   if (!result.success) {
-    
     // 각 필드마다 에러를 표시하고자 할 경우 (클라이언트 화면용)
     // const treeifyError = z.treeifyError(result.error)
     // console.log(treeifyError)
@@ -198,20 +199,48 @@ export const updateMemoAction = async (memoId: Memo['id'], updateMemo: MemoUpdat
 
     return {
       success: true,
-      data: (data as Memo)
+      data: data as Memo,
     }
-  } catch(error) {
+  } catch (error) {
     console.error('메모 수정 실패', getErrorMessage(error))
     return {
       success: false,
-      error: '메모 수정에 실패했습니다.'
+      error: '메모 수정에 실패했습니다.',
     }
   }
 }
 
 // [DELETE] 특정 메모를 삭제합니다.
-export const deleteMemoAction = async () => {
-  
+export const deleteMemoAction = async (memoId: Memo['id']): Promise<ActionResponse<null>> => {
+
+  if (!memoId) {
+    return {
+      success: false,
+      error: '삭제할 메모 ID가 없습니다.'
+    }
+  }
+
+  try {
+    const supabase = await createSupabase()
+    const { error } = await supabase.from(DB_NAME).delete().eq('id', memoId)
+
+    if (error) throw error
+
+    revalidatePath(REVALIDATE_PATH)
+
+    return {
+      success: true,
+      data: null
+    }
+
+  } catch(error) {
+    console.error('메모 삭제 실패', getErrorMessage(error))
+    return {
+      success: false,
+      error: '메모 삭제에 실패했습니다.'
+    }
+  }
+
 }
 
 /* -------------------------------------------------------------------------- */
