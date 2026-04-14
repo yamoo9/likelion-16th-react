@@ -1,7 +1,7 @@
 'use client'
 
-import { useActionState } from 'react'
 import Link from 'next/link'
+import { useActionState } from 'react'
 import {
   LucideMail,
   LucideLock,
@@ -9,8 +9,8 @@ import {
   LucideArrowRight,
 } from 'lucide-react'
 
-import { signInAction, signUpAction } from '@/actions/auth-actions'
 import { cn } from '@/utils'
+import { signInAction, signUpAction } from '@/actions/auth-actions'
 import { useFormStatus } from 'react-dom'
 
 
@@ -31,7 +31,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     <article className="rounded-[40px] border-2 border-slate-100 bg-white p-10 shadow-sm">
       <Header isSignIn={isSignIn} />
 
-      <form action={dispatchAction} className="space-y-5">
+      <form noValidate action={dispatchAction} className="space-y-5">
         {/* 이메일 입력 */}
         <EmailInput state={state} />
 

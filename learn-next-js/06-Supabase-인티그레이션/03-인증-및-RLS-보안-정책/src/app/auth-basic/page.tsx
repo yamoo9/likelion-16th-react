@@ -1,4 +1,5 @@
 import type { User } from '@supabase/supabase-js'
+import { createSupabase } from '@/lib/supabase/helpers'
 import {
   LucideInfo,
   LucideLogOut,
@@ -12,9 +13,10 @@ import { signOutAction } from '@/actions/auth-actions'
 
 export default async function AuthBasicPage() {
   // 서버용 Supabase 클라이언트 생성
+  const supabase = await createSupabase()
 
   // 생성된 Supabase 클라이언트로 인증 사용자 데이터 가져오기
-  const user = null
+  const { data: { user } } = await supabase.auth.getUser()
 
   return (
     <section className="mx-auto w-9/10 max-w-3xl px-6 py-12 antialiased">

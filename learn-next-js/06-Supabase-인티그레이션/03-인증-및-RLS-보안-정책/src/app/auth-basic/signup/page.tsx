@@ -1,5 +1,5 @@
-import { LucideChevronLeft } from 'lucide-react'
 import Link from 'next/link'
+import { LucideChevronLeft } from 'lucide-react'
 
 import { cn } from '@/utils'
 import { AuthForm } from '../auth-form'
