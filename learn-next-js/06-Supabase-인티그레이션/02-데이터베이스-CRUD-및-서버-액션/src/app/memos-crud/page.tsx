@@ -7,7 +7,7 @@ import MemoList from './memo-list'
 
 export default async function MemoCRUDPage({ searchParams }: PageProps<'/memos-crud'>) {
 
-  const { limit: limitParam } = await searchParams
+  const { limit: limitParam, error } = await searchParams
 
   /**
    * readMemoAction 서버 액션을 정의합니다. (Supabase 데이터 가져오기)
@@ -32,7 +32,7 @@ export default async function MemoCRUDPage({ searchParams }: PageProps<'/memos-c
       </header>
             
       <div className="mb-12 rounded-3xl border-2 border-slate-100 bg-slate-50/50 p-6">
-        <MemoForm />
+        <MemoForm errorMessage={error} />
       </div>
 
       <Suspense fallback={<Spinner />}>
