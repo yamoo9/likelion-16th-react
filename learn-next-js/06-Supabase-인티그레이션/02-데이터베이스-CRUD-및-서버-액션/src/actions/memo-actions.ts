@@ -1,10 +1,17 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
-import { createClient } from '@/lib/supabase/server'
+
+import { getErrorMessage } from '@/utils'
+import { createSupabase } from '@/lib/supabase/helpers'
+
+/* DB 테이블 이름 및 갱신할 페이지 경로 정의 ------------------------------------------- */
 
 const DB_NAME = 'memolist'
+const REVALIDATE_PATH = '/memos-crud'
+
+
+/* 타입 정의 (Types) ------------------------------------------------------------ */
 
 export type Memo = {
   id: string
@@ -14,49 +21,127 @@ export type Memo = {
   content: string
 }
 
+// 생성 시 필요한 타입 (id, 날짜 제외)
 export type MemoInsert = Pick<Memo, 'title' | 'content'>
 
-// [CREATE]
-export const createMemoAction = async (formData: FormData) => {
+// 액션 응답 반환 공통 타입
+export type ActionResponse<T> =
+  | {
+      success: true
+      data: T
+    }
+  | {
+      success: false
+      error: string
+    }
+
+/* 서버 액션 (Actions) ---------------------------------------------------------- */
+
+/**
+ * [CREATE] 새로운 메모를 생성합니다.
+ * @param formData 폼 데이터 { title, content } 
+ */
+export const createMemoAction = async (formData: FormData): Promise<ActionResponse<Memo>> => {
+  
+  // 사용자가 입력한 폼 데이터 값 추출
   const title = formData.get('title')?.toString().trim()
   const content = formData.get('content')?.toString().trim()
 
+  // 서버 측 유효성 검사: 예측 가능한 에러 (사용자 실수)
   if (!title || !content) {
-    throw new Error('메모 제목 또는 내용을 입력해야 합니다.')
+    // Supabase 데이터베이스에 연결할 필요없이 바로 실패 응답 결과 반환
+    return {
+      success: false,
+      error: '메모 제목과 내용을 입력해야 합니다.'
+    }
   }
+  
+  try {
+    const supabase = await createSupabase()
+    const newMemo: MemoInsert = { title, content }
 
-  const newMemo: MemoInsert = { title, content }
+    const { error, data } = await supabase
+      .from(DB_NAME) // DB에서
+      .insert([newMemo]) // 새 메모 추가
+      .select('*')
+      .single()
 
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
-  const { error } = await supabase.from(DB_NAME).insert([newMemo])
+    // 예측할 수 없는 로직 또는 API 에러 발생 시, catch 절로 던짐
+    if (error) throw error 
 
-  if (error) throw new Error(`${DB_NAME} 데이터베이스에 메모 생성 실패:`, error)
+    // Next.js 서버의 라우트 캐시 재검증 
+    // (Supabase의 생성 결과 바로 화면에 반영)
+    revalidatePath(REVALIDATE_PATH)
 
-  revalidatePath('/memos-crud')
+    // 클라이언트에 성공 응답 반환
+    return {
+      success: true,
+      data: (data as Memo)
+    }
+  } catch (error) {
+
+    // 서버 디버깅용 로그
+    console.log(`메모 생성 실패`, getErrorMessage(error))
+    
+    // 클라이언트에 실패 응답 반환
+    return {
+      success: false,
+      error: '메모를 생성하지 못했습니다.',
+    }
+  }
 }
 
-// [READ]
-export const readMemoAction = async (): Promise<Memo[]> => {
-  // 쿠키 스토어 가져오기
-  const cookieStore = await cookies()
-  // SupabaseClient 인스턴스 생성 (서버용)
-  const supabase = createClient(cookieStore)
-  // 데이터베이스에서 데이터 가져오기
-  const { error, data } = await supabase
-    .from(DB_NAME)
-    .select()
-    .order('created_at', { ascending: false }) // 최신순 정렬
+/**
+ * [READ] 메모 리스트를 가져옵니다. (단순 조회용)
+ * @param limit 가져올 메모의 개수
+ */
+export const readMemoAction = async (limit = 10): Promise<ActionResponse<Memo[]>> => {
+  try {
+    // Supabase 인스턴스 생성 (서버용)
+    const supabase = await createSupabase()
 
-  if (error) {
-    throw new Error(`${DB_NAME} 데이터 가져오기 실패:`, error)
+    // Supabase 'memolist' 데이터베이스에서 데이터 가져오기
+    const { error, data } = await supabase
+      .from(DB_NAME)
+      .select('*')
+      .order('created_at', { ascending: false }) // decending 최신순 정렬
+      .limit(limit) // 개수 제한
+
+    if (error) throw error // 에러가 있을 경우, 에러 던짐 (catch 절에서 처리)
+
+    // 응답 성공 시, 반환 값
+    return {
+      success: true,
+      data: (data as Memo[]) ?? []
+    }
+  } catch(error) {
+    // 서버 디버깅 로그용
+    console.error('메모 리스트 가져오기 실패', getErrorMessage(error))
+
+    // 응답 실패 시, 반환 값
+    return {
+      success: false,
+      error: '메모 리스트 데이터 가져오기에 실패했습니다.'
+    }
   }
-
-  return data
+  
 }
 
-// [UPDATE]
-export const updateMemoAction = async () => {}
+// [UPDATE] 기존 메모의 내용을 수정합니다.
+export const updateMemoAction = async () => {
 
-// [DELETE]
-export const deleteMemoAction = async () => {}
+}
+
+// [DELETE] 특정 메모를 삭제합니다.
+export const deleteMemoAction = async () => {
+
+}
+
+
+/* -------------------------------------------------------------------------- */
+
+// [READ] 특정 ID를 가진 메모 하나를 조회합니다.
+
+// [READ] 페이지네이션 처리가 된 메모 목록을 가져옵니다.
+
+// [READ] 제목 또는 내용에 검색어가 포함된 메모를 찾습니다.

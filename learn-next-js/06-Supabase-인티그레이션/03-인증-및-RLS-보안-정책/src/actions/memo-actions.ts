@@ -1,125 +1,292 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
-import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
+import { createClient } from '@/lib/supabase/server'
+import { isErrorObject } from '@/utils'
 
-const DATABASE_NAME = 'memos'
+/* DB 테이블 이름 및 갱신할 페이지 경로 정의 ------------------------------------------- */
 
-export interface Memo {
-  id: number
+const DB_NAME = 'memolist'
+const REVALIDATE_PATH = '/memos-crud'
+
+/* 타입 정의 (Types) ------------------------------------------------------------ */
+
+export type Memo = {
+  id: string
   created_at: string
+  updated_at: string
   title: string
   content: string
-  user_id: string
+}
+
+// 생성 시 필요한 타입 (id, 날짜 제외)
+export type MemoInsert = Pick<Memo, 'title' | 'content'>
+
+// 수정 시 필요한 타입 (일부 필드만 수정 가능하도록 Partial 사용)
+export type MemoUpdate = Partial<MemoInsert & { 'updated_at': string }>
+
+// 서버 액션의 공통 응답 구조 (성공 여부에 따른 유니온 타입)
+export type ActionResponse<T> = 
+  | { success: true, data: T }
+  | { success: false, error: string }
+
+// 페이지네이션 응답을 위한 타입
+export type MemoPagination = {
+  items: Memo[]
+  totalCount: number
+  currentPage: number
+  totalPages: number
+  hasNextPage: boolean
+}
+
+/* 헬퍼 함수 (Helpers) ---------------------------------------------------------- */
+
+/**
+ * 서버 측 Supabase 클라이언트를 생성합니다.
+ * 쿠키 정보를 함께 전달하여 인증 상태를 유지합니다.
+ */
+const createSupabase = async () => {
+  const cookieStore = await cookies()
+  return createClient(cookieStore)
 }
 
 /**
- * 메모 생성 (Create)
+ * 발생한 에러 객체에서 메시지 문자열을 안전하게 추출합니다.
  */
-export async function createMemoAction(formData: FormData) {
-  
-  const title = formData.get('title')?.toString()
-  const content = formData.get('content')?.toString()
+const getErrorMessage = (error: unknown) => {
+  return isErrorObject(error) ? error.message : String(error)
+}
 
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
-  
-  // RLS 보안 정책이 설정되지 않은 경우 
-  // Next.js 서버에서 직접 누구인지 확인해야 합니다.
-  // 사용자 정보(auth.getUser)를 가져옵니다. 
-  const user = null
+/* 서버 액션 (Actions) ---------------------------------------------------------- */
 
-  if (!user) {
-    throw new Error('메모를 작성하려면 로그인해야 합니다.')
+/**
+ * [CREATE] 새로운 메모를 생성합니다.
+ * @param formData - 제목(title)과 내용(content)이 담긴 폼 데이터
+ */
+export const createMemoAction = async (formData: FormData): Promise<ActionResponse<Memo>> => {
+  
+  // 사용자 입력 가져오기
+  const title = formData.get('title')?.toString().trim()
+  const content = formData.get('content')?.toString().trim()
+  
+  // 유효성 검사 (사용자 실수: 예상 가능한 오류는 return으로 처리)
+  if (!title || !content) {
+    return { success: false, error: '메모 제목 또는 내용을 입력해야 합니다.' }
   }
 
-  const { error } = await supabase
-    .from(DATABASE_NAME)
-    .insert([{ 
-      title, 
-      content, 
-      // ... ← 새 메모를 저장할 때 현재 로그인한 사용자 id를 설정합니다.
-    }])
+  try {
+    const newMemo: MemoInsert = { title, content }
+    const supabase = await createSupabase()
 
-  if (error) throw new Error(error.message)
+    // DB Insert 실행
+    const { error, data } = await supabase
+      .from(DB_NAME)
+      .insert([newMemo])
+      .select('*')
+      .single() // 생성된 데이터 1건을 즉시 반환받음
+    
+    if (error) throw error
+    
+    // 캐시 갱신 (목록 페이지에 즉시 반영)
+    revalidatePath(REVALIDATE_PATH)
 
-  revalidatePath('/read-table-data')
+    return { success: true, data: data as Memo }
+  } catch(error) {
+    console.error(`${DB_NAME} 생성 실패:`, getErrorMessage(error))
+    return { success: false, error: '메모 생성 중 오류가 발생했습니다.' }
+  }
 }
 
 /**
- * 메모 조회 (Read)
+ * [READ] 메모 목록을 가져옵니다. (단순 조회용)
+ * @param limit - 가져올 데이터 개수 제한
  */
-export async function readMemosAction() {
-  
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
+export const readMemoAction = async (limit = 10): Promise<ActionResponse<Memo[]>> => {
+  try {
+    const supabase = await createSupabase()
 
-  const { data, error } = await supabase
-  .from(DATABASE_NAME)
-  .select('*')
-    // 데이터 필터링: .eq('user_id', user.id)를 통해 
-    // DB에 있는 데이터 중 로그인 사용자 것만 골라낼 수 있습니다. 
-    // (RLS 설정하지 않은 경우 직접 확인 필요)
-    // ...
-    .order('created_at', { ascending: false })
+    const { error, data } = await supabase
+      .from(DB_NAME)
+      .select('*')
+      .order('created_at', { ascending: false }) // 최신순 정렬
+      .limit(limit)
 
-  if (error) throw new Error(error.message)
+    if (error) throw error
 
-  return data
+    return { success: true, data: data as Memo[] }
+  } catch(error) {
+    console.error(`${DB_NAME} 목록 조회 실패:`, getErrorMessage(error))
+    return { success: false, error: '메모 리스트를 가져오지 못했습니다.' }
+  }
 }
 
 /**
- * 메모 수정 (Update)
+ * [READ] 특정 ID를 가진 메모 하나를 조회합니다.
  */
-export async function updateMemoAction(id: number, title?: string, content?: string) {
+export const readMemoByIdAction = async (id: Memo['id']): Promise<ActionResponse<Memo|null>> => {
+  try {
+    const supabase = await createSupabase()
 
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
+    const { error, data } = await supabase
+      .from(DB_NAME)
+      .select('*')
+      .eq('id', id)
+      .maybeSingle() // 데이터가 없어도 에러를 던지지 않고 null 반환
 
-  // RLS 보안 정책이 설정되지 않은 경우 
-  // Next.js 서버에서 직접 누구인지 확인해야 합니다.
-  // 사용자 정보(auth.getUser)를 가져옵니다. 
-  const user = null
+    if (error) throw error
+
+    return { success: true, data: (data as Memo) ?? null }
+  } catch (error) {
+    console.error(`${DB_NAME} ID 조회 실패 (${id}):`, getErrorMessage(error))
+    return { success: false, error: '메모를 찾을 수 없습니다.' }
+  }
+}
+
+/**
+ * [READ] 페이지네이션 처리가 된 메모 목록을 가져옵니다.
+ * @param page - 현재 페이지 번호 (1부터 시작)
+ * @param limit - 한 페이지에 보여줄 개수
+ */
+export const paginateMemoAction = async (page = 1, limit = 10): Promise<ActionResponse<MemoPagination>> => {
   
-  if (!user) throw new Error('메모를 수정할 권한이 없습니다.')
+  // Supabase의 range 인덱스 기준: 0
+  const from = (page - 1) * limit
+  const to = from + limit - 1
+
+  try {
+
+    const supabase = await createSupabase()
+
+    // count: 'exact' 옵션으로 전체 데이터 개수를 함께 가져옴
+    const { error, data, count } = await supabase
+      .from(DB_NAME)
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(from, to)
+
+    if (error) throw error
+
+    const totalCount = count ?? 0
+    const totalPages = Math.ceil(totalCount / limit)
+
+    return {
+      success: true,
+      data: {
+        items: (data as Memo[]) ?? [],
+        totalCount,
+        currentPage: page,
+        totalPages,
+        hasNextPage: page < totalPages,
+      }
+    }
+  } catch(error) {
+    console.error(`${DB_NAME} 페이지네이션 실패:`, getErrorMessage(error))
+    return { success: false, error: '페이지 데이터를 불러오지 못했습니다.' }
+  }
+}
+
+/**
+ * [READ] 제목 또는 내용에 검색어가 포함된 메모를 찾습니다.
+ * @param search - 검색 키워드
+ * @param order - 정렬 순서 (desc: 최신순, asc: 오래된순)
+ */
+export const searchMemoAction = async (search: string, order: 'desc' | 'asc' = 'desc'): Promise<ActionResponse<Memo[]>> => {
+  const trimmedSearch = search.trim()
+
+  try {
+    const supabase = await createSupabase()
+    let query = supabase.from(DB_NAME).select('*')
+  
+    // 검색어가 있는 경우에만 필터 조건 추가
+    if (trimmedSearch.length > 0) {
+      const searchTerm = `%${trimmedSearch}%`
+      // title 또는 content 컬럼 중 하나라도 포함되면 결과에 포함 (OR 조건)
+      query = query.or(`title.ilike.${searchTerm},content.ilike.${searchTerm}`)
+    }
+
+    const { error, data } = await query.order('created_at', { ascending: order === 'asc' })
+
+    if (error) throw error
+
+    return { success: true, data: data as Memo[] }
+  } catch(error) {
+    console.error(`${DB_NAME} 검색 실패 ("${trimmedSearch}"):`, getErrorMessage(error))
+    return { success: false, error: '검색 중 오류가 발생했습니다.' }
+  }
+}
+
+/**
+ * [UPDATE] 기존 메모의 내용을 수정합니다.
+ * @param id - 수정할 메모의 고유 ID
+ * @param formData - 수정할 제목과 내용이 담긴 폼 데이터
+ */
+export const updateMemoAction = async (id: Memo['id'], formData: FormData): Promise<ActionResponse<Memo>> => {
+  
+  // 사용자 입력 가져오기
+  const title = formData.get('title')?.toString().trim()
+  const content = formData.get('content')?.toString().trim()
+
+  // 유효성 검사 (사용자 실수: 예상 가능한 오류는 return으로 처리)
+  if (!id) return { success: false, error: '수정할 메모 ID가 필요합니다.' }
+  if (!title || !content) return { success: false, error: '메모 제목과 내용 모두 입력해야 합니다.' }
+
+  try {
+
+    // 비즈니스 로직 및 DB 작업 (예상치 못한 오류가 발생할 수 있는 구간)
+    const updateMemo: MemoUpdate = {
+      title,
+      content,
+      updated_at: new Date().toISOString() // 수정 시각 명시적 업데이트
+    }
+    
+    const supabase = await createSupabase()
+
+    const { error, data } = await supabase
+      .from(DB_NAME)
+      .update(updateMemo)
+      .eq('id', id)
+      .select('*')
+      .single()
+
+    if (error) throw error
+
+    // 데이터가 변경되었으므로 관련 페이지 캐시 무효화
+    revalidatePath(REVALIDATE_PATH)
+
+    return { success: true, data: data as Memo }
+  } catch(error) {
+    console.error(`${DB_NAME} 수정 실패:`, getErrorMessage(error))
+    return { success: false, error: '메모 데이터 수정에 실패했습니다.' }
+  }
+}
+
+/**
+ * [DELETE] 특정 메모를 삭제합니다.
+ * @param id - 삭제할 메모의 고유 ID
+ */
+export const deleteMemoAction = async (id: Memo['id']): Promise<ActionResponse<null>> => {
+  
+  // 유효성 검사 (사용자 실수: 예상 가능한 오류는 return으로 처리)
+  if (!id) return { success: false, error: '삭제할 ID가 필요합니다.' }
+
+  try {
+    
+    const supabase = await createSupabase()
 
     const { error } = await supabase
-    .from(DATABASE_NAME)
-    .update({ title, content })
-    .eq('id', id)
-    // 이중 검증: 수정할 메모의 id뿐만 아니라 user_id도 일치해야 합니다.
-    // 이중 검증하지 않을 경우, 다른 사람이 메모 ID를 알아내 맘대로 수정할 수 있습니다.
-    // ...
+      .from(DB_NAME)
+      .delete()
+      .eq('id', id)
 
-  if (error) throw new Error(error.message)
+    if (error) throw error    
 
-  revalidatePath('/read-table-data')
-}
+    // 삭제 후 목록 페이지 갱신
+    revalidatePath(REVALIDATE_PATH)
 
-/**
- * 메모 삭제 (Delete)
- */
-export async function deleteMemoAction(id: number) {
-  
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
-  
-  // RLS 보안 정책이 설정되지 않은 경우 
-  // Next.js 서버에서 직접 누구인지 확인해야 합니다.
-  // 사용자 정보(auth.getUser)를 가져옵니다. 
-  const user = null
-
-  if (!user) throw new Error('메모를 삭제할 권한이 없습니다.')
-
-  const { error } = await supabase
-    .from(DATABASE_NAME)
-    .delete()
-    .eq('id', id)
-    // 삭제 요청 시에도 반드시 본인 데이터인지 확인이 필요합니다.
-    // ...
-
-  if (error) throw new Error(error.message)
-
-  revalidatePath('/read-table-data')
+    return { success: true, data: null }
+  } catch(error) {
+    console.error(`${DB_NAME} 삭제 실패:`, getErrorMessage(error))
+    return { success: false, error: '메모 데이터 삭제에 실패했습니다.' }
+  }
 }

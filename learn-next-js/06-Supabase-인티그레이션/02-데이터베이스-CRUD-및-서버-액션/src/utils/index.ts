@@ -1,4 +1,5 @@
-export * from './isErrorObject'
+export * from './get-error-message'
+export * from './is-error-object'
 export * from './debounce'
 export * from './throttle'
 export * from './wait'
