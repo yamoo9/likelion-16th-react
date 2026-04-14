@@ -5,13 +5,18 @@ import { Spinner } from '@/components/ui/spinner'
 import MemoForm from './memo-form'
 import MemoList from './memo-list'
 
-export default function MemoCRUDPage() {
+export default async function MemoCRUDPage({ searchParams }: PageProps<'/memos-crud'>) {
+
+  const { limit: limitParam } = await searchParams
 
   /**
    * readMemoAction 서버 액션을 정의합니다. (Supabase 데이터 가져오기)
    * readMemoAction 액션를 실행한 Promise를 MemoList 컴포넌트에 전달합니다.
    */
-  const memolistPromise = readMemoAction() // Promise<ActionResponse<Memo[]>>
+
+  const limit = Number(limitParam)
+  const limitNumber = Number.isNaN(limit) ? undefined : limit
+  const memolistPromise = readMemoAction(limitNumber)
   
   return (
     <section className="mx-auto w-9/10 max-w-3xl px-6 py-12 antialiased lg:w-3/5">

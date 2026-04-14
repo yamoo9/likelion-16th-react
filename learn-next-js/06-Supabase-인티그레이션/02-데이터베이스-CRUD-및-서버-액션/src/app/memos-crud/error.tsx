@@ -55,14 +55,14 @@ export default function Error({ error, unstable_retry }: Props) {
             )}>
               <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 <span className="h-2 w-2 rounded-full bg-red-400" />
-                Next.js 16 Debug Info
+                Next.js 16 디버깅 정보
               </div>
               <p className="font-mono text-xs font-medium text-red-600 line-clamp-2">
                 {error.message || 'Unknown Error'}
               </p>
               {error.digest && (
                 <p className="mt-1 font-mono text-[10px] text-slate-400">
-                  Digest: {error.digest}
+                  다이제스트: {error.digest}
                 </p>
               )}
             </div>
@@ -72,11 +72,11 @@ export default function Error({ error, unstable_retry }: Props) {
             <button
               type="button"
               onClick={handleRetry}
-              disabled={isPending}
+              aria-disabled={isPending}
               className={cn(
                 "group relative flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold transition-all active:scale-[0.98]",
                 "bg-slate-900 text-white hover:bg-slate-800",
-                "disabled:cursor-not-allowed disabled:opacity-70"
+                "aria-disabled:cursor-not-allowed aria-disabled:opacity-70"
               )}
             >
               <RotateCcw 
@@ -105,7 +105,7 @@ export default function Error({ error, unstable_retry }: Props) {
 
         <div className="border-t border-slate-100 bg-slate-50/50 py-4 text-center">
           <p className="text-[11px] text-slate-400">
-            ID: {error.digest || 'No digest available'}
+            ID: {error.digest || '사용 가능한 다이제스트가 없습니다.'}
           </p>
         </div>
       </div>
