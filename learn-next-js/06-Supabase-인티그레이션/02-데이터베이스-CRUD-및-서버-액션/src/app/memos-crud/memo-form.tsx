@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import { redirect} from 'next/navigation'
 
 import { createMemoAction } from '@/actions/memo-actions'
 
@@ -7,6 +7,7 @@ interface Props {
 }
 
 export default async function MemoForm({ errorMessage }: Props) {
+
   // 오류 원인
   // 일반 서버 컴포넌트 (페이지 컴포넌트가 아님. 검색 매개변수 못 읽음)
 

@@ -24,6 +24,9 @@ export type Memo = {
 // 생성 시 필요한 타입 (id, 날짜 제외)
 export type MemoInsert = Pick<Memo, 'title' | 'content'>
 
+// 수정 시 필요한 타입 (옵셔널 title, content)
+export type MemoUpdate = Partial<MemoInsert>
+
 // 액션 응답 반환 공통 타입
 export type ActionResponse<T> =
   | {
@@ -37,7 +40,7 @@ export type ActionResponse<T> =
 
 /* 메모 생성 스키마 --------------------------------------------------------------- */
 
-const CreateMemoSchema = z.object({
+const MemoSchema = z.object({
   title: z
     .string()
     .trim()
@@ -51,7 +54,7 @@ const CreateMemoSchema = z.object({
 })
 
 // 메모 생성 폼의 상태 타입
-export type CreateMemoFormState = z.infer<typeof CreateMemoSchema>
+export type MemoFormState = z.infer<typeof MemoSchema>
 
 /* 서버 액션 (Actions) ---------------------------------------------------------- */
 
@@ -68,7 +71,7 @@ export const createMemoAction = async (
   
   // 서버 측 유효성 검사: 예측 가능한 에러 (사용자 실수)
   // Zod를 사용한 입력 값 검증(Safe Parse -> Validation)
-  const result = CreateMemoSchema.safeParse({ title, content })
+  const result = MemoSchema.safeParse({ title, content })
 
   // Supabase 데이터베이스에 연결할 필요없이 바로 실패 응답 결과 반환
   if (!result.success) {
@@ -158,10 +161,58 @@ export const readMemoAction = async (
 }
 
 // [UPDATE] 기존 메모의 내용을 수정합니다.
-export const updateMemoAction = async () => {}
+export const updateMemoAction = async (memoId: Memo['id'], updateMemo: MemoUpdate) => {
+  // 서버 측 유효성 검사: 예측 가능한 에러 (사용자 실수)
+  // Zod를 사용한 입력 값 검증(Safe Parse -> Validation)
+  const result = MemoSchema.safeParse(updateMemo)
+
+  // Supabase 데이터베이스에 연결할 필요없이 바로 실패 응답 결과 반환
+  if (!result.success) {
+    
+    // 각 필드마다 에러를 표시하고자 할 경우 (클라이언트 화면용)
+    // const treeifyError = z.treeifyError(result.error)
+    // console.log(treeifyError)
+
+    // 전체 에러 메시지를 화면에 표시할 경우 (서버 터미널 디버깅용)
+    const prettifyError = z.prettifyError(result.error)
+
+    return {
+      success: false,
+      error: prettifyError,
+    }
+  }
+
+  try {
+    const supabase = await createSupabase()
+
+    const { error, data } = await supabase
+      .from(DB_NAME)
+      .update(result.data)
+      .eq('id', memoId)
+      .select('*')
+      .single()
+
+    if (error) throw error
+
+    revalidatePath(REVALIDATE_PATH)
+
+    return {
+      success: true,
+      data: (data as Memo)
+    }
+  } catch(error) {
+    console.error('메모 수정 실패', getErrorMessage(error))
+    return {
+      success: false,
+      error: '메모 수정에 실패했습니다.'
+    }
+  }
+}
 
 // [DELETE] 특정 메모를 삭제합니다.
-export const deleteMemoAction = async () => {}
+export const deleteMemoAction = async () => {
+  
+}
 
 /* -------------------------------------------------------------------------- */
 

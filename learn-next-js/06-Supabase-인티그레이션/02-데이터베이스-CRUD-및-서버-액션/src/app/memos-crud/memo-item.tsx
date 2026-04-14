@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, startTransition } from 'react'
 import {
   LucideStickyNote,
   LucideCalendar,
@@ -11,10 +11,10 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/utils'
-import { Memo } from '@/actions/memo-actions'
+import { updateMemoAction, type Memo } from '@/actions/memo-actions'
 
 interface Props {
-  memo?: Memo
+  memo: Memo
 }
 
 export default function MemoItem({ memo }: Props) {
@@ -26,9 +26,14 @@ export default function MemoItem({ memo }: Props) {
    * updateMemoAction 서버 액션을 정의합니다.
    * 서버 액션을 사용해 수정한 후, 화면을 즉시 업데이트합니다.
    */
-  const updateMemo = async () => {
+  const updateMemo = () => {
     console.log('메모 수정 기능')
-    setIsEditing(false) // 에디트 모드 OFF
+
+    startTransition(async () => {
+      const result = await updateMemoAction(memo.id, { title, content })
+      console.log(result)
+      setIsEditing(false) // 에디트 모드 OFF
+    })
   }
 
   /**
