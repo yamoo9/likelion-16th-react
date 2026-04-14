@@ -1,12 +1,13 @@
 import { Suspense } from 'react'
 
-import { readMemosAction } from '@/actions/memo-actions'
+import { readMemoAction } from '@/actions/memo-actions'
 import { Spinner } from '@/components/ui/spinner'
 import MemoForm from './memo-form'
 import MemoList from './memo-list'
 
 export default async function MemoCRUDPage() {
-  const memosPromise = readMemosAction()
+  
+  const memolistPromise = readMemoAction()
 
   return (
     <section className="mx-auto w-9/10 max-w-3xl px-6 py-12 antialiased lg:w-3/5">
@@ -26,7 +27,7 @@ export default async function MemoCRUDPage() {
       </div>
 
       <Suspense fallback={<Spinner>메모 리스트를 불러오는 중...</Spinner>}>
-        <MemoList memosPromise={memosPromise} />
+        <MemoList memolistPromise={memolistPromise} />
       </Suspense>
     </section>
   )

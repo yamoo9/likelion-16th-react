@@ -1,6 +1,13 @@
+import { redirect } from 'next/navigation'
+
 import { createMemoAction } from '@/actions/memo-actions'
 
-export default function MemoForm() {
+export default async function MemoForm({
+  searchParams,
+}: PageProps<'/memos-crud'>) {
+  const { error } = await searchParams
+  
+
   /**
    * createMemoAction 서버 액션을 정의합니다.
    * createMemoAction 서버 액션을 <form> 요소의 action 속성에 연결합니다.
@@ -11,11 +18,13 @@ export default function MemoForm() {
   // 인라인 서버 액션 (Server Action)
   const handleAction = async (formData: FormData) => {
     'use server'
-    
+
     const result = await createMemoAction(formData)
-    
-    if(!result.success) {
-      console.error(result.error)
+
+    if (!result.success) {
+      // Next.js의 서버 함수
+      // 페이지 리디렉션(redirection)
+      redirect(`?error=${encodeURIComponent(result.error)}`)
     } else {
       console.log(result.data)
     }
@@ -45,6 +54,11 @@ export default function MemoForm() {
       >
         메모 저장
       </button>
+      {error && (
+        <p role="alert" className="font-medium text-red-700 px-3 py-1">
+          {decodeURIComponent(error?.toString())}
+        </p>
+      )}
     </form>
   )
 }

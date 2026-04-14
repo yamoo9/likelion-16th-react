@@ -1,6 +1,8 @@
 import { FileText } from 'lucide-react'
-import MemoItem from '../memos-crud/memo-item'
+import type { User } from '@supabase/supabase-js'
+
 import type { Memo } from '@/actions/memo-actions'
+import MemoItem from '../memos-crud/memo-item'
 
 export default async function RLSSecurePage() {
   

@@ -7,16 +7,16 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-import { supabaseConfig } from '@/lib/supabase/config'
-import { createClient } from '@/lib/supabase/server'
 import { cn, isErrorObject } from '@/utils'
+import { supabaseConfig } from '@/lib/supabase/config'
+import { createSupabase } from '@/lib/supabase/helpers'
 
 export default async function SetupCheckPage() {
   let isConnected = false
   let errorMessage = ''
 
   try {
-    const supabase = await createClient()
+    const supabase = await createSupabase()
     const { error } = await supabase.auth.getSession()
     if (error) throw error
     isConnected = true
